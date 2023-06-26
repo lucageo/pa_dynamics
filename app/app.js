@@ -904,7 +904,7 @@ map.on('click', 'protection_trends_acp', function (e) {
             data: [parseFloat(d[0]._2014_prot_mar_perc), parseFloat(d[0]._2015_prot_mar_perc),parseFloat(d[0]._2015_prot_mar_perc),parseFloat(d[0]._2017_prot_mar_perc),parseFloat(d[0]._2018_prot_mar_perc),parseFloat(d[0]._2019_prot_mar_perc),parseFloat(d[0]._2020_prot_mar_perc),parseFloat(d[0]._2021_prot_mar_perc),parseFloat(d[0]._2022_prot_mar_perc),parseFloat(d[0]._2023_prot_mar_perc)],
             
             color: '#8eb4b1',
-            name: 'Marine Priotection (%)'
+            name: 'Marine Protection (%)'
         }],
 
       });
@@ -913,7 +913,7 @@ map.on('click', 'protection_trends_acp', function (e) {
 
       $('#pan').highcharts({
         chart: {
-          type: 'columnpyramid',
+          type: 'column',
           backgroundColor: null,
 
       },
@@ -964,17 +964,17 @@ map.on('click', 'protection_trends_acp', function (e) {
           }
       },
       series: [{
-          type: 'columnpyramid',
+          type: 'column',
           name: ' Terrestrial',
           color: '#8fbf4b',
           data: [parseFloat(d[0]._2014_terrestrial_count),parseFloat(d[0]._2015_terrestrial_count),parseFloat(d[0]._2016_terrestrial_count),parseFloat(d[0]._2017_terrestrial_count),parseFloat(d[0]._2018_terrestrial_count),parseFloat(d[0]._2019_terrestrial_count),parseFloat(d[0]._2020_terrestrial_count),parseFloat(d[0]._2021_terrestrial_count),parseFloat(d[0]._2022_terrestrial_count),parseFloat(d[0]._2023_terrestrial_count)],
       }, {
-          type: 'columnpyramid',
+          type: 'column',
           name: 'Marine',
           color: '#8eb4b1',
           data: [parseFloat(d[0]._2014_marine_count),parseFloat(d[0]._2015_marine_count),parseFloat(d[0]._2016_marine_count),parseFloat(d[0]._2017_marine_count),parseFloat(d[0]._2018_marine_count),parseFloat(d[0]._2019_marine_count),parseFloat(d[0]._2020_marine_count),parseFloat(d[0]._2021_marine_count),parseFloat(d[0]._2022_marine_count),parseFloat(d[0]._2023_marine_count)],
       }, {
-          type: 'columnpyramid',
+          type: 'column',
           name: 'Coastal',
           color: '#b4a98e',
           data: [parseFloat(d[0]._2014_costal_count),parseFloat(d[0]._2015_costal_count),parseFloat(d[0]._2016_costal_count),parseFloat(d[0]._2017_marine_count),parseFloat(d[0]._2018_costal_count),parseFloat(d[0]._2019_costal_count),parseFloat(d[0]._2020_costal_count),parseFloat(d[0]._2021_costal_count),parseFloat(d[0]._2022_costal_count),parseFloat(d[0]._2023_costal_count)],
@@ -1013,7 +1013,7 @@ $.ajax({
   });
 
 
-var api_trend =  "https://api.biopama.org/api/protection_level/function/api_lc_copernicus_trends/iso3="+e.features[0].properties.iso3_digit
+var api_trend =  "https://api.biopama.org/api/protection_level/function/api_lc_copernicus_trends_2019/iso3="+e.features[0].properties.iso3_digit
 $.ajax({
   url: api_trend,
   dataType: 'json',
@@ -1042,17 +1042,17 @@ $.ajax({
     }
 
 
-    var _2018_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
-    var _2023_lc_unprot_perc = (res[0]._2018_lc_unprot*100)/country_area
-    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2018_lc_unprot_perc).toFixed(3);
-    var _2018_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
-    var _2023_lc_prot_perc = (res[0]._2018_lc_prot*100)/country_area
-    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2018_lc_prot_perc).toFixed(3);
+    var _2019_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
+    var _2023_lc_unprot_perc = (res[0]._2019_lc_unprot*100)/country_area
+    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2019_lc_unprot_perc).toFixed(3);
+    var _2019_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
+    var _2023_lc_prot_perc = (res[0]._2019_lc_prot*100)/country_area
+    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2019_lc_prot_perc).toFixed(3);
 
 
     $('#landcover_20').highcharts({
       chart: {
-        type: 'columnpyramid',
+        type: 'column',
         backgroundColor: null,
 
     },
@@ -1071,7 +1071,7 @@ $.ajax({
     },
 
       title: {
-        text: 'Land cover dynamics ('+ res[0].lc_class_1+')',
+        text: 'Land cover dynamics ('+ res[0].copernicus_lc_class+')',
         style: {
           color: '#a1aeb0',
           font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
@@ -1080,7 +1080,7 @@ $.ajax({
         
     },
     xAxis: {
-        categories: ['2018', '2023'],
+        categories: ['2019', '2023'],
         gridLineColor: '#404040',
         
         labels: {
@@ -1098,7 +1098,7 @@ $.ajax({
         stackLabels: {
           enabled: true,
           style: {
-            fontSize: 23,
+            fontSize: 0,
               color: 'white',
               textOutline: 'none'
           }
@@ -1106,7 +1106,7 @@ $.ajax({
     },
 
     plotOptions: {
-      columnpyramid: {
+      column: {
           stacking: 'normal',
           dataLabels: {
               enabled: true,
@@ -1132,19 +1132,19 @@ $.ajax({
           'color':'white',
           'font-size': '20px'
       },
-      text: '<p><b>'+ res[0].lc_class_1+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of wich '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(unprot_normal_variation_perc)+' % while <b>inside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(prot_normal_variation_perc)+' % between 2018 and 2023 with respect to the country area.</p>'
+      text: '<p><b>'+ res[0].copernicus_lc_class+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of which '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(res[0].perc_lc_unprot).toFixed(2) +' % while <b>inside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(res[0].perc_lc_prot).toFixed(2)+' % between 2019 and 2023.</p>'
     },
 
     series: [{
         
         name: ' Unprotected',
         color: '#788864',
-        data: [parseFloat(res[0]._2018_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
+        data: [parseFloat(res[0]._2019_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
     }, {
         
         name: 'Protected',
         color: '#4d9221',
-        data: [parseFloat(res[0]._2018_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
+        data: [parseFloat(res[0]._2019_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
 
         
 
@@ -1170,17 +1170,17 @@ $.ajax({
     color2 = '#e77323'
     }
 
-    var _2018_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
-    var _2023_lc_unprot_perc = (res[0]._2018_lc_unprot*100)/country_area
-    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2018_lc_unprot_perc).toFixed(3);
-    var _2018_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
-    var _2023_lc_prot_perc = (res[0]._2018_lc_prot*100)/country_area
-    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2018_lc_prot_perc).toFixed(3);
+    var _2019_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
+    var _2023_lc_unprot_perc = (res[0]._2019_lc_unprot*100)/country_area
+    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2019_lc_unprot_perc).toFixed(3);
+    var _2019_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
+    var _2023_lc_prot_perc = (res[0]._2019_lc_prot*100)/country_area
+    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2019_lc_prot_perc).toFixed(3);
 
 
     $('#landcover_30').highcharts({
       chart: {
-        type: 'columnpyramid',
+        type: 'column',
         backgroundColor: null,
 
     },
@@ -1199,7 +1199,7 @@ $.ajax({
     },
 
       title: {
-        text: 'Land cover dynamics ('+ res[0].lc_class_1+')',
+        text: 'Land cover dynamics ('+ res[0].copernicus_lc_class+')',
         style: {
           color: '#a1aeb0',
           font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
@@ -1208,7 +1208,7 @@ $.ajax({
         
     },
     xAxis: {
-        categories: ['2018', '2023'],
+        categories: ['2019', '2023'],
         gridLineColor: '#404040',
         
         labels: {
@@ -1226,7 +1226,7 @@ $.ajax({
         stackLabels: {
           enabled: true,
           style: {
-            fontSize: 23,
+            fontSize: 0,
               color: 'white',
               textOutline: 'none'
           }
@@ -1234,7 +1234,7 @@ $.ajax({
     },
 
     plotOptions: {
-      columnpyramid: {
+      column: {
           stacking: 'normal',
           dataLabels: {
               enabled: true,
@@ -1260,19 +1260,19 @@ $.ajax({
           'color':'white',
           'font-size': '20px'
       },
-      text: '<p><b>'+ res[0].lc_class_1+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of wich '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(unprot_normal_variation_perc)+' % while <b>inside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(prot_normal_variation_perc)+' % between 2018 and 2023 with respect to the country area.</p>'
+      text: '<p><b>'+ res[0].copernicus_lc_class+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of which '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(res[0].perc_lc_unprot).toFixed(2) +' % while <b>inside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(res[0].perc_lc_prot).toFixed(2)+' % between 2019 and 2023.</p>'
     },
 
     series: [{
         
         name: ' Unprotected',
         color: '#788864',
-        data: [parseFloat(res[0]._2018_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
+        data: [parseFloat(res[0]._2019_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
     }, {
         
         name: 'Protected',
         color: '#4d9221',
-        data: [parseFloat(res[0]._2018_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
+        data: [parseFloat(res[0]._2019_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
 
         
 
@@ -1298,16 +1298,16 @@ $.ajax({
     color2 = '#e77323'
     }
 
-        var _2018_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
-    var _2023_lc_unprot_perc = (res[0]._2018_lc_unprot*100)/country_area
-    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2018_lc_unprot_perc).toFixed(3);
-    var _2018_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
-    var _2023_lc_prot_perc = (res[0]._2018_lc_prot*100)/country_area
-    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2018_lc_prot_perc).toFixed(3);
+        var _2019_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
+    var _2023_lc_unprot_perc = (res[0]._2019_lc_unprot*100)/country_area
+    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2019_lc_unprot_perc).toFixed(3);
+    var _2019_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
+    var _2023_lc_prot_perc = (res[0]._2019_lc_prot*100)/country_area
+    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2019_lc_prot_perc).toFixed(3);
 
     $('#landcover_40').highcharts({
       chart: {
-        type: 'columnpyramid',
+        type: 'column',
         backgroundColor: null,
 
     },
@@ -1326,7 +1326,7 @@ $.ajax({
     },
 
       title: {
-        text: 'Land cover dynamics ('+ res[0].lc_class_1+')',
+        text: 'Land cover dynamics ('+ res[0].copernicus_lc_class+')',
         style: {
           color: '#a1aeb0',
           font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
@@ -1335,7 +1335,7 @@ $.ajax({
         
     },
     xAxis: {
-        categories: ['2018', '2023'],
+        categories: ['2019', '2023'],
         gridLineColor: '#404040',
         
         labels: {
@@ -1353,7 +1353,7 @@ $.ajax({
         stackLabels: {
           enabled: true,
           style: {
-            fontSize: 23,
+            fontSize: 0,
               color: 'white',
               textOutline: 'none'
           }
@@ -1361,7 +1361,7 @@ $.ajax({
     },
 
     plotOptions: {
-      columnpyramid: {
+      column: {
           stacking: 'normal',
           dataLabels: {
               enabled: true,
@@ -1387,19 +1387,19 @@ $.ajax({
           'color':'white',
           'font-size': '20px'
       },
-      text: '<p><b>'+ res[0].lc_class_1+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of wich '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(unprot_normal_variation_perc)+' % while <b>inside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(prot_normal_variation_perc)+' % between 2018 and 2023 with respect to the country area.</p>'
+      text: '<p><b>'+ res[0].copernicus_lc_class+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of which '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(res[0].perc_lc_unprot).toFixed(2) +' % while <b>inside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(res[0].perc_lc_prot).toFixed(2)+' % between 2019 and 2023.</p>'
     },
 
     series: [{
         
         name: ' Unprotected',
         color: '#788864',
-        data: [parseFloat(res[0]._2018_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
+        data: [parseFloat(res[0]._2019_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
     }, {
         
         name: 'Protected',
         color: '#4d9221',
-        data: [parseFloat(res[0]._2018_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
+        data: [parseFloat(res[0]._2019_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
 
         
 
@@ -1423,19 +1423,19 @@ $.ajax({
     }else {
     color2 = '#e77323'
     }
-    var _2018_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
-    var _2023_lc_unprot_perc = (res[0]._2018_lc_unprot*100)/country_area
-    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2018_lc_unprot_perc).toFixed(3);
-    var _2018_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
-    var _2023_lc_prot_perc = (res[0]._2018_lc_prot*100)/country_area
-    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2018_lc_prot_perc).toFixed(3);
+    var _2019_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
+    var _2023_lc_unprot_perc = (res[0]._2019_lc_unprot*100)/country_area
+    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2019_lc_unprot_perc).toFixed(3);
+    var _2019_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
+    var _2023_lc_prot_perc = (res[0]._2019_lc_prot*100)/country_area
+    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2019_lc_prot_perc).toFixed(3);
 
     console.log(_2023_lc_unprot_perc)
     console.log(_2023_lc_prot_perc)
     
     $('#landcover_50').highcharts({
       chart: {
-        type: 'columnpyramid',
+        type: 'column',
         backgroundColor: null,
 
     },
@@ -1454,7 +1454,7 @@ $.ajax({
     },
 
       title: {
-        text: 'Land cover dynamics ('+ res[0].lc_class_1+')',
+        text: 'Land cover dynamics ('+ res[0].copernicus_lc_class+')',
         style: {
           color: '#a1aeb0',
           font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
@@ -1463,7 +1463,7 @@ $.ajax({
         
     },
     xAxis: {
-        categories: ['2018', '2023'],
+        categories: ['2019', '2023'],
         gridLineColor: '#404040',
         
         labels: {
@@ -1481,7 +1481,7 @@ $.ajax({
         stackLabels: {
           enabled: true,
           style: {
-            fontSize: 23,
+            fontSize: 0,
               color: 'white',
               textOutline: 'none'
           }
@@ -1489,7 +1489,7 @@ $.ajax({
     },
 
     plotOptions: {
-      columnpyramid: {
+      column: {
           stacking: 'normal',
           dataLabels: {
               enabled: true,
@@ -1515,19 +1515,19 @@ $.ajax({
           'color':'white',
           'font-size': '20px'
       },
-      text: '<p><b>'+ res[0].lc_class_1+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of wich '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(unprot_normal_variation_perc)+' % while <b>inside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(prot_normal_variation_perc)+' % between 2018 and 2023 with respect to the country area.</p>'
+      text: '<p><b>'+ res[0].copernicus_lc_class+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of which '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(res[0].perc_lc_unprot).toFixed(2) +' % while <b>inside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(res[0].perc_lc_prot).toFixed(2)+' % between 2019 and 2023.</p>'
     },
 
     series: [{
         
         name: ' Unprotected',
         color: '#788864',
-        data: [parseFloat(res[0]._2018_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
+        data: [parseFloat(res[0]._2019_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
     }, {
         
         name: 'Protected',
         color: '#4d9221',
-        data: [parseFloat(res[0]._2018_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
+        data: [parseFloat(res[0]._2019_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
 
         
 
@@ -1551,16 +1551,16 @@ $.ajax({
     }else {
     color2 = '#e77323'
     }
-    var _2018_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
-    var _2023_lc_unprot_perc = (res[0]._2018_lc_unprot*100)/country_area
-    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2018_lc_unprot_perc).toFixed(3);
-    var _2018_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
-    var _2023_lc_prot_perc = (res[0]._2018_lc_prot*100)/country_area
-    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2018_lc_prot_perc).toFixed(3);
+    var _2019_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
+    var _2023_lc_unprot_perc = (res[0]._2019_lc_unprot*100)/country_area
+    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2019_lc_unprot_perc).toFixed(3);
+    var _2019_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
+    var _2023_lc_prot_perc = (res[0]._2019_lc_prot*100)/country_area
+    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2019_lc_prot_perc).toFixed(3);
     
     $('#landcover_60').highcharts({
       chart: {
-        type: 'columnpyramid',
+        type: 'column',
         backgroundColor: null,
 
     },
@@ -1579,7 +1579,7 @@ $.ajax({
     },
 
       title: {
-        text: 'Land cover dynamics ('+ res[0].lc_class_1+')',
+        text: 'Land cover dynamics ('+ res[0].copernicus_lc_class+')',
         style: {
           color: '#a1aeb0',
           font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
@@ -1588,7 +1588,7 @@ $.ajax({
         
     },
     xAxis: {
-        categories: ['2018', '2023'],
+        categories: ['2019', '2023'],
         gridLineColor: '#404040',
         
         labels: {
@@ -1606,7 +1606,7 @@ $.ajax({
         stackLabels: {
           enabled: true,
           style: {
-            fontSize: 23,
+            fontSize: 0,
               color: 'white',
               textOutline: 'none'
           }
@@ -1614,7 +1614,7 @@ $.ajax({
     },
 
     plotOptions: {
-      columnpyramid: {
+      column: {
           stacking: 'normal',
           dataLabels: {
               enabled: true,
@@ -1640,19 +1640,19 @@ $.ajax({
           'color':'white',
           'font-size': '20px'
       },
-      text: '<p><b>'+ res[0].lc_class_1+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of wich '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(unprot_normal_variation_perc)+' % while <b>inside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(prot_normal_variation_perc)+' % between 2018 and 2023 with respect to the country area.</p>'
+      text: '<p><b>'+ res[0].copernicus_lc_class+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of which '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(res[0].perc_lc_unprot).toFixed(2) +' % while <b>inside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(res[0].perc_lc_prot).toFixed(2)+' % between 2019 and 2023.</p>'
     },
 
     series: [{
         
         name: ' Unprotected',
         color: '#788864',
-        data: [parseFloat(res[0]._2018_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
+        data: [parseFloat(res[0]._2019_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
     }, {
         
         name: 'Protected',
         color: '#4d9221',
-        data: [parseFloat(res[0]._2018_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
+        data: [parseFloat(res[0]._2019_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
 
         
 
@@ -1676,16 +1676,16 @@ $.ajax({
     }else {
     color2 = '#e77323'
     }
-    var _2018_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
-    var _2023_lc_unprot_perc = (res[0]._2018_lc_unprot*100)/country_area
-    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2018_lc_unprot_perc).toFixed(3);
-    var _2018_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
-    var _2023_lc_prot_perc = (res[0]._2018_lc_prot*100)/country_area
-    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2018_lc_prot_perc).toFixed(3);
+    var _2019_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
+    var _2023_lc_unprot_perc = (res[0]._2019_lc_unprot*100)/country_area
+    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2019_lc_unprot_perc).toFixed(3);
+    var _2019_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
+    var _2023_lc_prot_perc = (res[0]._2019_lc_prot*100)/country_area
+    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2019_lc_prot_perc).toFixed(3);
     
     $('#landcover_80').highcharts({
       chart: {
-        type: 'columnpyramid',
+        type: 'column',
         backgroundColor: null,
 
     },
@@ -1704,7 +1704,7 @@ $.ajax({
     },
 
       title: {
-        text: 'Land cover dynamics ('+ res[0].lc_class_1+')',
+        text: 'Land cover dynamics ('+ res[0].copernicus_lc_class+')',
         style: {
           color: '#a1aeb0',
           font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
@@ -1713,7 +1713,7 @@ $.ajax({
         
     },
     xAxis: {
-        categories: ['2018', '2023'],
+        categories: ['2019', '2023'],
         gridLineColor: '#404040',
         
         labels: {
@@ -1731,7 +1731,7 @@ $.ajax({
         stackLabels: {
           enabled: true,
           style: {
-            fontSize: 23,
+            fontSize: 0,
               color: 'white',
               textOutline: 'none'
           }
@@ -1739,7 +1739,7 @@ $.ajax({
     },
 
     plotOptions: {
-      columnpyramid: {
+      column: {
           stacking: 'normal',
           dataLabels: {
               enabled: true,
@@ -1765,19 +1765,19 @@ $.ajax({
           'color':'white',
           'font-size': '20px'
       },
-      text: '<p><b>'+ res[0].lc_class_1+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of wich '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(unprot_normal_variation_perc)+' % while <b>inside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(prot_normal_variation_perc)+' % between 2018 and 2023 with respect to the country area.</p>'
+      text: '<p><b>'+ res[0].copernicus_lc_class+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of which '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(res[0].perc_lc_unprot).toFixed(2) +' % while <b>inside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(res[0].perc_lc_prot).toFixed(2)+' % between 2019 and 2023.</p>'
     },
 
     series: [{
         
         name: ' Unprotected',
         color: '#788864',
-        data: [parseFloat(res[0]._2018_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
+        data: [parseFloat(res[0]._2019_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
     }, {
         
         name: 'Protected',
         color: '#4d9221',
-        data: [parseFloat(res[0]._2018_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
+        data: [parseFloat(res[0]._2019_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
 
         
 
@@ -1802,16 +1802,16 @@ $.ajax({
     }else {
     color2 = '#e77323'
     }
-    var _2018_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
-    var _2023_lc_unprot_perc = (res[0]._2018_lc_unprot*100)/country_area
-    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2018_lc_unprot_perc).toFixed(3);
-    var _2018_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
-    var _2023_lc_prot_perc = (res[0]._2018_lc_prot*100)/country_area
-    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2018_lc_prot_perc).toFixed(3);
+    var _2019_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
+    var _2023_lc_unprot_perc = (res[0]._2019_lc_unprot*100)/country_area
+    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2019_lc_unprot_perc).toFixed(3);
+    var _2019_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
+    var _2023_lc_prot_perc = (res[0]._2019_lc_prot*100)/country_area
+    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2019_lc_prot_perc).toFixed(3);
     
     $('#landcover_90').highcharts({
       chart: {
-        type: 'columnpyramid',
+        type: 'column',
         backgroundColor: null,
 
     },
@@ -1830,7 +1830,7 @@ $.ajax({
     },
 
       title: {
-        text: 'Land cover dynamics ('+ res[0].lc_class_1+')',
+        text: 'Land cover dynamics ('+ res[0].copernicus_lc_class+')',
         style: {
           color: '#a1aeb0',
           font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
@@ -1839,7 +1839,7 @@ $.ajax({
         
     },
     xAxis: {
-        categories: ['2018', '2023'],
+        categories: ['2019', '2023'],
         gridLineColor: '#404040',
         
         labels: {
@@ -1857,7 +1857,7 @@ $.ajax({
         stackLabels: {
           enabled: true,
           style: {
-            fontSize: 23,
+            fontSize: 0,
               color: 'white',
               textOutline: 'none'
           }
@@ -1865,7 +1865,7 @@ $.ajax({
     },
 
     plotOptions: {
-      columnpyramid: {
+      column: {
           stacking: 'normal',
           dataLabels: {
               enabled: true,
@@ -1891,19 +1891,19 @@ $.ajax({
           'color':'white',
           'font-size': '20px'
       },
-      text: '<p><b>'+ res[0].lc_class_1+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of wich '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(unprot_normal_variation_perc)+' % while <b>inside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(prot_normal_variation_perc)+' % between 2018 and 2023 with respect to the country area.</p>'
+      text: '<p><b>'+ res[0].copernicus_lc_class+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of which '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(res[0].perc_lc_unprot).toFixed(2) +' % while <b>inside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(res[0].perc_lc_prot).toFixed(2)+' % between 2019 and 2023.</p>'
     },
 
     series: [{
         
         name: ' Unprotected',
         color: '#788864',
-        data: [parseFloat(res[0]._2018_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
+        data: [parseFloat(res[0]._2019_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
     }, {
         
         name: 'Protected',
         color: '#4d9221',
-        data: [parseFloat(res[0]._2018_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
+        data: [parseFloat(res[0]._2019_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
 
         
 
@@ -1928,16 +1928,16 @@ $.ajax({
     color2 = '#e77323'
     }
 
-    var _2018_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
-    var _2023_lc_unprot_perc = (res[0]._2018_lc_unprot*100)/country_area
-    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2018_lc_unprot_perc).toFixed(3);
-    var _2018_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
-    var _2023_lc_prot_perc = (res[0]._2018_lc_prot*100)/country_area
-    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2018_lc_prot_perc).toFixed(3);
+    var _2019_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
+    var _2023_lc_unprot_perc = (res[0]._2019_lc_unprot*100)/country_area
+    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2019_lc_unprot_perc).toFixed(3);
+    var _2019_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
+    var _2023_lc_prot_perc = (res[0]._2019_lc_prot*100)/country_area
+    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2019_lc_prot_perc).toFixed(3);
 
     $('#landcover_112').highcharts({
       chart: {
-        type: 'columnpyramid',
+        type: 'column',
         backgroundColor: null,
 
     },
@@ -1956,7 +1956,7 @@ $.ajax({
     },
 
       title: {
-        text: 'Land cover dynamics ('+ res[0].lc_class_1+')',
+        text: 'Land cover dynamics ('+ res[0].copernicus_lc_class+')',
         style: {
           color: '#a1aeb0',
           font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
@@ -1965,7 +1965,7 @@ $.ajax({
         
     },
     xAxis: {
-        categories: ['2018', '2023'],
+        categories: ['2019', '2023'],
         gridLineColor: '#404040',
         
         labels: {
@@ -1983,7 +1983,7 @@ $.ajax({
         stackLabels: {
           enabled: true,
           style: {
-            fontSize: 23,
+            fontSize: 0,
               color: 'white',
               textOutline: 'none'
           }
@@ -1991,7 +1991,7 @@ $.ajax({
     },
 
     plotOptions: {
-      columnpyramid: {
+      column: {
           stacking: 'normal',
           dataLabels: {
               enabled: true,
@@ -2017,19 +2017,19 @@ $.ajax({
           'color':'white',
           'font-size': '20px'
       },
-      text: '<p><b>'+ res[0].lc_class_1+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of wich '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(unprot_normal_variation_perc)+' % while <b>inside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(prot_normal_variation_perc)+' % between 2018 and 2023 with respect to the country area.</p>'
+      text: '<p><b>'+ res[0].copernicus_lc_class+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of which '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(res[0].perc_lc_unprot).toFixed(2) +' % while <b>inside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(res[0].perc_lc_prot).toFixed(2)+' % between 2019 and 2023.</p>'
     },
 
     series: [{
         
         name: ' Unprotected',
         color: '#788864',
-        data: [parseFloat(res[0]._2018_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
+        data: [parseFloat(res[0]._2019_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
     }, {
         
         name: 'Protected',
         color: '#4d9221',
-        data: [parseFloat(res[0]._2018_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
+        data: [parseFloat(res[0]._2019_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
 
         
 
@@ -2055,16 +2055,16 @@ $.ajax({
     color2 = '#e77323'
     }
 
-        var _2018_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
-    var _2023_lc_unprot_perc = (res[0]._2018_lc_unprot*100)/country_area
-    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2018_lc_unprot_perc).toFixed(3);
-    var _2018_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
-    var _2023_lc_prot_perc = (res[0]._2018_lc_prot*100)/country_area
-    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2018_lc_prot_perc).toFixed(3);
+        var _2019_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
+    var _2023_lc_unprot_perc = (res[0]._2019_lc_unprot*100)/country_area
+    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2019_lc_unprot_perc).toFixed(3);
+    var _2019_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
+    var _2023_lc_prot_perc = (res[0]._2019_lc_prot*100)/country_area
+    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2019_lc_prot_perc).toFixed(3);
 
     $('#landcover_114').highcharts({
       chart: {
-        type: 'columnpyramid',
+        type: 'column',
         backgroundColor: null,
 
     },
@@ -2083,7 +2083,7 @@ $.ajax({
     },
 
       title: {
-        text: 'Land cover dynamics ('+ res[0].lc_class_1+')',
+        text: 'Land cover dynamics ('+ res[0].copernicus_lc_class+')',
         style: {
           color: '#a1aeb0',
           font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
@@ -2092,7 +2092,7 @@ $.ajax({
         
     },
     xAxis: {
-        categories: ['2018', '2023'],
+        categories: ['2019', '2023'],
         gridLineColor: '#404040',
         
         labels: {
@@ -2110,7 +2110,7 @@ $.ajax({
         stackLabels: {
           enabled: true,
           style: {
-            fontSize: 23,
+            fontSize: 0,
               color: 'white',
               textOutline: 'none'
           }
@@ -2118,7 +2118,7 @@ $.ajax({
     },
 
     plotOptions: {
-      columnpyramid: {
+      column: {
           stacking: 'normal',
           dataLabels: {
               enabled: true,
@@ -2144,19 +2144,19 @@ $.ajax({
           'color':'white',
           'font-size': '20px'
       },
-      text: '<p><b>'+ res[0].lc_class_1+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of wich '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(unprot_normal_variation_perc)+' % while <b>inside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(prot_normal_variation_perc)+' % between 2018 and 2023 with respect to the country area.</p>'
+      text: '<p><b>'+ res[0].copernicus_lc_class+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of which '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(res[0].perc_lc_unprot).toFixed(2) +' % while <b>inside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(res[0].perc_lc_prot).toFixed(2)+' % between 2019 and 2023.</p>'
     },
 
     series: [{
         
         name: ' Unprotected',
         color: '#788864',
-        data: [parseFloat(res[0]._2018_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
+        data: [parseFloat(res[0]._2019_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
     }, {
         
         name: 'Protected',
         color: '#4d9221',
-        data: [parseFloat(res[0]._2018_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
+        data: [parseFloat(res[0]._2019_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
 
         
 
@@ -2183,15 +2183,15 @@ $.ajax({
     color2 = '#e77323'
     }
 
-        var _2018_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
-    var _2023_lc_unprot_perc = (res[0]._2018_lc_unprot*100)/country_area
-    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2018_lc_unprot_perc).toFixed(3);
-    var _2018_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
-    var _2023_lc_prot_perc = (res[0]._2018_lc_prot*100)/country_area
-    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2018_lc_prot_perc).toFixed(3);
+        var _2019_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
+    var _2023_lc_unprot_perc = (res[0]._2019_lc_unprot*100)/country_area
+    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2019_lc_unprot_perc).toFixed(3);
+    var _2019_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
+    var _2023_lc_prot_perc = (res[0]._2019_lc_prot*100)/country_area
+    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2019_lc_prot_perc).toFixed(3);
     $('#landcover_116').highcharts({
       chart: {
-        type: 'columnpyramid',
+        type: 'column',
         backgroundColor: null,
 
     },
@@ -2210,7 +2210,7 @@ $.ajax({
     },
 
       title: {
-        text: 'Land cover dynamics ('+ res[0].lc_class_1+')',
+        text: 'Land cover dynamics ('+ res[0].copernicus_lc_class+')',
         style: {
           color: '#a1aeb0',
           font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
@@ -2219,7 +2219,7 @@ $.ajax({
         
     },
     xAxis: {
-        categories: ['2018', '2023'],
+        categories: ['2019', '2023'],
         gridLineColor: '#404040',
         
         labels: {
@@ -2237,7 +2237,7 @@ $.ajax({
         stackLabels: {
           enabled: true,
           style: {
-            fontSize: 23,
+            fontSize: 0,
               color: 'white',
               textOutline: 'none'
           }
@@ -2245,7 +2245,7 @@ $.ajax({
     },
 
     plotOptions: {
-      columnpyramid: {
+      column: {
           stacking: 'normal',
           dataLabels: {
               enabled: true,
@@ -2271,19 +2271,19 @@ $.ajax({
           'color':'white',
           'font-size': '20px'
       },
-      text: '<p><b>'+ res[0].lc_class_1+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of wich '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(unprot_normal_variation_perc)+' % while <b>inside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(prot_normal_variation_perc)+' % between 2018 and 2023 with respect to the country area.</p>'
+      text: '<p><b>'+ res[0].copernicus_lc_class+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of which '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(res[0].perc_lc_unprot).toFixed(2) +' % while <b>inside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(res[0].perc_lc_prot).toFixed(2)+' % between 2019 and 2023.</p>'
     },
 
     series: [{
         
         name: ' Unprotected',
         color: '#788864',
-        data: [parseFloat(res[0]._2018_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
+        data: [parseFloat(res[0]._2019_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
     }, {
         
         name: 'Protected',
         color: '#4d9221',
-        data: [parseFloat(res[0]._2018_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
+        data: [parseFloat(res[0]._2019_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
 
         
 
@@ -2309,15 +2309,15 @@ $.ajax({
     color2 = '#e77323'
     }
 
-    var _2018_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
-    var _2023_lc_unprot_perc = (res[0]._2018_lc_unprot*100)/country_area
-    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2018_lc_unprot_perc).toFixed(3);
-    var _2018_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
-    var _2023_lc_prot_perc = (res[0]._2018_lc_prot*100)/country_area
-    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2018_lc_prot_perc).toFixed(3);
+    var _2019_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
+    var _2023_lc_unprot_perc = (res[0]._2019_lc_unprot*100)/country_area
+    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2019_lc_unprot_perc).toFixed(3);
+    var _2019_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
+    var _2023_lc_prot_perc = (res[0]._2019_lc_prot*100)/country_area
+    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2019_lc_prot_perc).toFixed(3);
     $('#landcover_122').highcharts({
       chart: {
-        type: 'columnpyramid',
+        type: 'column',
         backgroundColor: null,
 
     },
@@ -2336,7 +2336,7 @@ $.ajax({
     },
 
       title: {
-        text: 'Land cover dynamics ('+ res[0].lc_class_1+')',
+        text: 'Land cover dynamics ('+ res[0].copernicus_lc_class+')',
         style: {
           color: '#a1aeb0',
           font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
@@ -2345,7 +2345,7 @@ $.ajax({
         
     },
     xAxis: {
-        categories: ['2018', '2023'],
+        categories: ['2019', '2023'],
         gridLineColor: '#404040',
         
         labels: {
@@ -2363,7 +2363,7 @@ $.ajax({
         stackLabels: {
           enabled: true,
           style: {
-            fontSize: 23,
+            fontSize: 0,
               color: 'white',
               textOutline: 'none'
           }
@@ -2371,7 +2371,7 @@ $.ajax({
     },
 
     plotOptions: {
-      columnpyramid: {
+      column: {
           stacking: 'normal',
           dataLabels: {
               enabled: true,
@@ -2397,19 +2397,19 @@ $.ajax({
           'color':'white',
           'font-size': '20px'
       },
-      text: '<p><b>'+ res[0].lc_class_1+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of wich '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(unprot_normal_variation_perc)+' % while <b>inside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(prot_normal_variation_perc)+' % between 2018 and 2023 with respect to the country area.</p>'
+      text: '<p><b>'+ res[0].copernicus_lc_class+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of which '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(res[0].perc_lc_unprot).toFixed(2) +' % while <b>inside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(res[0].perc_lc_prot).toFixed(2)+' % between 2019 and 2023.</p>'
     },
 
     series: [{
         
         name: ' Unprotected',
         color: '#788864',
-        data: [parseFloat(res[0]._2018_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
+        data: [parseFloat(res[0]._2019_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
     }, {
         
         name: 'Protected',
         color: '#4d9221',
-        data: [parseFloat(res[0]._2018_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
+        data: [parseFloat(res[0]._2019_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
 
         
 
@@ -2433,16 +2433,16 @@ $.ajax({
     }else {
     color2 = '#e77323'
     }
-    var _2018_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
-    var _2023_lc_unprot_perc = (res[0]._2018_lc_unprot*100)/country_area
-    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2018_lc_unprot_perc).toFixed(3);
-    var _2018_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
-    var _2023_lc_prot_perc = (res[0]._2018_lc_prot*100)/country_area
-    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2018_lc_prot_perc).toFixed(3);
+    var _2019_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
+    var _2023_lc_unprot_perc = (res[0]._2019_lc_unprot*100)/country_area
+    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2019_lc_unprot_perc).toFixed(3);
+    var _2019_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
+    var _2023_lc_prot_perc = (res[0]._2019_lc_prot*100)/country_area
+    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2019_lc_prot_perc).toFixed(3);
     
     $('#landcover_124').highcharts({
       chart: {
-        type: 'columnpyramid',
+        type: 'column',
         backgroundColor: null,
 
     },
@@ -2461,7 +2461,7 @@ $.ajax({
     },
 
       title: {
-        text: 'Land cover dynamics ('+ res[0].lc_class_1+')',
+        text: 'Land cover dynamics ('+ res[0].copernicus_lc_class+')',
         style: {
           color: '#a1aeb0',
           font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
@@ -2470,7 +2470,7 @@ $.ajax({
         
     },
     xAxis: {
-        categories: ['2018', '2023'],
+        categories: ['2019', '2023'],
         gridLineColor: '#404040',
         
         labels: {
@@ -2488,7 +2488,7 @@ $.ajax({
         stackLabels: {
           enabled: true,
           style: {
-            fontSize: 23,
+            fontSize: 0,
               color: 'white',
               textOutline: 'none'
           }
@@ -2496,7 +2496,7 @@ $.ajax({
     },
 
     plotOptions: {
-      columnpyramid: {
+      column: {
           stacking: 'normal',
           dataLabels: {
               enabled: true,
@@ -2522,19 +2522,19 @@ $.ajax({
           'color':'white',
           'font-size': '20px'
       },
-      text: '<p><b>'+ res[0].lc_class_1+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of wich '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(unprot_normal_variation_perc)+' % while <b>inside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(prot_normal_variation_perc)+' % between 2018 and 2023 with respect to the country area.</p>'
+      text: '<p><b>'+ res[0].copernicus_lc_class+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of which '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(res[0].perc_lc_unprot).toFixed(2) +' % while <b>inside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(res[0].perc_lc_prot).toFixed(2)+' % between 2019 and 2023.</p>'
     },
 
     series: [{
         
         name: ' Unprotected',
         color: '#788864',
-        data: [parseFloat(res[0]._2018_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
+        data: [parseFloat(res[0]._2019_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
     }, {
         
         name: 'Protected',
         color: '#4d9221',
-        data: [parseFloat(res[0]._2018_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
+        data: [parseFloat(res[0]._2019_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
 
         
 
@@ -2560,16 +2560,16 @@ $.ajax({
     color2 = '#e77323'
     }
 
-    var _2018_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
-    var _2023_lc_unprot_perc = (res[0]._2018_lc_unprot*100)/country_area
-    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2018_lc_unprot_perc).toFixed(3);
-    var _2018_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
-    var _2023_lc_prot_perc = (res[0]._2018_lc_prot*100)/country_area
-    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2018_lc_prot_perc).toFixed(3);
+    var _2019_lc_unprot_perc = (res[0]._2023_lc_unprot*100)/country_area
+    var _2023_lc_unprot_perc = (res[0]._2019_lc_unprot*100)/country_area
+    var unprot_normal_variation_perc = Math.abs(_2023_lc_unprot_perc - _2019_lc_unprot_perc).toFixed(3);
+    var _2019_lc_prot_perc = (res[0]._2023_lc_prot*100)/country_area
+    var _2023_lc_prot_perc = (res[0]._2019_lc_prot*100)/country_area
+    var prot_normal_variation_perc = Math.abs(_2023_lc_prot_perc - _2019_lc_prot_perc).toFixed(3);
     
     $('#landcover_126').highcharts({
       chart: {
-        type: 'columnpyramid',
+        type: 'column',
         backgroundColor: null,
 
     },
@@ -2588,7 +2588,7 @@ $.ajax({
     },
 
       title: {
-        text: 'Land cover dynamics ('+ res[0].lc_class_1+')',
+        text: 'Land cover dynamics ('+ res[0].copernicus_lc_class+')',
         style: {
           color: '#a1aeb0',
           font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
@@ -2597,7 +2597,7 @@ $.ajax({
         
     },
     xAxis: {
-        categories: ['2018', '2023'],
+        categories: ['2019', '2023'],
         gridLineColor: '#404040',
         
         labels: {
@@ -2615,7 +2615,7 @@ $.ajax({
         stackLabels: {
           enabled: true,
           style: {
-            fontSize: 23,
+            fontSize: 0,
               color: 'white',
               textOutline: 'none'
           }
@@ -2623,7 +2623,7 @@ $.ajax({
     },
 
     plotOptions: {
-      columnpyramid: {
+      column: {
           stacking: 'normal',
           dataLabels: {
               enabled: true,
@@ -2649,19 +2649,19 @@ $.ajax({
           'color':'white',
           'font-size': '20px'
       },
-      text: '<p><b>'+ res[0].lc_class_1+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of wich '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(unprot_normal_variation_perc)+' % while <b>inside protected areas</b> '+ (res[0].lc_class_1).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(prot_normal_variation_perc)+' % between 2018 and 2023 with respect to the country area.</p>'
+      text: '<p><b>'+ res[0].copernicus_lc_class+'</b> coverage represents '+(_2023_lc_unprot_perc+_2023_lc_prot_perc).toFixed(2)+' % of the country area of which '+_2023_lc_prot_perc.toFixed(2)+' % is located within Protected Area boundaries as of 2023.  <b>Outside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color1+';">'+ res[0].trend_lc_unprot+'</span> by '+Math.abs(res[0].perc_lc_unprot).toFixed(2) +' % while <b>inside protected areas</b> '+ (res[0].copernicus_lc_class).toLowerCase()+' has <span style="color:'+color2+';">'+res[0].trend_lc_prot+' </span> by '+Math.abs(res[0].perc_lc_prot).toFixed(2)+' % between 2019 and 2023.</p>'
     },
 
     series: [{
         
         name: ' Unprotected',
         color: '#788864',
-        data: [parseFloat(res[0]._2018_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
+        data: [parseFloat(res[0]._2019_lc_unprot),parseFloat(res[0]._2023_lc_unprot)],
     }, {
         
         name: 'Protected',
         color: '#4d9221',
-        data: [parseFloat(res[0]._2018_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
+        data: [parseFloat(res[0]._2019_lc_prot),parseFloat(res[0]._2023_lc_prot)],}]
 
         
 
