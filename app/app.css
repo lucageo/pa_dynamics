@@ -1232,7 +1232,14 @@ solid #33373d;
     margin-top: 10px;
     color: #6b7477;
   }
-
+i{
+  font-size: 15px;
+  text-align: justify!important;
+  font-family: sans-serif;
+  font-style: initial;
+  color: #c5cad0;
+  line-height: 1.8;
+}
   #pan {
 
     background: #1f2328;

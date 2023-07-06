@@ -842,73 +842,6 @@ map.on('click', 'protection_trends_acp', function (e) {
         
 
 
-        $('#protection').highcharts({
-          chart: {
-            backgroundColor: null,
-            type: 'line',
-            fontFamily: 'Helvetica',
-           
-        },
-        legend: {
-          itemStyle: {
-
-             color: '#A0A0A0'
-          },
-          itemHoverStyle: {
-             color: '#000'
-          },
-          itemHiddenStyle: {
-             color: '#fff'
-          }
-       
-    },
-          title: {
-            text: 'Protection Dynamics',
-            style: {
-              color: '#a1aeb0',
-              font: 'bold 20px "Source Sans Pro", Helvetica Neue , sans-serif',
-              },
-            align: 'left'
-        },
-        xAxis: {
-            categories: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
-            lineColor: '#7a8386',
-          tickColor: '#7a8386',
-          labels: {
-            style: {
-                color: '#7a8386'
-            },
-          }
-        },
-        yAxis: {
-          visible: false,
-          labels: {
-            style: {
-                color: '#7a8386'
-            },
-          },
-          lineColor: '#7a8386',
-          tickColor: '#7a8386',
-        title: {
-          text: '%'
-        },
-        
-        
-      },
-        series: [{
-            data: [parseFloat(d[0]._2014_prot_perc), parseFloat(d[0]._2015_prot_perc),parseFloat(d[0]._2015_prot_perc),parseFloat(d[0]._2017_prot_perc),parseFloat(d[0]._2018_prot_perc),parseFloat(d[0]._2019_prot_perc),parseFloat(d[0]._2020_prot_perc),parseFloat(d[0]._2021_prot_perc),parseFloat(d[0]._2022_prot_perc),parseFloat(d[0]._2023_prot_perc)],
-           
-            color: '#8fbf4b',
-            name: 'Terrestrial Protection (%)'
-        }, {
-            data: [parseFloat(d[0]._2014_prot_mar_perc), parseFloat(d[0]._2015_prot_mar_perc),parseFloat(d[0]._2015_prot_mar_perc),parseFloat(d[0]._2017_prot_mar_perc),parseFloat(d[0]._2018_prot_mar_perc),parseFloat(d[0]._2019_prot_mar_perc),parseFloat(d[0]._2020_prot_mar_perc),parseFloat(d[0]._2021_prot_mar_perc),parseFloat(d[0]._2022_prot_mar_perc),parseFloat(d[0]._2023_prot_mar_perc)],
-            
-            color: '#8eb4b1',
-            name: 'Marine Protection (%)'
-        }],
-
-      });
-
 /// SECOND CHART
 
       $('#pan').highcharts({
@@ -932,12 +865,12 @@ map.on('click', 'protection_trends_acp', function (e) {
   },
     
         title: {
-          text: 'Evolution of the number of Protected Areas',
+          text: 'Number of Protected Areas and Conserved Areas collected in the WDPA',
           style: {
             color: '#a1aeb0',
-            font: 'bold 20px "Source Sans Pro", Helvetica Neue , sans-serif',
+            font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
             },
-          align: 'left'
+          align: 'center'
           
       },
       xAxis: {
@@ -2678,6 +2611,946 @@ $.ajax({
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var api_trend_tmf =  "https://api.biopama.org/api/protection_level/function/api_tmf_time_series/iso3="+e.features[0].properties.iso3_digit
+$.ajax({
+  url: api_trend_tmf,
+  dataType: 'json',
+  success: function(d) {
+
+
+
+  var res = d.filter(obj=> obj.protection == "protected");
+
+
+
+    $('#tmf_deforestation_stack').highcharts({
+      chart: {
+        type: 'column',
+        backgroundColor: null,
+
+    },
+    legend: {
+      itemStyle: {
+
+          color: '#A0A0A0'
+      },
+      itemHoverStyle: {
+          color: '#000'
+      },
+      itemHiddenStyle: {
+          color: '#fff'
+      }
+
+    },
+
+      title: {
+        text: 'Protected Tropical Moist Forest Degradation and Deforestation',
+        style: {
+          color: '#a1aeb0',
+          font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
+          },
+        align: 'center'
+        
+    },
+    xAxis: {
+        categories: ['2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021'],
+        gridLineColor: '#404040',
+        
+        labels: {
+          style: {
+              color: '#7a8386'
+          },
+        }
+    },
+    yAxis: {
+      visible: true,
+      gridLineColor: '#404040',
+        title: {
+            text: 'SQKM '
+        },
+        stackLabels: {
+          enabled: true,
+          style: {
+            fontSize: 10,
+              color: 'white',
+              textOutline: 'none'
+          },
+          formatter: function() {
+            return  Highcharts.numberFormat(this.total, 2, ',');
+        }
+      }
+    },
+
+    plotOptions: {
+      column: {
+          stacking: 'normal',
+          dataLabels: {
+              enabled: true,
+              color: 'white',
+          
+              style: {
+                textOutline: 'none',
+                fontSize: 0,
+              }
+          }
+      },
+      series: {
+                  
+        borderWidth: 0
+    }
+    },
+
+    caption: {
+      verticalAlign: 'bottom',
+      useHTML: true,
+      style: {
+          'padding-top': '10px',
+          'color':'white',
+          'font-size': '20px'
+      },
+      text: '<p><b>'
+    },
+
+    series: [{
+        
+        name: 'Direct Deforestation',
+        color: '#c80a0a',
+        data: [parseFloat(res[0]._2000_directdeforestation),parseFloat(res[0]._2001_directdeforestation),parseFloat(res[0]._2002_directdeforestation),parseFloat(res[0]._2003_directdeforestation),parseFloat(res[0]._2004_directdeforestation),parseFloat(res[0]._2005_directdeforestation),parseFloat(res[0]._2006_directdeforestation),parseFloat(res[0]._2007_directdeforestation),parseFloat(res[0]._2008_directdeforestation),parseFloat(res[0]._2009_directdeforestation),parseFloat(res[0]._2010_directdeforestation),parseFloat(res[0]._2011_directdeforestation),parseFloat(res[0]._2012_directdeforestation),parseFloat(res[0]._2013_directdeforestation),parseFloat(res[0]._2014_directdeforestation),parseFloat(res[0]._2015_directdeforestation),parseFloat(res[0]._2016_directdeforestation),parseFloat(res[0]._2017_directdeforestation),parseFloat(res[0]._2018_directdeforestation),parseFloat(res[0]._2019_directdeforestation),parseFloat(res[0]._2020_directdeforestation),parseFloat(res[0]._2021_directdeforestation)],
+    }, {
+        
+        name: 'Deforestation after degradation',
+        color: '#ff6347',
+        data: [parseFloat(res[0]._2000_deforafterdegrad),parseFloat(res[0]._2001_deforafterdegrad),parseFloat(res[0]._2002_deforafterdegrad),parseFloat(res[0]._2003_deforafterdegrad),parseFloat(res[0]._2004_deforafterdegrad),parseFloat(res[0]._2005_deforafterdegrad),parseFloat(res[0]._2006_deforafterdegrad),parseFloat(res[0]._2007_deforafterdegrad),parseFloat(res[0]._2008_deforafterdegrad),parseFloat(res[0]._2009_deforafterdegrad),parseFloat(res[0]._2010_deforafterdegrad),parseFloat(res[0]._2011_deforafterdegrad),parseFloat(res[0]._2012_deforafterdegrad),parseFloat(res[0]._2013_deforafterdegrad),parseFloat(res[0]._2014_deforafterdegrad),parseFloat(res[0]._2015_deforafterdegrad),parseFloat(res[0]._2016_deforafterdegrad),parseFloat(res[0]._2017_deforafterdegrad),parseFloat(res[0]._2018_deforafterdegrad),parseFloat(res[0]._2019_deforafterdegrad),parseFloat(res[0]._2020_deforafterdegrad),parseFloat(res[0]._2021_deforafterdegrad)],
+
+      }, {
+        
+        name: 'Forest Degradation',
+        color: '#ffb400',
+        data: [parseFloat(res[0]._2000_forestdegradation),parseFloat(res[0]._2001_forestdegradation),parseFloat(res[0]._2002_forestdegradation),parseFloat(res[0]._2003_forestdegradation),parseFloat(res[0]._2004_forestdegradation),parseFloat(res[0]._2005_forestdegradation),parseFloat(res[0]._2006_forestdegradation),parseFloat(res[0]._2007_forestdegradation),parseFloat(res[0]._2008_forestdegradation),parseFloat(res[0]._2009_forestdegradation),parseFloat(res[0]._2010_forestdegradation),parseFloat(res[0]._2011_forestdegradation),parseFloat(res[0]._2012_forestdegradation),parseFloat(res[0]._2013_forestdegradation),parseFloat(res[0]._2014_forestdegradation),parseFloat(res[0]._2015_forestdegradation),parseFloat(res[0]._2016_forestdegradation),parseFloat(res[0]._2017_forestdegradation),parseFloat(res[0]._2018_forestdegradation),parseFloat(res[0]._2019_forestdegradation),parseFloat(res[0]._2020_forestdegradation),parseFloat(res[0]._2021_forestdegradation)],
+
+        }]
+        
+      });
+
+    }
+  
+
+  });
+  
+  
+  var api_trend_tmf =  "https://api.biopama.org/api/protection_level/function/api_tmf_time_series/iso3="+e.features[0].properties.iso3_digit
+  $.ajax({
+    url: api_trend_tmf,
+    dataType: 'json',
+    success: function(d) {
+  
+  
+  
+    var res = d.filter(obj=> obj.protection == "unprotected");
+  
+  
+  
+      $('#tmf_deforestation_stack_unprot').highcharts({
+        chart: {
+          type: 'column',
+          backgroundColor: null,
+  
+      },
+      legend: {
+        itemStyle: {
+  
+            color: '#A0A0A0'
+        },
+        itemHoverStyle: {
+            color: '#000'
+        },
+        itemHiddenStyle: {
+            color: '#fff'
+        }
+  
+      },
+  
+        title: {
+          text: 'Unprotected Tropical Moist Forest Degradation and Deforestation',
+          style: {
+            color: '#a1aeb0',
+            font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
+            },
+          align: 'center'
+          
+      },
+      xAxis: {
+          categories: ['2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021'],
+          gridLineColor: '#404040',
+          
+          labels: {
+            style: {
+                color: '#7a8386'
+            },
+          }
+      },
+      yAxis: {
+        visible: true,
+        gridLineColor: '#404040',
+          title: {
+              text: 'SQKM '
+          },
+          stackLabels: {
+            enabled: true,
+            style: {
+              fontSize: 10,
+                color: 'white',
+                textOutline: 'none'
+            },
+            formatter: function() {
+              return  Highcharts.numberFormat(this.total, 2, ',');
+          }
+        }
+      },
+  
+      plotOptions: {
+        column: {
+            stacking: 'normal',
+            dataLabels: {
+                enabled: true,
+                color: 'white',
+            
+                style: {
+                  textOutline: 'none',
+                  fontSize: 0,
+                }
+            }
+        },
+        series: {
+                    
+          borderWidth: 0
+      }
+      },
+  
+      caption: {
+        verticalAlign: 'bottom',
+        useHTML: true,
+        style: {
+            'padding-top': '10px',
+            'color':'white',
+            'font-size': '20px'
+        },
+        text: '<p><b>'
+      },
+  
+      series: [{
+          
+          name: 'Direct Deforestation',
+          color: '#c80a0a',
+          data: [parseFloat(res[0]._2000_directdeforestation),parseFloat(res[0]._2001_directdeforestation),parseFloat(res[0]._2002_directdeforestation),parseFloat(res[0]._2003_directdeforestation),parseFloat(res[0]._2004_directdeforestation),parseFloat(res[0]._2005_directdeforestation),parseFloat(res[0]._2006_directdeforestation),parseFloat(res[0]._2007_directdeforestation),parseFloat(res[0]._2008_directdeforestation),parseFloat(res[0]._2009_directdeforestation),parseFloat(res[0]._2010_directdeforestation),parseFloat(res[0]._2011_directdeforestation),parseFloat(res[0]._2012_directdeforestation),parseFloat(res[0]._2013_directdeforestation),parseFloat(res[0]._2014_directdeforestation),parseFloat(res[0]._2015_directdeforestation),parseFloat(res[0]._2016_directdeforestation),parseFloat(res[0]._2017_directdeforestation),parseFloat(res[0]._2018_directdeforestation),parseFloat(res[0]._2019_directdeforestation),parseFloat(res[0]._2020_directdeforestation),parseFloat(res[0]._2021_directdeforestation)],
+      }, {
+          
+          name: 'Deforestation after degradation',
+          color: '#ff6347',
+          data: [parseFloat(res[0]._2000_deforafterdegrad),parseFloat(res[0]._2001_deforafterdegrad),parseFloat(res[0]._2002_deforafterdegrad),parseFloat(res[0]._2003_deforafterdegrad),parseFloat(res[0]._2004_deforafterdegrad),parseFloat(res[0]._2005_deforafterdegrad),parseFloat(res[0]._2006_deforafterdegrad),parseFloat(res[0]._2007_deforafterdegrad),parseFloat(res[0]._2008_deforafterdegrad),parseFloat(res[0]._2009_deforafterdegrad),parseFloat(res[0]._2010_deforafterdegrad),parseFloat(res[0]._2011_deforafterdegrad),parseFloat(res[0]._2012_deforafterdegrad),parseFloat(res[0]._2013_deforafterdegrad),parseFloat(res[0]._2014_deforafterdegrad),parseFloat(res[0]._2015_deforafterdegrad),parseFloat(res[0]._2016_deforafterdegrad),parseFloat(res[0]._2017_deforafterdegrad),parseFloat(res[0]._2018_deforafterdegrad),parseFloat(res[0]._2019_deforafterdegrad),parseFloat(res[0]._2020_deforafterdegrad),parseFloat(res[0]._2021_deforafterdegrad)],
+  
+        }, {
+          
+          name: 'Forest Degradation',
+          color: '#ffb400',
+          data: [parseFloat(res[0]._2000_forestdegradation),parseFloat(res[0]._2001_forestdegradation),parseFloat(res[0]._2002_forestdegradation),parseFloat(res[0]._2003_forestdegradation),parseFloat(res[0]._2004_forestdegradation),parseFloat(res[0]._2005_forestdegradation),parseFloat(res[0]._2006_forestdegradation),parseFloat(res[0]._2007_forestdegradation),parseFloat(res[0]._2008_forestdegradation),parseFloat(res[0]._2009_forestdegradation),parseFloat(res[0]._2010_forestdegradation),parseFloat(res[0]._2011_forestdegradation),parseFloat(res[0]._2012_forestdegradation),parseFloat(res[0]._2013_forestdegradation),parseFloat(res[0]._2014_forestdegradation),parseFloat(res[0]._2015_forestdegradation),parseFloat(res[0]._2016_forestdegradation),parseFloat(res[0]._2017_forestdegradation),parseFloat(res[0]._2018_forestdegradation),parseFloat(res[0]._2019_forestdegradation),parseFloat(res[0]._2020_forestdegradation),parseFloat(res[0]._2021_forestdegradation)],
+  
+          }]
+          
+        });
+  
+      }
+    
+  
+    });
+
+    var api_trend_tmf =  "https://api.biopama.org/api/protection_level/function/api_tmf_time_series/iso3="+e.features[0].properties.iso3_digit
+    $.ajax({
+      url: api_trend_tmf,
+      dataType: 'json',
+      success: function(d) {
+    
+    
+    
+      var res = d.filter(obj=> obj.protection == "unprotected");
+      var resp = d.filter(obj=> obj.protection == "protected");
+
+      var UndisturbedUnprot1 = parseFloat(res[0]._2000_undisturbedforest)
+      var UndisturbedUnprot2 = parseFloat(res[0]._2021_undisturbedforest)
+      var UndisturbedProt1 = parseFloat(resp[0]._2000_undisturbedforest)
+      var UndisturbedProt2 = parseFloat(resp[0]._2021_undisturbedforest)
+
+      var unprotVariation = parseFloat(((UndisturbedUnprot2-UndisturbedUnprot1)/UndisturbedUnprot1)*100) 
+      var protVariation = parseFloat(((UndisturbedProt2-UndisturbedProt1)/UndisturbedProt1)*100)
+
+
+      var countrycoverage2000 = (((UndisturbedUnprot1+UndisturbedProt1)/(parseFloat(resp[0]._2021_poly_area)+parseFloat(res[0]._2021_poly_area)))*100).toFixed(2)
+      var countrycoverage2021 = (((UndisturbedUnprot2+UndisturbedProt2)/(parseFloat(resp[0]._2021_poly_area)+parseFloat(res[0]._2021_poly_area)))*100).toFixed(2)
+
+
+      var trendUndisturbUnprot = 'unknown';
+
+      if(UndisturbedUnprot1 > UndisturbedUnprot2){
+        trendUndisturbUnprot = 'decreased'
+        color1 = '#ff6347'
+      }else{
+        trendUndisturbUnprot = 'increased'
+        color1 = '#adef2a'
+      }
+
+      var trendUndisturbProt = 'unknown';
+
+      if(UndisturbedProt1 > UndisturbedProt2){
+        trendUndisturbProt = 'decreased'
+        color2 = '#ff6347'
+      }else{
+        trendUndisturbProt = 'increased'
+        color2 = '#adef2a'
+        
+      }
+    
+
+    
+
+        $('#tmf_undist_stack_unprot').highcharts({
+          chart: {
+            type: 'column',
+            backgroundColor: null,
+    
+        },
+        legend: {
+          itemStyle: {
+    
+              color: '#A0A0A0'
+          },
+          itemHoverStyle: {
+              color: '#000'
+          },
+          itemHiddenStyle: {
+              color: '#fff'
+          }
+    
+        },
+    
+          title: {
+            text: 'Undisturbed Tropical Moist Forest',
+            style: {
+              color: '#a1aeb0',
+              font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
+              },
+            align: 'center'
+            
+        },
+        xAxis: {
+            categories: ['2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021'],
+            gridLineColor: '#404040',
+            
+            labels: {
+              style: {
+                  color: '#7a8386'
+              },
+            }
+        },
+        yAxis: {
+          visible: true,
+          gridLineColor: '#404040',
+            title: {
+                text: 'SQKM '
+            },
+            stackLabels: {
+              enabled: true,
+              style: {
+                fontSize: 10,
+                  color: 'white',
+                  textOutline: 'none'
+              },
+              formatter: function() {
+                
+                return  Highcharts.numberFormat(this.total/1000, 1, ',')+" k";
+            }
+          }
+        },
+    
+        plotOptions: {
+          spline: {
+            marker: {
+                enabled: false
+            }
+        },
+          column: {
+              stacking: 'normal',
+              dataLabels: {
+                  enabled: true,
+                  color: 'white',
+              
+                  style: {
+                    textOutline: 'none',
+                    fontSize: 0,
+                  }
+              }
+          },
+          series: {
+                      
+            borderWidth: 0
+        }
+        },
+    
+        caption: {
+          verticalAlign: 'bottom',
+          useHTML: true,
+          style: {
+              'padding-top': '10px',
+              'color':'white',
+              'font-size': '15px'
+          },
+          text: '<i>Undisturbed tropical moist forest not subject to protection has <span style="color:'+color1+';"> '+trendUndisturbUnprot+' </span> by <b>'+(unprotVariation).toFixed(2)+'</b>% whereas '+
+                'undisturbed tropical moist forest subject to protection has <span style="color:'+color2+';"> '+trendUndisturbProt+' </span> by <b>'+(protVariation).toFixed(2)+'</b>%.</i>'+
+                '<i><br>Overall, in 1995, Undisturbed Tropical Moist Forest accounted for <b> '+countrycoverage2000+'</b>% of the total country area. In 2021 this proportion stood at <b> '+countrycoverage2021+'</b>%</i>'
+
+        },
+    
+        series: [{
+            
+            name: 'Unprotected',
+            color: '#7fb763',
+            
+            data: [parseFloat(res[0]._2000_undisturbedforest),parseFloat(res[0]._2001_undisturbedforest),parseFloat(res[0]._2002_undisturbedforest),parseFloat(res[0]._2003_undisturbedforest),parseFloat(res[0]._2004_undisturbedforest),parseFloat(res[0]._2005_undisturbedforest),parseFloat(res[0]._2006_undisturbedforest),parseFloat(res[0]._2007_undisturbedforest),parseFloat(res[0]._2008_undisturbedforest),parseFloat(res[0]._2009_undisturbedforest),parseFloat(res[0]._2010_undisturbedforest),parseFloat(res[0]._2011_undisturbedforest),parseFloat(res[0]._2012_undisturbedforest),parseFloat(res[0]._2013_undisturbedforest),parseFloat(res[0]._2014_undisturbedforest),parseFloat(res[0]._2015_undisturbedforest),parseFloat(res[0]._2016_undisturbedforest),parseFloat(res[0]._2017_undisturbedforest),parseFloat(res[0]._2018_undisturbedforest),parseFloat(res[0]._2019_undisturbedforest),parseFloat(res[0]._2020_undisturbedforest),parseFloat(res[0]._2021_undisturbedforest)],
+        },{
+            
+            name: 'Protected',
+            color: '#369707',
+           
+            data: [parseFloat(resp[0]._2000_undisturbedforest),parseFloat(resp[0]._2001_undisturbedforest),parseFloat(resp[0]._2002_undisturbedforest),parseFloat(resp[0]._2003_undisturbedforest),parseFloat(resp[0]._2004_undisturbedforest),parseFloat(resp[0]._2005_undisturbedforest),parseFloat(resp[0]._2006_undisturbedforest),parseFloat(resp[0]._2007_undisturbedforest),parseFloat(resp[0]._2008_undisturbedforest),parseFloat(resp[0]._2009_undisturbedforest),parseFloat(resp[0]._2010_undisturbedforest),parseFloat(resp[0]._2011_undisturbedforest),parseFloat(resp[0]._2012_undisturbedforest),parseFloat(resp[0]._2013_undisturbedforest),parseFloat(resp[0]._2014_undisturbedforest),parseFloat(resp[0]._2015_undisturbedforest),parseFloat(resp[0]._2016_undisturbedforest),parseFloat(resp[0]._2017_undisturbedforest),parseFloat(resp[0]._2018_undisturbedforest),parseFloat(resp[0]._2019_undisturbedforest),parseFloat(resp[0]._2020_undisturbedforest),parseFloat(resp[0]._2021_undisturbedforest)],
+        }]
+            
+          });
+    
+        }
+      
+    
+      });
+
+
+
+
+      var api_trend_tmf =  "https://api.biopama.org/api/burned_area/function/api_dynamics/iso3="+e.features[0].properties.iso3_digit
+      $.ajax({
+        url: api_trend_tmf,
+        dataType: 'json',
+        success: function(d) {
+      
+      
+      
+        var res = d.filter(obj=> obj.protection == "unprotected");
+        var resp = d.filter(obj=> obj.protection == "protected");
+ 
+
+ 
+        /*  
+
+
+ 
+        var UndisturbedUnprot1 = parseFloat(res[0]._2000_undisturbedforest)
+        var UndisturbedUnprot2 = parseFloat(res[0]._2021_undisturbedforest)
+        var UndisturbedProt1 = parseFloat(resp[0]._2000_undisturbedforest)
+        var UndisturbedProt2 = parseFloat(resp[0]._2021_undisturbedforest)
+  
+        var unprotVariation = parseFloat(((UndisturbedUnprot2-UndisturbedUnprot1)/UndisturbedUnprot1)*100) 
+        var protVariation = parseFloat(((UndisturbedProt2-UndisturbedProt1)/UndisturbedProt1)*100)
+  
+  
+        var countrycoverage2000 = (((UndisturbedUnprot1+UndisturbedProt1)/(parseFloat(resp[0]._2021_poly_area)+parseFloat(res[0]._2021_poly_area)))*100).toFixed(2)
+        var countrycoverage2021 = (((UndisturbedUnprot2+UndisturbedProt2)/(parseFloat(resp[0]._2021_poly_area)+parseFloat(res[0]._2021_poly_area)))*100).toFixed(2)
+  
+  
+        var trendUndisturbUnprot = 'unknown';
+  
+        if(UndisturbedUnprot1 > UndisturbedUnprot2){
+          trendUndisturbUnprot = 'decreased'
+          color1 = '#ff6347'
+        }else{
+          trendUndisturbUnprot = 'increased'
+          color1 = '#adef2a'
+        }
+  
+        var trendUndisturbProt = 'unknown';
+  
+        if(UndisturbedProt1 > UndisturbedProt2){
+          trendUndisturbProt = 'decreased'
+          color2 = '#ff6347'
+        }else{
+          trendUndisturbProt = 'increased'
+          color2 = '#adef2a'
+          
+        }
+      
+   */
+      
+  
+          $('#burned_areas').highcharts({
+            chart: {
+              type: 'column',
+              backgroundColor: null,
+      
+          },
+          legend: {
+            itemStyle: {
+      
+                color: '#A0A0A0'
+            },
+            itemHoverStyle: {
+                color: '#000'
+            },
+            itemHiddenStyle: {
+                color: '#fff'
+            }
+      
+          },
+      
+            title: {
+              text: 'Burned Areas',
+              style: {
+                color: '#a1aeb0',
+                font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
+                },
+              align: 'center'
+              
+          },
+          xAxis: {
+              categories: ['2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020'],
+              gridLineColor: '#404040',
+              
+              labels: {
+                style: {
+                    color: '#7a8386'
+                },
+              }
+          },
+          yAxis: {
+            visible: true,
+            gridLineColor: '#404040',
+              title: {
+                  text: 'SQKM '
+              },
+              stackLabels: {
+                enabled: true,
+                style: {
+                  fontSize: 10,
+                    color: 'white',
+                    textOutline: 'none'
+                },
+                formatter: function() {
+                  
+                  return  Highcharts.numberFormat(this.total/1000, 1, ',')+" k";
+              }
+            }
+          },
+      
+          plotOptions: {
+            spline: {
+              marker: {
+                  enabled: false
+              }
+          },
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true,
+                    color: 'white',
+                
+                    style: {
+                      textOutline: 'none',
+                      fontSize: 0,
+                    }
+                }
+            },
+            series: {
+                        
+              borderWidth: 0
+          }
+          },
+      
+          caption: {
+            verticalAlign: 'bottom',
+            useHTML: true,
+            style: {
+                'padding-top': '10px',
+                'color':'white',
+                'font-size': '15px'
+            },
+            text: ''
+  
+          },
+      
+          series: [{
+              
+              name: 'Unprotected',
+              color: '#c08108',
+              
+              data: [parseFloat(res[0].burned_2001),parseFloat(res[0].burned_2002),parseFloat(res[0].burned_2003),parseFloat(res[0].burned_2004),parseFloat(res[0].burned_2005),parseFloat(res[0].burned_2006),parseFloat(res[0].burned_2007),parseFloat(res[0].burned_2008),parseFloat(res[0].burned_2009),parseFloat(res[0].burned_2010),parseFloat(res[0].burned_2011),parseFloat(res[0].burned_2012),parseFloat(res[0].burned_2013),parseFloat(res[0].burned_2014),parseFloat(res[0].burned_2015),parseFloat(res[0].burned_2016),parseFloat(res[0].burned_2017),parseFloat(res[0].burned_2018),parseFloat(res[0].burned_2019),parseFloat(res[0].burned_2020)],
+          },{
+              
+              name: 'Protected',
+              color: '#f1c063',
+             
+              data: [parseFloat(resp[0].burned_2001),parseFloat(resp[0].burned_2002),parseFloat(resp[0].burned_2003),parseFloat(resp[0].burned_2004),parseFloat(resp[0].burned_2005),parseFloat(resp[0].burned_2006),parseFloat(resp[0].burned_2007),parseFloat(resp[0].burned_2008),parseFloat(resp[0].burned_2009),parseFloat(resp[0].burned_2010),parseFloat(resp[0].burned_2011),parseFloat(resp[0].burned_2012),parseFloat(resp[0].burned_2013),parseFloat(resp[0].burned_2014),parseFloat(resp[0].burned_2015),parseFloat(resp[0].burned_2016),parseFloat(resp[0].burned_2017),parseFloat(resp[0].burned_2018),parseFloat(resp[0].burned_2019),parseFloat(resp[0].burned_2020)],
+          }]
+              
+            });
+      
+          }
+        
+      
+        });
+  
+
+
+
+
+      var api_trend_sw =  "https://api.biopama.org/api/waterdynamics/function/api_prot_unprot_surfacewater_dynamics/iso3="+e.features[0].properties.iso3_digit
+      $.ajax({
+        url: api_trend_sw,
+        dataType: 'json',
+        success: function(d) {
+      
+      
+      
+        var res = d.filter(obj=> obj.protection == "unprotected");
+        var resp = d.filter(obj=> obj.protection == "protected");
+
+
+        
+
+        var permanent_perc_change_p = ((parseFloat(resp[0].permanent_2021))-(parseFloat(resp[0].permanent_2000)))/(parseFloat(resp[0].permanent_2000))*100
+        var permanent_perc_change_up = ((parseFloat(res[0].permanent_2021))-(parseFloat(res[0].permanent_2000)))/(parseFloat(res[0].permanent_2000))*100
+        var seasonal_perc_change_p = ((parseFloat(resp[0].seasonal_2021))-(parseFloat(resp[0].seasonal_2000)))/(parseFloat(resp[0].seasonal_2000))*100
+        var seasonal_perc_change_up = ((parseFloat(res[0].seasonal_2021))-(parseFloat(res[0].seasonal_2000)))/(parseFloat(res[0].seasonal_2000))*100
+
+        var pertrendWaterUnprot = 'unknown';
+
+        if(parseFloat(res[0].permanent_2000) > parseFloat(res[0].permanent_2021)){
+          pertrendWaterUnprot = 'decreased'
+          color_p_un = '#ff6347'
+        }
+        else{
+          pertrendWaterUnprot = 'increased'
+          color_p_un = '#adef2a'
+        }
+  
+        var pertrendWaterProt = 'unknown';
+
+        if(parseFloat(resp[0].permanent_2000) > parseFloat(resp[0].permanent_2021)){
+          pertrendWaterProt = 'decreased'
+          color_p_p = '#ff6347'
+        }else{
+          pertrendWaterProt = 'increased'
+          color_p_p = '#adef2a'
+        }
+
+        var seatrendWaterUnprot = 'unknown';
+
+        if(parseFloat(res[0].seasonal_2000) > parseFloat(res[0].seasonal_2021)){
+          seatrendWaterUnprot = 'decreased'
+          color_s_un = '#ff6347'
+        }else{
+          seatrendWaterUnprot = 'increased'
+          color_s_un = '#adef2a'
+        }
+  
+        var seatrendWaterProt = 'unknown';
+
+        if(parseFloat(resp[0].seasonal_2000) > parseFloat(resp[0].seasonal_2021)){
+          seatrendWaterProt = 'decreased'
+          color_s_p = '#ff6347'
+        }else{
+          seatrendWaterProt = 'increased'
+          color_s_p = '#adef2a'
+        }
+
+  
+          $('#water_unprot_stack_unprot').highcharts({
+            chart: {
+              type: 'column',
+              backgroundColor: null,
+      
+          },
+          legend: {
+            itemStyle: {
+      
+                color: '#A0A0A0'
+            },
+            itemHoverStyle: {
+                color: '#000'
+            },
+            itemHiddenStyle: {
+                color: '#fff'
+            }
+      
+          },
+      
+            title: {
+              text: 'Unprotected Seasonal and Permanent Surface Water ',
+              style: {
+                color: '#a1aeb0',
+                font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
+                },
+              align: 'center'
+              
+          },
+          xAxis: {
+              categories: ['2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021'],
+              gridLineColor: '#404040',
+              
+              labels: {
+                style: {
+                    color: '#7a8386'
+                },
+              }
+          },
+          yAxis: {
+            visible: true,
+            gridLineColor: '#404040',
+              title: {
+                  text: 'SQKM '
+              },
+              stackLabels: {
+                enabled: true,
+                style: {
+                  fontSize: 10,
+                    color: 'white',
+                    textOutline: 'none'
+                },
+                formatter: function() {
+                  
+                  return  Highcharts.numberFormat(this.total/1000, 1, ',')+" k";
+              }
+            }
+          },
+      
+          plotOptions: {
+            spline: {
+              marker: {
+                  enabled: false
+              }
+          },
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true,
+                    color: 'white',
+                
+                    style: {
+                      textOutline: 'none',
+                      fontSize: 0,
+                    }
+                }
+            },
+            series: {
+                        
+              borderWidth: 0
+          }
+          },
+      
+          caption: {
+            verticalAlign: 'bottom',
+            useHTML: true,
+            style: {
+                'padding-top': '10px',
+                'color':'white',
+                'font-size': '15px'
+            },
+            text: '<i>Permanent water not subject to protection has<span style="color:'+color_p_un+';"> '+pertrendWaterUnprot+'</span> between 2000 and 2021 by <b>'+parseFloat(permanent_perc_change_up).toFixed(2)+'%</b></i>'
+
+  
+          },
+      
+          series: [{
+              
+              name: 'Seasonal',
+              color: '#6baed6',
+              data: [parseFloat(res[0].seasonal_2000),parseFloat(res[0].seasonal_2001),parseFloat(res[0].seasonal_2002),parseFloat(res[0].seasonal_2003),parseFloat(res[0].seasonal_2004),parseFloat(res[0].seasonal_2005),parseFloat(res[0].seasonal_2006),parseFloat(res[0].seasonal_2007),parseFloat(res[0].seasonal_2008),parseFloat(res[0].seasonal_2009),parseFloat(res[0].seasonal_2010),parseFloat(res[0].seasonal_2011),parseFloat(res[0].seasonal_2012),parseFloat(res[0].seasonal_2013),parseFloat(res[0].seasonal_2014),parseFloat(res[0].seasonal_2015),parseFloat(res[0].seasonal_2016),parseFloat(res[0].seasonal_2017),parseFloat(res[0].seasonal_2018),parseFloat(res[0].seasonal_2019),parseFloat(res[0].seasonal_2020),parseFloat(res[0].seasonal_2021)],
+          },{
+              
+              name: 'Permanent',
+              color: '#2171b5',
+              data: [parseFloat(res[0].permanent_2000),parseFloat(res[0].permanent_2001),parseFloat(res[0].permanent_2002),parseFloat(res[0].permanent_2003),parseFloat(res[0].permanent_2004),parseFloat(res[0].permanent_2005),parseFloat(res[0].permanent_2006),parseFloat(res[0].permanent_2007),parseFloat(res[0].permanent_2008),parseFloat(res[0].permanent_2009),parseFloat(res[0].permanent_2010),parseFloat(res[0].permanent_2011),parseFloat(res[0].permanent_2012),parseFloat(res[0].permanent_2013),parseFloat(res[0].permanent_2014),parseFloat(res[0].permanent_2015),parseFloat(res[0].permanent_2016),parseFloat(res[0].permanent_2017),parseFloat(res[0].permanent_2018),parseFloat(res[0].permanent_2019),parseFloat(res[0].permanent_2020),parseFloat(res[0].permanent_2021)],
+          }]
+              
+            });
+      
+            $('#water_prot_stack_unprot').highcharts({
+              chart: {
+                type: 'column',
+                backgroundColor: null,
+        
+            },
+            legend: {
+              itemStyle: {
+        
+                  color: '#A0A0A0'
+              },
+              itemHoverStyle: {
+                  color: '#000'
+              },
+              itemHiddenStyle: {
+                  color: '#fff'
+              }
+        
+            },
+        
+              title: {
+                text: 'Protected Seasonal and Permanent Surface Water ',
+                style: {
+                  color: '#a1aeb0',
+                  font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
+                  },
+                align: 'center'
+                
+            },
+            xAxis: {
+                categories: ['2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021'],
+                gridLineColor: '#404040',
+                
+                labels: {
+                  style: {
+                      color: '#7a8386'
+                  },
+                }
+            },
+            yAxis: {
+              visible: true,
+              gridLineColor: '#404040',
+                title: {
+                    text: 'SQKM '
+                },
+                stackLabels: {
+                  enabled: true,
+                  style: {
+                    fontSize: 10,
+                      color: 'white',
+                      textOutline: 'none'
+                  },
+                  formatter: function() {
+                    
+                    return  Highcharts.numberFormat(this.total/1000, 1, ',')+" k";
+                }
+              }
+            },
+        
+            plotOptions: {
+              spline: {
+                marker: {
+                    enabled: false
+                }
+            },
+              column: {
+                  stacking: 'normal',
+                  dataLabels: {
+                      enabled: true,
+                      color: 'white',
+                  
+                      style: {
+                        textOutline: 'none',
+                        fontSize: 0,
+                      }
+                  }
+              },
+              series: {
+                          
+                borderWidth: 0
+            }
+            },
+        
+            caption: {
+              verticalAlign: 'bottom',
+              useHTML: true,
+              style: {
+                  'padding-top': '10px',
+                  'color':'white',
+                  'font-size': '15px'
+              },
+              text: '<i>Permanent water subject to protection has<span style="color:'+color_p_p+';"> '+pertrendWaterProt+'</span> between 2000 and 2021 by <b>'+parseFloat(permanent_perc_change_p).toFixed(2)+'%</b></i>'
+              
+    
+            },
+        
+            series: [{
+                
+                name: 'Seasonal',
+                color: '#2171b5',
+                data: [parseFloat(resp[0].seasonal_2000),parseFloat(resp[0].seasonal_2001),parseFloat(resp[0].seasonal_2002),parseFloat(resp[0].seasonal_2003),parseFloat(resp[0].seasonal_2004),parseFloat(resp[0].seasonal_2005),parseFloat(resp[0].seasonal_2006),parseFloat(resp[0].seasonal_2007),parseFloat(resp[0].seasonal_2008),parseFloat(resp[0].seasonal_2009),parseFloat(resp[0].seasonal_2010),parseFloat(resp[0].seasonal_2011),parseFloat(resp[0].seasonal_2012),parseFloat(resp[0].seasonal_2013),parseFloat(resp[0].seasonal_2014),parseFloat(resp[0].seasonal_2015),parseFloat(resp[0].seasonal_2016),parseFloat(resp[0].seasonal_2017),parseFloat(resp[0].seasonal_2018),parseFloat(resp[0].seasonal_2019),parseFloat(resp[0].seasonal_2020),parseFloat(resp[0].seasonal_2021)],
+            },{
+                
+                name: 'Permanent',
+                color: '#08306b',
+                data: [parseFloat(resp[0].permanent_2000),parseFloat(resp[0].permanent_2001),parseFloat(resp[0].permanent_2002),parseFloat(resp[0].permanent_2003),parseFloat(resp[0].permanent_2004),parseFloat(resp[0].permanent_2005),parseFloat(resp[0].permanent_2006),parseFloat(resp[0].permanent_2007),parseFloat(resp[0].permanent_2008),parseFloat(resp[0].permanent_2009),parseFloat(resp[0].permanent_2010),parseFloat(resp[0].permanent_2011),parseFloat(resp[0].permanent_2012),parseFloat(resp[0].permanent_2013),parseFloat(resp[0].permanent_2014),parseFloat(resp[0].permanent_2015),parseFloat(resp[0].permanent_2016),parseFloat(resp[0].permanent_2017),parseFloat(resp[0].permanent_2018),parseFloat(resp[0].permanent_2019),parseFloat(resp[0].permanent_2020),parseFloat(resp[0].permanent_2021)],
+              }]
+                
+              });
+
+
+
+
+
+          }
+        
+      
+        });
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["in", "iso3", e.features[0].properties.iso3_digit]);
 
           map.setFilter("protection_trends_acp", ["!in", "iso2_digit", e.features[0].properties.iso2_digit]);
@@ -2755,7 +3628,16 @@ $.ajax({
           "<div>"+
           "<div id='country_title'><b>"+e.features[0].properties.name_c+"</b></div>"+
           "<div id='country_subtitle'><i>Protected Areas Dynamics Dashboard</i></div>"+
-          "<div id='protection'></div><br>"+
+
+
+
+ 
+          "<div id='tmf_undist_stack_unprot' class = 'landcover'></div><br>"+   
+          "<div id='tmf_deforestation_stack' class = 'landcover'></div><br>"+
+          "<div id='tmf_deforestation_stack_unprot' class = 'landcover'></div><br>"+   
+          "<div id='burned_areas' class = 'landcover'></div><br>"+   
+          "<div id='water_prot_stack_unprot' class = 'landcover'></div><br>"+
+          "<div id='water_unprot_stack_unprot' class = 'landcover'></div><br>"+
           "<div id='pan'></div><br>"+
           "<div id='landcover_20' class = 'landcover'></div><br>"+
           "<div id='landcover_30' class = 'landcover'></div><br>"+
@@ -2770,6 +3652,8 @@ $.ajax({
           "<div id='landcover_122' class = 'landcover'></div><br>"+
           "<div id='landcover_124' class = 'landcover'></div><br>"+
           "<div id='landcover_126' class = 'landcover'></div><br>"+
+
+          
 
           
           "</div></li></ul>");
