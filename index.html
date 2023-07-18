@@ -1,196 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset='utf-8' />
-  <title>Biodiversity Analysis Tool</title>
-  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-  <!-- <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js'></script> -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
-  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
-  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
-  <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css' rel='stylesheet' />
-  <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/wnumb/1.0.4/wNumb.min.js'></script>
-
-  <script src="https://code.highcharts.com/highcharts.js"></script>
-  <script src="https://code.highcharts.com/highcharts-more.js"></script>
-
-  <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-  <script src="https://code.highcharts.com/modules/bullet.js"></script>
-  <script src="https://code.highcharts.com/modules/timeline.js"></script>
-  <script src="https://code.highcharts.com/modules/dumbbell.js"></script>
-  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<meta charset='utf-8' />
+<title>IPAD (Integrated Protected Areas Dynamics)</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+<link href='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css' rel='stylesheet' />
+<script src='https://cdnjs.cloudflare.com/ajax/libs/wnumb/1.0.4/wNumb.min.js'></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://code.highcharts.com/modules/bullet.js"></script>
+<script src="https://code.highcharts.com/modules/timeline.js"></script>
+<script src="https://code.highcharts.com/modules/dumbbell.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
-  <!-- <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v2.0.2/turf.min.js'></script> -->
-  <script src='src/js/mapbox-gl-draw.js'></script>
-  <script src='src/js/busyLoad.js'></script>
-
-  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v0.18.0/mapbox-gl-draw.css' type='text/css'/>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
-  <!-- Compiled and minified CSS -->
+<script src='src/js/mapbox-gl-draw.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v0.18.0/mapbox-gl-draw.css' type='text/css'/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-<!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" **defer**></script>
-
-  <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 <link rel='stylesheet' href='src/css/geocoder.css' type='text/css' />
-  <script src='src/js/mapbox-gl-draw-rectangle-mode.min.js'></script>
-
-  <link href="src/css/busyLoad.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="app/app.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="app/app.css" rel="stylesheet">
 </head>
-<body>
+        <body>
 
+              <div id='map' class='map'> </div>
+              <div id='geocoder' class='geocoder'></div>
+              <div id ='pa_title'></div>
+              <div id="pa_stats"><div id="pa_stat"></div></div>
+              <div class="legend"></div>
 
-
-<div id='map' class='map'> </div>
-<div id='geocoder' class='geocoder'></div>
-<div id='main_tools' class='main_tools'>
-  <div class="row">
-    <div class="col s12 m6 l3 icon_custom layers_icon country_select"><a class=" tooltipped" data-position="bottom" data-tooltip="Country Statistics"><span>Country Statistics</span></div>
-    </div>
-</div>
-        
-
-
-  <div id='country_var_dropdown' >
-    <fieldset>
-      <select id='layer_country' name='layer_country'>
-        <option value="" disabled>Protection & Connectivity</option>
-        <option value='prot_perc_ind' selected data-icon="img/layer-icon.svg">Overall Protection</option>
-        <option value='prot_terr_perc_ind' data-icon="img/layer-icon.svg">Terrestrial Protection</option>
-        <option value='prot_mar_perc_ind'data-icon="img/layer-icon.svg" >Marine Protection</option>
-        <option value='protconn_ind' data-icon="img/layer-icon.svg">Terrestrial Connectivity</option>
-        <option value="" disabled>Ecosystems</option>
-        <option value='forest_perc_ind' data-icon="img/layer-icon.svg">Forest Cover</option>
-        <option value='forest_gain_perc_ind' data-icon="img/layer-icon.svg">Forest Gain</option>
-        <option value='forest_loss_perc_ind' data-icon="img/layer-icon.svg">Forest Loss</option>
-        <option value='land_degradation_ind' data-icon="img/layer-icon.svg">Land Degradation</option>
-        <option value="" disabled>Ecosystem Services</option>
-        <option value='land_natural_perc_ind' data-icon="img/layer-icon.svg">Natural Areas</option>
-        <option value='water_p_netchange_perc_ind' data-icon="img/layer-icon.svg">Surface Water Change</option>
-        <option value='tot_carbon_ind' data-icon="img/layer-icon.svg">Total Carbon</option>
-        <option value="" disabled>Species</option>
-        <option value='tot_species_ind' data-icon="img/layer-icon.svg">Number of Species</option>
-        <option value='species_endem_ind' data-icon="img/layer-icon.svg">Number of Endemic Species</option>
-        <option value='threat_species_ind' data-icon="img/layer-icon.svg">Number of Threatened Species</option>
-        <option value='species_endem_threat_ind' data-icon="img/layer-icon.svg">Number of Threatened Endemic Species</option>
-        <option value="" disabled>Human Dynamics</option>
-        <option value='tot_pop_ind' data-icon="img/layer-icon.svg"> Total Population</option>
-        <option value='dens_pop_ind' data-icon="img/layer-icon.svg">Population Density</option>
-        <option value='growth_pop_ind' data-icon="img/layer-icon.svg">Population Growth</option>
-        <option value='agri_area_ind'data-icon="img/layer-icon.svg" >Agricultural Areas</option>
-      </select>
-      </fieldset>
-  </div>
-
-  <div id='custom_map_tools'></div>
-
-
-
-
-  
-<!-- ------------------ main sidebar where country scores and tool are displayed ------------------------------ -->
-
-      
-  <div class='sidebar' data-html2canvas-ignore="true">
-      <div id='country_name'></div>
-      <div id = 'listing'>
-      <div id = 'listingname'>
-      </div>
-     </div>
-
-
-     <ul class="collapsible manual_scores">
-      <li>
-        <div class="collapsible-header scoring_section"><i class="material-icons">tune</i> Set your conservation priorities</div>
-        <div class="collapsible-body"><span>
-          <div class='top_dropdown'>
-            <div class='top_dropdown_inner'>
-            <div class='map-overlay-inner'>
-            <form action="#">
-              <div class="input-field col s12">
-                <a class='btn modal-trigger' href='#modal-carbon'><span class='material-icons'>info</span></a><span class="material-icons delvarico delvarico-carbon">clear</span> <label>Above and Below Ground Carbon</label><br>    
-                <p class="range-field range-field-carbon"><input type="range" id="carbon_slider" value ="1" min="1" max="10" /> <output id="carbon_value" name="carbon_value">1<span></span></output></p>
-              </div>
-            </form>
-            <form action="#">
-              <div class="input-field col s12">
-                <a class='btn modal-trigger' href='#modal-water'><span class='material-icons'>info</span></a><span class="material-icons delvarico delvarico-water">clear</span> <label>Water Presence</label><br>    
-                <p class="range-field range-field-water"><input type="range" id="water_slider" value ="1" min="1" max="10" /> <output id="water_value" name="water_value">1<span></span></output></p>
-              </div>
-            </form>
-            <form action="#">
-              <div class="input-field col s12">
-                <a class='btn modal-trigger' href='#modal-natural'><span class='material-icons'>info</span></a> <span class="material-icons delvarico delvarico-natural">clear</span> <label>Natural Areas Presence</label><br>    
-                <p class="range-field range-field-natural"><input type="range" id="natural_slider" value ="1" min="1" max="10" /> <output id="natural_value" name="natural_value">1<span></span></output></p>
-              </div>
-            </form>
-            <form action="#">
-              <div class="input-field col s12">
-                <a class='btn modal-trigger' href='#modal-forest'><span class='material-icons'>info</span></a> <span class="material-icons delvarico delvarico-forest">clear</span> <label>Intact Forest Presence</label><br>    
-                <p class="range-field range-field-forest"><input type="range" id="forest_slider" value ="1" min="1" max="10" /> <output id="forest_value" name="forest_value">1<span></span></output></p>
-              </div>
-            </form>
-            <form action="#">
-              <div class="input-field col s12">
-                <a class='btn modal-trigger' href='#modal-mammals'><span class='material-icons'>info</span></a><span class="material-icons delvarico delvarico-mammals">clear</span>  <label>Mammals Presence</label><br>    
-                <p class="range-field range-field-mammals"><input type="range" id="mammals_slider" value ="1" min="1" max="10" /> <output id="mammals_value" name="mammals_value">1<span></span></output></p>
-              </div>
-            </form>
-            <form action="#">
-              <div class="input-field col s12">
-                <a class='btn modal-trigger' href='#modal-th_mammals'><span class='material-icons'>info</span></a><span class="material-icons delvarico delvarico-th_mammals">clear</span> <label>Threatened Endemic Mammals Presence</label><br>    
-                <p class="range-field range-field-th_mammals"><input type="range" id="mammals_th_slider" value ="1" min="1" max="10" /> <output id="mammals_th_value" name="mammals_th_value">1<span></span></output></p>
-              </div>
-            </form>
-            <form action="#">
-              <div class="input-field col s12">
-                <a class='btn modal-trigger' href='#modal-amphibians'><span class='material-icons'>info</span></a><span class="material-icons delvarico delvarico-amphibians">clear</span> <label>Amphibians Presence</label><br>    
-                <p class="range-field range-field-amphibians"><input type="range" id="amphibians_slider" value ="1" min="1" max="10" /> <output id="amphibians_value" name="amphibians_value">1<span></span></output></p>
-              </div>
-            </form>
-            <form action="#">
-              <div class="input-field col s12">
-                <a class='btn modal-trigger' href='#modal-th_amphibians'><span class='material-icons'>info</span></a><span class="material-icons delvarico delvarico-th_amphibians">clear</span>  <label>Threatened Endemic Amphibians Presence</label><br>    
-                <p class="range-field range-field-th_amphibians"><input type="range" id="amphibians_th_slider" value ="1" min="1" max="10" /> <output id="amphibians_th_value" name="amphibians_th_value">1<span></span></output></p>
-              </div>
-            </form>
-            <form action="#">
-              <div class="input-field col s12">
-                <a class='btn modal-trigger' href='#modal-birds'><span class='material-icons'>info</span></a><span class="material-icons delvarico delvarico-birds">clear</span> <label>Birds Presence</label><br>    
-                <p class="range-field range-field-birds"><input type="range" id="birds_slider" value ="1" min="1" max="10" /> <output id="birds_value" name="birds_value">1<span></span></output></p>
-              </div>
-            </form>
-            
-
-          </div>
-          </div>
-          </div>
-        </span></div>
-      </li>
-    </ul>
-          
-
-  </div>
-
-
-
-
-
-
-
- <div id="image"></div>
- <div id ='pa_title'></div>
- <div id="pa_stats"><div id="pa_stat"></div></div>
-
-<div class="legend">
-
-  </div>
-  <script src='app/app.js'></script>
-
-</body>
+            <script src='app/app.js'></script>
+      </body>
 </html>

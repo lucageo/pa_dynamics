@@ -1575,6 +1575,14 @@ i{
     color: #7c8998;
     text-align: center;
 }
+#protconn_wrapper{
+  background: #060a19;
+  padding: 10px;
+  /* border: 1px solid #0e301e; */
+  color: #7c8998;
+  text-align: center;
+}
+
 #freshwater_wrapper{
   background: #060a19;
   padding: 10px;
