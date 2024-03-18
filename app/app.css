@@ -688,11 +688,13 @@ div.mapboxgl-popup-content > i
         line-height: 17px;
     }
     p {
-        font-family: sans-serif;
-        margin: 0;
-        font-size: 16px;
-        line-height: 26px;
-    }
+      font-family: sans-serif;
+      margin: 0;
+      font-size: 12px;
+      line-height: 26px;
+      font-family: sans-serif !important;
+      color: #7c8998;
+  }
   #country_pop_title{
   
         margin-bottom: 10px;
@@ -1555,54 +1557,54 @@ i{
     color: #77bb0b;
   }
   #tmf_wrapper{
-    background: #060a19;
+    background: #061123;
     padding: 10px;
-    /* border: 1px solid #0e301e; */
-    color: #7c8998;
+    border-top: 7px solid #041a3e;
+    color: #becad8;
     text-align: center;
   }
   #vegetation_wrapper{
-    background: #060a19;
+    background: #061123;
     padding: 10px;
-    /* border: 1px solid #0e301e; */
-    color: #7c8998;
+    border-top: 7px solid #041a3e;
+    color: #becad8;
     text-align: center;
   }
   #burned_wrapper{
-    background: #060a19;
+    background: #061123;
     padding: 10px;
-    /* border: 1px solid #0e301e; */
-    color: #7c8998;
+    border-top: 7px solid #041a3e;
+    color: #becad8;
     text-align: center;
 }
 #protconn_wrapper{
-  background: #060a19;
+  background: #061123;
   padding: 10px;
-  /* border: 1px solid #0e301e; */
-  color: #7c8998;
+  border-top: 7px solid #041a3e;
+  color: #becad8;
   text-align: center;
 }
 
 #freshwater_wrapper{
-  background: #060a19;
+  background: #061123;
   padding: 10px;
-  /* border: 1px solid #0e301e; */
-  color: #7c8998;
+  border-top: 7px solid #041a3e;
+  color: #becad8;
   text-align: center;
 }
 #nightlight_wrapper{
-  background: #060a19;
+  background: #061123;
   padding: 10px;
-  /* border: 1px solid #0e301e; */
-  color: #7c8998;
+  border-top: 7px solid #041a3e;
+  color: #becad8;
   text-align: center;
 }
 
 #pan_wrapper{
-  background: #060a19;
+  background: #061123;
   padding: 10px;
-  /* border: 1px solid #0e301e; */
-  color: #7c8998;
+  border-top: 7px solid #041a3e;
+  color: #becad8;
   text-align: center;
 }
   #pa_stats{
@@ -1629,7 +1631,7 @@ i{
     /* border: 1px solid; */
     padding: 36px;
     color: #ffffff;
-    background: #061123;
+    background: #041a3e;
 
   }
 
