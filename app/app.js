@@ -552,7 +552,7 @@ style: {
 'color':'white',
 'font-size': '20px'
 },
-text: '<i>Between 2018 and 2021, in the Tropical Moist Forest ecosystem, the average deforestation  was '+avg.toFixed(2)+' km<sup>2</sup>/yr. Over the period 2020 - 2021 <b>deforestation, inside Protected Areas</b>, has <span style="color:'+color+';">'+trend+'</span> by '+Math.abs(percentage).toFixed(2)+'%  compared to the period 2018 - 2019. <i><hr><p>The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre, is a valuable dataset for detecting and monitoring changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns. More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'
+text: '<i>Between 2018 and 2021, in the Tropical Moist Forest ecosystem, the average deforestation  was '+avg.toFixed(2)+' km<sup>2</sup>/yr. Over the period 2020 - 2021 <b>deforestation, inside Protected Areas</b>, has <span style="color:'+color+';">'+trend+'</span> by '+Math.abs(percentage).toFixed(2)+'%  compared to the period 2018 - 2019. <i><hr><p><i class="tiny material-icons">info</i> The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre helps detect and monitor changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns. More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'
 },
 
 series: [{
@@ -692,7 +692,7 @@ style: {
 'color':'white',
 'font-size': '15px'
 },
-text: '<i>Between 2018 and 2021, in the Tropical Moist Forest ecosystem, the average deforestation  was '+avg.toFixed(2)+' km<sup>2</sup>/yr. Over the period 2020 - 2021 <b>deforestation, outside Protected Areas</b>, has <span style="color:'+color+';">'+trend+'</span> by '+Math.abs(percentage).toFixed(2)+'%  compared to the period 2018 - 2019. <i><hr><p>The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre, is a valuable dataset for detecting and monitoring changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns. More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'
+text: '<i>Between 2018 and 2021, in the Tropical Moist Forest ecosystem, the average deforestation  was '+avg.toFixed(2)+' km<sup>2</sup>/yr. Over the period 2020 - 2021 <b>deforestation, outside Protected Areas</b>, has <span style="color:'+color+';">'+trend+'</span> by '+Math.abs(percentage).toFixed(2)+'%  compared to the period 2018 - 2019. <i><hr><p><p><i class="tiny material-icons">info</i> The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre helps detect and monitor changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns. More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'
 },
 
 series: [{
@@ -868,7 +868,7 @@ text: '<i>Undisturbed tropical moist forest not subject to protection has <span 
 'undisturbed tropical moist forest subject to protection has <span style="color:'+color2+';"> '+trendUndisturbProt+' </span> by <b>'+Math.abs((protVariation)).toFixed(2)+'</b>%.</i>'+
 '<i>Overall, in 2000, Undisturbed Tropical Moist Forest accounted for <b> '+countrycoverage2000+'</b>% of the total country area. In 2021 this proportion stood at <b> '+countrycoverage2021+'</b>%.</i>'+
 '<hr>'+
-'<p>The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre, is a valuable dataset for detecting and monitoring changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns. More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'
+'<p><p><i class="tiny material-icons">info</i> The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre, helps detect and monitor changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns. More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'
 
 },
 
@@ -940,6 +940,7 @@ $('#burned_areas').highcharts({
 chart: {
 type: 'column',
 backgroundColor: null,
+height:'600px'
 
 },
 legend: {
@@ -1028,7 +1029,8 @@ style: {
 'font-size': '15px'
 },
 text: '<i>Over the span of 2016 to 2020, the burned lands inside protected areas showed a <b>'+Math.abs(parseFloat(percp)).toFixed(2)+'% </b><span style="color:'+color_p+';">'+trendp+'</span> when contrasted with the period of 2001 to 2005 </i>'+
-'<i> whereas the burned lands outside protected areas within the same time span showed a <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'% </b><span style="color:'+color_up+';">'+trend+'.</span></i>'
+'<i> whereas the burned lands outside protected areas within the same time span showed a <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'% </b><span style="color:'+color_up+';">'+trend+'.</span></i>'+
+'<hr><p><i class="tiny material-icons">info</i> These Statistics are derived from the ESA Climate Change Initiative (CCI). MODIS Fire_cci Burned Area pixel product is a monthly global ~250m spatial resolution dataset containing information on burned areas as well as ancillary data. This dataset is also part of the Copernicus Climate Change Service (C3S).vFor more information please visit <a href="https://climate.esa.int/en/projects/fire/">https://climate.esa.int/en/projects/fire/</a></p>'
 
 
 },
@@ -1096,6 +1098,7 @@ $('#fires').highcharts({
 chart: {
 type: 'column',
 backgroundColor: null,
+height: '600px'
 
 },
 legend: {
@@ -1184,7 +1187,8 @@ style: {
 'font-size': '15px'
 },
 text: '<i>Over the span of 2018 to 2022, the number of fires inside protected areas showed a <b>'+Math.abs(parseFloat(percp)).toFixed(2)+'% </b><span style="color:'+color_p+';">'+trendp+'</span> when contrasted with the period of 2001 to 2005 </i>'+
-'<i> whereas the number of fires outside protected areas within the same time span showed a <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'% </b><span style="color:'+color_up+';">'+trend+'.</span></i>'
+'<i> whereas the number of fires outside protected areas within the same time span showed a <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'% </b><span style="color:'+color_up+';">'+trend+'.</span></i>'+
+'<hr><p><i class="tiny material-icons">info</i> These Statistics are derived from the Fire Information for Resource Management System (FIRMS). MODIS Collection 6 NRT Hotspot / Active Fire Detections MCD14DL. Available on-line at <a href="https://earthdata.nasa.gov/firms">https://earthdata.nasa.gov/firms</a> </p>'
 
 
 },
@@ -1341,7 +1345,7 @@ style: {
 },
 text: '<i>Gross primary productivity inside protected areas has<span style="color:'+color_p+';"> '+trendp+'</span> between 2014 and 2022 by <b>'+Math.abs(parseFloat(percp)).toFixed(2)+'%</b></i>'+
 '<i> whereas gross primary productivity outside protected areas has<span style="color:'+color_up+';"> '+trend+'</span> between 2014 and 2022 by <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'%.</b></i>'+
-'<hr><p>The MOD17A3HGF V6.1 product provides information about annual Gross and Net Primary Productivity (GPP and NPP) at 500m pixel resolution. Annual NPP is derived from the sum of all 8-day Net Photosynthesis(PSN) products (MOD17A2H) from the given year. The PSN value is the difference of the Gross Primary Productivity (GPP) and the Maintenance Respiration (MR) (GPP-MR). More at https://lpdaac.usgs.gov/products/mod17a3hgfv061/</p>'
+'<hr><p><i class="tiny material-icons">info</i> This data provides information about annual Gross Primary Productivity at 500m pixel resolution. Annual Gross Primary Productivity inside and outside Protected Areas is derived from the sum of all 8-day Net Photosynthesis products from the given year. More at https://lpdaac.usgs.gov/products/mod17a3hgfv061/</p>'
 
 },
 
@@ -1716,6 +1720,7 @@ $('#water_unprot_stack_unprot').highcharts({
 chart: {
 type: 'column',
 backgroundColor: null,
+height:'600px'
 
 },
 legend: {
@@ -1803,7 +1808,8 @@ style: {
 'color':'white',
 'font-size': '15px'
 },
-text: '<i>Permanent water not subject to protection has<span style="color:'+color_p_un+';"> '+pertrendWaterUnprot+'</span> between 2000 and 2021 by <b>'+parseFloat(permanent_perc_change_up).toFixed(2)+'%.</b></i>'
+text: '<i>Permanent water not subject to protection has<span style="color:'+color_p_un+';"> '+pertrendWaterUnprot+'</span> between 2000 and 2021 by <b>'+parseFloat(permanent_perc_change_up).toFixed(2)+'%.</b></i>'+
+'<hr><p><i class="tiny material-icons">info</i> This data developed by the European Commission Joint Research Centre contains the temporal distribution of surface water and provides statistics on the extent outside Protected Areas. For more information please visit <a href="https://data.jrc.ec.europa.eu/collection/id-0084">https://data.jrc.ec.europa.eu/collection/id-0084</a> </p>'
 
 
 },
@@ -1826,6 +1832,7 @@ $('#water_prot_stack_unprot').highcharts({
 chart: {
 type: 'column',
 backgroundColor: null,
+height:'600px'
 
 },
 legend: {
@@ -1913,7 +1920,8 @@ style: {
 'color':'white',
 'font-size': '15px'
 },
-text: '<i>Permanent water subject to protection has<span style="color:'+color_p_p+';"> '+pertrendWaterProt+'</span> between 2000 and 2021 by <b>'+parseFloat(permanent_perc_change_p).toFixed(2)+'%.</b></i>'
+text: '<i>Permanent water subject to protection has<span style="color:'+color_p_p+';"> '+pertrendWaterProt+'</span> between 2000 and 2021 by <b>'+parseFloat(permanent_perc_change_p).toFixed(2)+'%.</b></i>'+
+'<hr> <p><i class="tiny material-icons">info</i> This data developed by the European Commission Joint Research Centre contains the temporal distribution of surface water and provides statistics on the extent inside Protected Areas. For more information please visit <a href="https://data.jrc.ec.europa.eu/collection/id-0084">https://data.jrc.ec.europa.eu/collection/id-0084</a> </p>'
 
 
 },
