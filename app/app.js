@@ -400,6 +400,18 @@ series: {
 borderWidth: 0
 }
 },
+
+caption: {
+  verticalAlign: 'bottom',
+  useHTML: true,
+  style: {
+  'padding-top': '10px',
+  'color':'white',
+  'font-size': '20px'
+  },
+  text: '<hr><p><i class="tiny material-icons">info</i> This data provides information on the number of Protected Areas collected by UNEP-WCMC. More at https://www.protectedplanet.net/en</p>'
+
+  },
 series: [{
 type: 'column',
 name: ' Terrestrial',
@@ -426,6 +438,8 @@ lineColor: '#b8bfc1',
 fillColor: '#b8bfc1'
 }
 }]
+
+
 
 });
 }
@@ -1030,7 +1044,7 @@ style: {
 },
 text: '<i>Over the span of 2016 to 2020, the burned lands inside protected areas showed a <b>'+Math.abs(parseFloat(percp)).toFixed(2)+'% </b><span style="color:'+color_p+';">'+trendp+'</span> when contrasted with the period of 2001 to 2005 </i>'+
 '<i> whereas the burned lands outside protected areas within the same time span showed a <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'% </b><span style="color:'+color_up+';">'+trend+'.</span></i>'+
-'<hr><p><i class="tiny material-icons">info</i> These Statistics are derived from the ESA Climate Change Initiative (CCI). MODIS Fire_cci Burned Area pixel product is a monthly global ~250m spatial resolution dataset containing information on burned areas as well as ancillary data. This dataset is also part of the Copernicus Climate Change Service (C3S).vFor more information please visit <a href="https://climate.esa.int/en/projects/fire/">https://climate.esa.int/en/projects/fire/</a></p>'
+'<hr><p><i class="tiny material-icons">info</i> These statistics are derived from the ESA Climate Change Initiative (CCI). MODIS Fire_cci Burned Area pixel product is a monthly global ~250m spatial resolution dataset containing information on burned areas as well as ancillary data. This dataset is also part of the Copernicus Climate Change Service (C3S).vFor more information please visit <a href="https://climate.esa.int/en/projects/fire/">https://climate.esa.int/en/projects/fire/</a></p>'
 
 
 },
@@ -1188,7 +1202,7 @@ style: {
 },
 text: '<i>Over the span of 2018 to 2022, the number of fires inside protected areas showed a <b>'+Math.abs(parseFloat(percp)).toFixed(2)+'% </b><span style="color:'+color_p+';">'+trendp+'</span> when contrasted with the period of 2001 to 2005 </i>'+
 '<i> whereas the number of fires outside protected areas within the same time span showed a <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'% </b><span style="color:'+color_up+';">'+trend+'.</span></i>'+
-'<hr><p><i class="tiny material-icons">info</i> These Statistics are derived from the Fire Information for Resource Management System (FIRMS). MODIS Collection 6 NRT Hotspot / Active Fire Detections MCD14DL. Available on-line at <a href="https://earthdata.nasa.gov/firms">https://earthdata.nasa.gov/firms</a> </p>'
+'<hr><p><i class="tiny material-icons">info</i> These statistics are derived from the Fire Information for Resource Management System (FIRMS). MODIS Collection 6 NRT Hotspot / Active Fire Detections MCD14DL. Available on-line at <a href="https://earthdata.nasa.gov/firms">https://earthdata.nasa.gov/firms</a> </p>'
 
 
 },
@@ -1213,6 +1227,173 @@ data: [parseFloat(resp[0].fires_2001),parseFloat(resp[0].fires_2002),parseFloat(
 
 
 });
+
+
+//GHSL dynamics
+var api_ghsl =  "https://api.biopama.org/api/human_modification/function/api_ghsl/iso3="+e.features[0].properties.iso3
+$.ajax({
+url: api_ghsl,
+dataType: 'json',
+success: function(d) {
+
+
+
+var res = d.filter(obj=> obj.protection == "unprotected");
+var resp = d.filter(obj=> obj.protection == "protected");
+
+var start = parseFloat(res[0].sum_2000)
+var end = parseFloat(res[0].sum_2020)
+
+var perc = ((end-start)/start)*100
+if(start > end){
+trend = 'decrease'
+color_up = '#ff6347'
+}
+else{
+trend = 'increase'
+color_up = '#adef2a'
+}
+
+var startp = parseFloat(resp[0].sum_2000)
+var endp = parseFloat(resp[0].sum_2020)
+
+var percp = ((endp-startp)/startp)*100
+if(startp > endp){
+trendp = 'decrease'
+color_p = '#ff6347'
+}
+else{
+trendp = 'increase'
+color_p = '#adef2a'
+}
+
+
+$('#ghsl').highcharts({
+chart: {
+type: 'column',
+backgroundColor: null,
+height: '600px'
+
+},
+legend: {
+itemStyle: {
+
+color: '#A0A0A0'
+},
+itemHoverStyle: {
+color: '#000'
+},
+itemHiddenStyle: {
+color: '#fff'
+}
+
+},
+
+title: {
+text: 'People',
+style: {
+color: '#a1aeb0',
+font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
+},
+align: 'center'
+
+},
+xAxis: {
+categories: ['2000','2005','2010','2015','2020'],
+gridLineColor: '#404040',
+
+labels: {
+style: {
+color: '#7a8386'
+},
+}
+},
+yAxis: {
+visible: true,
+gridLineColor: '#404040',
+title: {
+text: 'People '
+},
+stackLabels: {
+enabled: true,
+style: {
+fontSize: 10,
+color: 'white',
+textOutline: 'none'
+},
+formatter: function() {
+
+return  Highcharts.numberFormat(this.total/1000, 1, ',')+"k";
+}
+}
+},
+
+plotOptions: {
+spline: {
+marker: {
+enabled: false
+}
+},
+column: {
+stacking: 'normal',
+dataLabels: {
+enabled: true,
+color: 'white',
+
+style: {
+textOutline: 'none',
+fontSize: 0,
+}
+}
+},
+series: {
+
+borderWidth: 0
+}
+},
+
+caption: {
+verticalAlign: 'bottom',
+useHTML: true,
+style: {
+'padding-top': '10px',
+'color':'white',
+'font-size': '15px'
+},
+text: '<i>Between 2000 to 2020, the number of people living inside protected areas showed a <b>'+Math.abs(parseFloat(percp)).toFixed(2)+'% </b><span style="color:'+color_p+';">'+trendp+'</span>.</i>'+
+'<i> whereas the number of fires people living outside protected areas within the same time span showed a <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'% </b><span style="color:'+color_up+';">'+trend+'.</span></i>'+
+'<hr><p><i class="tiny material-icons">info</i> These statistics are derived from the The Global Human Settlement Layer (GHSL) Developed by the European Commission - Joint Research Centre. The GHSL project produces global spatial information about the human presence on the planet over time. This in the form of built-up maps, population density maps and settlement maps. This information is generated with evidence-based analytics and knowledge using new spatial data mining technologies. Available on-line at <a href="https://ghsl.jrc.ec.europa.eu/index.php">https://ghsl.jrc.ec.europa.eu/index.php</a> </p>'
+
+
+},
+
+series: [{
+
+name: 'Unprotected',
+color: '#c04a08',
+
+data: [parseFloat(res[0].sum_2000),parseFloat(res[0].sum_2005),parseFloat(res[0].sum_2010),parseFloat(res[0].sum_2015),parseFloat(res[0].sum_2020)],
+},{
+
+name: 'Protected',
+color: '#f19562',
+
+data: [parseFloat(resp[0].sum_2000),parseFloat(resp[0].sum_2005),parseFloat(resp[0].sum_2010),parseFloat(resp[0].sum_2015),parseFloat(resp[0].sum_2020)],}]
+
+});
+
+}
+
+
+});
+
+
+
+
+
+
+
+
 // Primary Productivity dynamics
 var api_primary_prod =  "https://api.biopama.org/api/forest/function/api_primary_prod/iso3="+e.features[0].properties.iso3
 $.ajax({
@@ -1411,6 +1592,7 @@ $('#nightlights').highcharts({
 chart: {
 type: 'column',
 backgroundColor: null,
+height:'600px'
 
 },
 legend: {
@@ -1450,7 +1632,7 @@ yAxis: {
 visible: true,
 gridLineColor: '#404040',
 title: {
-text: 'nanoWatts '
+text: ' '
 },
 stackLabels: {
 enabled: true,
@@ -1499,8 +1681,8 @@ style: {
 'font-size': '15px'
 },
 text: '<i>Nightlighs inside protected areas has<span style="color:'+color_p+';"> '+nighttrendp+'</span> between 2014 and 2022 by <b>'+Math.abs(parseFloat(percp)).toFixed(2)+'%</b></i>'+
-'<i> whereas nightlighs outside protected areas has<span style="color:'+color_up+';"> '+nighttrend+'</span> between 2014 and 2022 by <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'%.</b></i>'
-
+'<i> whereas nightlighs outside protected areas has<span style="color:'+color_up+';"> '+nighttrend+'</span> between 2014 and 2022 by <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'%.</b></i>'+
+'<hr><p><i class="tiny material-icons">info</i> This data provides information about annual nightime lights at 500m pixel resolution. Annual global VIIRS nighttime lights dataset is a time series produced from monthly cloud-free average radiance grids spanning 2013 to 2021. More at https://www.mdpi.com/2072-4292/13/5/922</p>'
 
 },
 
@@ -1549,6 +1731,7 @@ $('#protconn').highcharts({
 chart: {
 type: 'column',
 backgroundColor: null,
+height: '600px'
 
 },
 legend: {
@@ -1588,7 +1771,7 @@ yAxis: {
 visible: true,
 gridLineColor: '#404040',
 title: {
-text: 'nanoWatts '
+text: ' '
 },
 stackLabels: {
 enabled: true,
@@ -1636,7 +1819,9 @@ style: {
 'color':'white',
 'font-size': '15px'
 },
-text: '<i>Protected areas connectivity has<span style="color:'+color_p_un+';"> '+protconntrend+'</span> between 2010 and 2023 by <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'%.</b></i>'
+text: '<i>Protected areas connectivity has<span style="color:'+color_p_un+';"> '+protconntrend+'</span> between 2010 and 2023 by <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'%.</b></i>'+
+'<hr><p><i class="tiny material-icons">info</i> This data provides information on the level of Connectivity of Protected Areas in country using the ProtConn indicator developed at the European Commission - Joint Research Centre. The indicator considers the spatial arrangement, size and coverage of protected areas (PAs), and accounts for both the land area that can be reached within PAs and that which is reachable through the connections between different PAs.. More at https://dopa.jrc.ec.europa.eu/</p>'
+
 
 
 },
@@ -2013,6 +2198,7 @@ data: [parseFloat(resp[0].permanent_2000),parseFloat(resp[0].permanent_2001),par
   "<div id='nightlight_wrapper'>"+
   "<div class = 'title'><h3>Human Modification Dynamics</h3></div>"+ 
   "<div id='nightlights' class = 'landcover'></div></div>"+
+  "<div id='ghsl' class = 'landcover'></div></div>"+
 
   "<div id='protconn_wrapper'>"+
   "<div class = 'title'><h3>Protected Areas Connectivity Dynamics</h3></div>"+ 
