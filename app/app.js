@@ -1831,7 +1831,7 @@ text: '<i>Protected areas has<span style="color:'+color_p_un+';"> '+protconntren
 
 series: [{
 
-name: 'ProtConn',
+name: 'Protected Area',
 color: '#7fbc41',
 data: [parseFloat(res.pa_2001),parseFloat(res.pa_2006),parseFloat(res.pa_2011),parseFloat(res.pa_2016),parseFloat(res.pa_2023)],            
 }]
