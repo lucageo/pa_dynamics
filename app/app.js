@@ -1703,6 +1703,152 @@ data: [parseFloat(resp[0].rad_2014),parseFloat(resp[0].rad_2015),parseFloat(resp
 
 
 });
+
+
+
+//Prot desig year
+var api_trend_protcon =  "https://api.biopama.org/api/protection_level/function/api_desig/iso3="+e.features[0].properties.iso3
+$.ajax({
+url: api_trend_protcon,
+dataType: 'json',
+success: function(d) {
+
+
+
+var res = d[0];     
+
+var start = parseFloat(res.pa_2001)
+var end = parseFloat(res.pa_2023)
+
+var perc = ((parseFloat(res.pa_2023)-parseFloat(res.pa_2001))/parseFloat(res.pa_2001))*100
+if(parseFloat(res.pa_2001) > parseFloat(res.pa_2023)){
+protconntrend = 'decreased'
+color_p_un = '#ff6347'
+}
+else{
+protconntrend = 'increased'
+color_p_un = '#adef2a'
+}
+
+$('#desig').highcharts({
+chart: {
+type: 'column',
+backgroundColor: null,
+height: '600px'
+
+},
+legend: {
+itemStyle: {
+
+color: '#A0A0A0'
+},
+itemHoverStyle: {
+color: '#000'
+},
+itemHiddenStyle: {
+color: '#fff'
+}
+
+},
+
+title: {
+text: 'Protection by designation year',
+style: {
+color: '#a1aeb0',
+font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
+},
+align: 'center'
+
+},
+xAxis: {
+categories: ['2001','2006','2011','2016','2023'],
+gridLineColor: '#404040',
+
+labels: {
+style: {
+color: '#7a8386'
+},
+}
+},
+yAxis: {
+visible: true,
+gridLineColor: '#404040',
+title: {
+text: ' '
+},
+stackLabels: {
+enabled: true,
+style: {
+fontSize: 10,
+color: 'white',
+textOutline: 'none'
+},
+formatter: function() {
+
+return  Highcharts.numberFormat(this.total, 2, ',');
+}
+}
+},
+
+plotOptions: {
+spline: {
+marker: {
+enabled: false
+}
+},
+column: {
+stacking: 'normal',
+dataLabels: {
+enabled: true,
+color: 'white',
+
+style: {
+textOutline: 'none',
+fontSize: 0,
+}
+}
+},
+series: {
+
+borderWidth: 0
+}
+},
+
+caption: {
+verticalAlign: 'bottom',
+useHTML: true,
+style: {
+'padding-top': '10px',
+'color':'white',
+'font-size': '15px'
+},
+text: '<i>Protected areas has<span style="color:'+color_p_un+';"> '+protconntrend+'</span> between 2001 and 2023 by <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'%.</b></i>'+
+'<hr><p><i class="tiny material-icons">info</i> This data provides information on the country level of protection using the designation year from the WDPA dataset. More at https://www.protectedplanet.net/en</p>'
+
+
+
+},
+
+series: [{
+
+name: 'ProtConn',
+color: '#7fbc41',
+data: [parseFloat(res.pa_2001),parseFloat(res.pa_2006),parseFloat(res.pa_2011),parseFloat(res.pa_2016),parseFloat(res.pa_2023)],            
+}]
+
+});
+
+}
+
+
+});
+
+
+
+
+
+
+
 //ProtConn dynamics
 var api_trend_protcon =  "https://api.biopama.org/api/protection_level/function/api_protconn_ts/iso3="+e.features[0].properties.iso3
 $.ajax({
@@ -2206,6 +2352,7 @@ data: [parseFloat(resp[0].permanent_2000),parseFloat(resp[0].permanent_2001),par
 
   "<div id='pan_wrapper'>"+
   "<div class = 'title'><h3>World Database on Protected Areas Dynamics</h3></div>"+ 
+  "<div id='desig' class = 'landcover'></div></div>"+
   "<div id='pan' class = 'landcover'></div></div>"+
   "</div></li></ul>");
 
