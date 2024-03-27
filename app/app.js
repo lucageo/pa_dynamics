@@ -908,6 +908,179 @@ $('#tmf_undist_stack_unprot').html('<center><b>Statistics not available for the 
 
 
 });
+
+
+
+
+
+var lcc =  "https://api.biopama.org/api/land_cover_change/function/api_land_cover_change_by_iso3/iso_codes="+e.features[0].properties.iso3
+$.ajax({
+url: lcc,
+dataType: 'json',
+success: function(jsonData) {
+
+// List of classes to include in the chart
+const includedClasses = [
+  '245', '246', '247', '248', '249', '251', '252', '253', 
+];
+
+
+function prepareDonutData(data, protectionStatus) {
+  return data
+  .filter(item => includedClasses.includes(item.class) && item.protection === protectionStatus)
+  .map(item => ({
+      name: item.legend_subclass,
+      y: parseFloat(item.area_sqkm),
+      color: `#${item.legend_color}`
+    }));
+}
+
+// Calculate the total area for percentage calculation
+const totalProtectedArea = jsonData
+  .filter(item => item.protection === 'protected')
+  .reduce((sum, item) => sum + parseFloat(item.area_sqkm), 0);
+const totalUnprotectedArea = jsonData
+  .filter(item => item.protection === 'unprotected')
+  .reduce((sum, item) => sum + parseFloat(item.area_sqkm), 0);
+
+// Initialize Highcharts for the protected donut chart
+Highcharts.chart('lcc', {
+  chart: {
+    type: 'pie',
+    backgroundColor: null,
+    height: '800px'
+  },
+  title: {
+    text: 'Land use change inside protected areas (2000-2020)',
+    style: {
+      color: '#a1aeb0',
+      font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
+    },
+    align: 'center'
+  },
+  tooltip: {
+    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+  },
+  plotOptions: {
+    pie: {
+      innerSize: '50%', // This creates the donut effect
+      dataLabels: {
+        enabled: true,
+        format: '<b>{point.name}</b>: {point.percentage:.1f}%'
+      }
+    }
+  },
+  caption: {
+    verticalAlign: 'bottom',
+    useHTML: true,
+    style: {
+    'padding-top': '10px',
+    'color':'white',
+    'font-size': '15px'
+    },
+    text: '<p><i class="tiny material-icons">info</i>The GLAD Global Land Cover and Land Use Change dataset quantifies changes in forest extent and height, cropland, built-up lands, surface water, and perennial snow and ice extent from the year 2000 to 2020 at 30-m spatial resolution. The global dataset derived from the GLAD Landsat Analysis Ready Data. Each thematic product was independently derived using state-of-the-art, locally and regionally calibrated machine learning tools. For more information please visit <a href="https://glad.umd.edu/dataset/GLCLUC2020">https://glad.umd.edu/dataset/GLCLUC2020</a></p>'
+    
+    },
+  series: [{
+    name: 'Area',
+    colorByPoint: true,
+    data: prepareDonutData(jsonData, 'protected').map(item => {
+      return {
+        name: item.name,
+        y: item.y / totalProtectedArea * 100, // Convert area to percentage of total
+        color: item.color // Use the color from the data
+      };
+    })
+  }]
+});
+
+// Initialize Highcharts for the unprotected donut chart
+Highcharts.chart('lcc-unp', {
+  chart: {
+    type: 'pie',
+    backgroundColor: null,
+height:'800px'
+  },
+  title: {
+    text: 'Land use change outside protected areas (2000-2020)',
+    style: {
+    color: '#a1aeb0',
+    font: '16px "Source Sans Pro", Helvetica Neue , sans-serif',
+    },
+    align: 'center'
+    
+    },
+  plotOptions: {
+    pie: {
+      innerSize: '50%', // This creates the donut effect
+      dataLabels: {
+        enabled: true,
+        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+      }
+    }
+  },
+  caption: {
+    verticalAlign: 'bottom',
+    useHTML: true,
+    style: {
+    'padding-top': '10px',
+    'color':'white',
+    'font-size': '15px'
+    },
+    text: '<p><i class="tiny material-icons">info</i>The GLAD Global Land Cover and Land Use Change dataset quantifies changes in forest extent and height, cropland, built-up lands, surface water, and perennial snow and ice extent from the year 2000 to 2020 at 30-m spatial resolution. The global dataset derived from the GLAD Landsat Analysis Ready Data. Each thematic product was independently derived using state-of-the-art, locally and regionally calibrated machine learning tools. For more information please visit <a href="https://glad.umd.edu/dataset/GLCLUC2020">https://glad.umd.edu/dataset/GLCLUC2020</a></p>'
+    
+    
+    },
+  series: [{
+    name: 'Area',
+    colorByPoint: true,
+    data: prepareDonutData(jsonData, 'unprotected').map(item => {
+      return {
+        name: item.name,
+        y: item.y / totalProtectedArea * 100, // Convert area to percentage of total
+        color: item.color // Use the color from the data
+      };
+    })
+  }]
+});
+
+
+
+}
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Burned Areas dynamics
 var api_burned_area =  "https://api.biopama.org/api/burned_area/function/api_dynamics/iso3="+e.features[0].properties.iso3
 $.ajax({
@@ -1044,7 +1217,7 @@ style: {
 },
 text: '<i>Over the span of 2016 to 2020, the burned lands inside protected areas showed a <b>'+Math.abs(parseFloat(percp)).toFixed(2)+'% </b><span style="color:'+color_p+';">'+trendp+'</span> when contrasted with the period of 2001 to 2005 </i>'+
 '<i> whereas the burned lands outside protected areas within the same time span showed a <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'% </b><span style="color:'+color_up+';">'+trend+'.</span></i>'+
-'<hr><p><i class="tiny material-icons">info</i> These statistics are derived from the ESA Climate Change Initiative (CCI). MODIS Fire_cci Burned Area pixel product is a monthly global ~250m spatial resolution dataset containing information on burned areas as well as ancillary data. This dataset is also part of the Copernicus Climate Change Service (C3S).vFor more information please visit <a href="https://climate.esa.int/en/projects/fire/">https://climate.esa.int/en/projects/fire/</a></p>'
+'<hr><p><i class="tiny material-icons">info</i> These statistics are derived from the ESA Climate Change Initiative (CCI). MODIS Fire_cci Burned Area pixel product is a monthly global ~250m spatial resolution dataset containing information on burned areas as well as ancillary data. This dataset is also part of the Copernicus Climate Change Service (C3S). For more information please visit <a href="https://climate.esa.int/en/projects/fire/">https://climate.esa.int/en/projects/fire/</a></p>'
 
 
 },
@@ -2345,6 +2518,15 @@ data: [parseFloat(resp[0].permanent_2000),parseFloat(resp[0].permanent_2001),par
   "<div class = 'title'><h3>Human Modification Dynamics</h3></div>"+ 
   "<div id='nightlights' class = 'landcover'></div></div>"+
   "<div id='ghsl' class = 'landcover'></div></div>"+
+  "<div id='lcc_wrapper'>"+
+  "<div class = 'title'><h3>Land Use Dynamics</h3></div>"+ 
+  "<div id='lcc' class = 'landcover'></div></div>"+
+  "<div id='lcc-extended' class = 'landcover'></div></div>"+
+  "<div id='lcc-unp' class = 'landcover'></div></div>"+
+
+
+ 
+  "<div id='lcc-unp-t' class = 'landcover'></div></div>"+
 
   "<div id='protconn_wrapper'>"+
   "<div class = 'title'><h3>Protected Areas Connectivity Dynamics</h3></div>"+ 

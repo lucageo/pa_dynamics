@@ -1599,7 +1599,13 @@ i{
   color: #becad8;
   text-align: center;
 }
-
+#lcc_wrapper{
+  background: #061123;
+  padding: 10px;
+  border-top: 7px solid #041a3e;
+  color: #becad8;
+  text-align: center;
+}
 #pan_wrapper{
   background: #061123;
   padding: 10px;
