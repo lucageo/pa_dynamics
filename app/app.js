@@ -459,15 +459,15 @@ async: false
 });
 
 // TMF deforestation inside PAs dynamics
-var api_trend_tmf =  "https://api.biopama.org/api/protection_level/function/api_tmf_time_series/iso3="+e.features[0].properties.iso3
+var api_trend_tmf =  "https://api.biopama.org/api/tmf/function/api_tmf_timeseries_prot_unprot/iso_codes="+e.features[0].properties.iso3
 $.ajax({
 url: api_trend_tmf,
 dataType: 'json',
 success: function(d) {
 var res = d.filter(obj=> obj.protection == "protected");
-var avg =  (parseFloat(res[0]._2018_directdeforestation)+parseFloat(res[0]._2019_directdeforestation)+parseFloat(res[0]._2020_directdeforestation)+parseFloat(res[0]._2021_directdeforestation)+parseFloat(res[0]._2018_deforafterdegrad)+parseFloat(res[0]._2019_deforafterdegrad)+parseFloat(res[0]._2020_deforafterdegrad)+parseFloat(res[0]._2021_deforafterdegrad))/4
-var first = (parseFloat(res[0]._2018_directdeforestation)+parseFloat(res[0]._2019_directdeforestation)+parseFloat(res[0]._2018_deforafterdegrad)+parseFloat(res[0]._2019_deforafterdegrad))
-var last = (parseFloat(res[0]._2020_directdeforestation)+parseFloat(res[0]._2021_directdeforestation)+parseFloat(res[0]._2020_deforafterdegrad)+parseFloat(res[0]._2021_deforafterdegrad))
+var avg =  (parseFloat(res[0]._2018_directdeforestation/1000000)+parseFloat(res[0]._2019_directdeforestation/1000000)+parseFloat(res[0]._2020_directdeforestation/1000000)+parseFloat(res[0]._2021_directdeforestation/1000000))/4
+var first = (parseFloat(res[0]._2018_directdeforestation/1000000000)+parseFloat(res[0]._2019_directdeforestation/1000000000)+parseFloat(res[0]._2018_deforafterdegrad/1000000000)+parseFloat(res[0]._2019_deforafterdegrad/1000000000))
+var last = (parseFloat(res[0]._2020_directdeforestation/1000000000)+parseFloat(res[0]._2021_directdeforestation/1000000000)+parseFloat(res[0]._2020_deforafterdegrad/1000000000)+parseFloat(res[0]._2021_deforafterdegrad/1000000000))
 if (first>last){
 var trend = 'decreased'
 var color = '#adef2a'
@@ -478,7 +478,7 @@ var color = '#ff6347'
 
 var percentage = (((last-first)/first)*100)
 
-if (parseFloat(res[0]._2000_forestdegradation)>0){
+if (parseFloat(res[0]._2000_forestdegradation/1000000000)>0){
 
 $('#tmf_deforestation_stack').highcharts({
 chart: {
@@ -524,7 +524,7 @@ yAxis: {
 visible: true,
 gridLineColor: '#404040',
 title: {
-text: 'SQKM '
+text: 'Mh '
 },
 stackLabels: {
 enabled: true,
@@ -566,25 +566,25 @@ style: {
 'color':'white',
 'font-size': '20px'
 },
-text: '<i>Between 2018 and 2021, in the Tropical Moist Forest ecosystem, the average deforestation  was '+avg.toFixed(2)+' km<sup>2</sup>/yr. Over the period 2020 - 2021 <b>deforestation, inside Protected Areas</b>, has <span style="color:'+color+';">'+trend+'</span> by '+Math.abs(percentage).toFixed(2)+'%  compared to the period 2018 - 2019. <i><hr><p><i class="tiny material-icons">info</i> The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre helps detect and monitor changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns. More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'
+text: '<i>Between 2018 and 2021, in the Tropical Moist Forest ecosystem, the average deforestation  was '+avg.toFixed(2)+' h/yr. Over the period 2020 - 2021 <b>deforestation, inside Protected Areas</b>, has <span style="color:'+color+';">'+trend+'</span> by '+Math.abs(percentage).toFixed(2)+'%  compared to the period 2018 - 2019. <i><hr><p><i class="tiny material-icons">info</i> The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre helps detect and monitor changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns. More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'
 },
 
 series: [{
 
 name: 'Direct Deforestation',
 color: '#c80a0a',
-data: [parseFloat(res[0]._2000_directdeforestation),parseFloat(res[0]._2001_directdeforestation),parseFloat(res[0]._2002_directdeforestation),parseFloat(res[0]._2003_directdeforestation),parseFloat(res[0]._2004_directdeforestation),parseFloat(res[0]._2005_directdeforestation),parseFloat(res[0]._2006_directdeforestation),parseFloat(res[0]._2007_directdeforestation),parseFloat(res[0]._2008_directdeforestation),parseFloat(res[0]._2009_directdeforestation),parseFloat(res[0]._2010_directdeforestation),parseFloat(res[0]._2011_directdeforestation),parseFloat(res[0]._2012_directdeforestation),parseFloat(res[0]._2013_directdeforestation),parseFloat(res[0]._2014_directdeforestation),parseFloat(res[0]._2015_directdeforestation),parseFloat(res[0]._2016_directdeforestation),parseFloat(res[0]._2017_directdeforestation),parseFloat(res[0]._2018_directdeforestation),parseFloat(res[0]._2019_directdeforestation),parseFloat(res[0]._2020_directdeforestation),parseFloat(res[0]._2021_directdeforestation)],
+data: [parseFloat(res[0]._2000_directdeforestation/1000000000),parseFloat(res[0]._2001_directdeforestation/1000000000),parseFloat(res[0]._2002_directdeforestation/1000000000),parseFloat(res[0]._2003_directdeforestation/1000000000),parseFloat(res[0]._2004_directdeforestation/1000000000),parseFloat(res[0]._2005_directdeforestation/1000000000),parseFloat(res[0]._2006_directdeforestation/1000000000),parseFloat(res[0]._2007_directdeforestation/1000000000),parseFloat(res[0]._2008_directdeforestation/1000000000),parseFloat(res[0]._2009_directdeforestation/1000000000),parseFloat(res[0]._2010_directdeforestation/1000000000),parseFloat(res[0]._2011_directdeforestation/1000000000),parseFloat(res[0]._2012_directdeforestation/1000000000),parseFloat(res[0]._2013_directdeforestation/1000000000),parseFloat(res[0]._2014_directdeforestation/1000000000),parseFloat(res[0]._2015_directdeforestation/1000000000),parseFloat(res[0]._2016_directdeforestation/1000000000),parseFloat(res[0]._2017_directdeforestation/1000000000),parseFloat(res[0]._2018_directdeforestation/1000000000),parseFloat(res[0]._2019_directdeforestation/1000000000),parseFloat(res[0]._2020_directdeforestation/1000000000),parseFloat(res[0]._2021_directdeforestation/1000000000)],
 }, {
 
 name: 'Deforestation after degradation',
 color: '#ff6347',
-data: [parseFloat(res[0]._2000_deforafterdegrad),parseFloat(res[0]._2001_deforafterdegrad),parseFloat(res[0]._2002_deforafterdegrad),parseFloat(res[0]._2003_deforafterdegrad),parseFloat(res[0]._2004_deforafterdegrad),parseFloat(res[0]._2005_deforafterdegrad),parseFloat(res[0]._2006_deforafterdegrad),parseFloat(res[0]._2007_deforafterdegrad),parseFloat(res[0]._2008_deforafterdegrad),parseFloat(res[0]._2009_deforafterdegrad),parseFloat(res[0]._2010_deforafterdegrad),parseFloat(res[0]._2011_deforafterdegrad),parseFloat(res[0]._2012_deforafterdegrad),parseFloat(res[0]._2013_deforafterdegrad),parseFloat(res[0]._2014_deforafterdegrad),parseFloat(res[0]._2015_deforafterdegrad),parseFloat(res[0]._2016_deforafterdegrad),parseFloat(res[0]._2017_deforafterdegrad),parseFloat(res[0]._2018_deforafterdegrad),parseFloat(res[0]._2019_deforafterdegrad),parseFloat(res[0]._2020_deforafterdegrad),parseFloat(res[0]._2021_deforafterdegrad)],
+data: [parseFloat(res[0]._2000_deforafterdegrad/1000000000),parseFloat(res[0]._2001_deforafterdegrad/1000000000),parseFloat(res[0]._2002_deforafterdegrad/1000000000),parseFloat(res[0]._2003_deforafterdegrad/1000000000),parseFloat(res[0]._2004_deforafterdegrad/1000000000),parseFloat(res[0]._2005_deforafterdegrad/1000000000),parseFloat(res[0]._2006_deforafterdegrad/1000000000),parseFloat(res[0]._2007_deforafterdegrad/1000000000),parseFloat(res[0]._2008_deforafterdegrad/1000000000),parseFloat(res[0]._2009_deforafterdegrad/1000000000),parseFloat(res[0]._2010_deforafterdegrad/1000000000),parseFloat(res[0]._2011_deforafterdegrad/1000000000),parseFloat(res[0]._2012_deforafterdegrad/1000000000),parseFloat(res[0]._2013_deforafterdegrad/1000000000),parseFloat(res[0]._2014_deforafterdegrad/1000000000),parseFloat(res[0]._2015_deforafterdegrad/1000000000),parseFloat(res[0]._2016_deforafterdegrad/1000000000),parseFloat(res[0]._2017_deforafterdegrad/1000000000),parseFloat(res[0]._2018_deforafterdegrad/1000000000),parseFloat(res[0]._2019_deforafterdegrad/1000000000),parseFloat(res[0]._2020_deforafterdegrad/1000000000),parseFloat(res[0]._2021_deforafterdegrad/1000000000)],
 
 }, {
 
 name: 'Forest Degradation',
 color: '#ffb400',
-data: [parseFloat(res[0]._2000_forestdegradation),parseFloat(res[0]._2001_forestdegradation),parseFloat(res[0]._2002_forestdegradation),parseFloat(res[0]._2003_forestdegradation),parseFloat(res[0]._2004_forestdegradation),parseFloat(res[0]._2005_forestdegradation),parseFloat(res[0]._2006_forestdegradation),parseFloat(res[0]._2007_forestdegradation),parseFloat(res[0]._2008_forestdegradation),parseFloat(res[0]._2009_forestdegradation),parseFloat(res[0]._2010_forestdegradation),parseFloat(res[0]._2011_forestdegradation),parseFloat(res[0]._2012_forestdegradation),parseFloat(res[0]._2013_forestdegradation),parseFloat(res[0]._2014_forestdegradation),parseFloat(res[0]._2015_forestdegradation),parseFloat(res[0]._2016_forestdegradation),parseFloat(res[0]._2017_forestdegradation),parseFloat(res[0]._2018_forestdegradation),parseFloat(res[0]._2019_forestdegradation),parseFloat(res[0]._2020_forestdegradation),parseFloat(res[0]._2021_forestdegradation)],
+data: [parseFloat(res[0]._2000_forestdegradation/1000000000),parseFloat(res[0]._2001_forestdegradation/1000000000),parseFloat(res[0]._2002_forestdegradation/1000000000),parseFloat(res[0]._2003_forestdegradation/1000000000),parseFloat(res[0]._2004_forestdegradation/1000000000),parseFloat(res[0]._2005_forestdegradation/1000000000),parseFloat(res[0]._2006_forestdegradation/1000000000),parseFloat(res[0]._2007_forestdegradation/1000000000),parseFloat(res[0]._2008_forestdegradation/1000000000),parseFloat(res[0]._2009_forestdegradation/1000000000),parseFloat(res[0]._2010_forestdegradation/1000000000),parseFloat(res[0]._2011_forestdegradation/1000000000),parseFloat(res[0]._2012_forestdegradation/1000000000),parseFloat(res[0]._2013_forestdegradation/1000000000),parseFloat(res[0]._2014_forestdegradation/1000000000),parseFloat(res[0]._2015_forestdegradation/1000000000),parseFloat(res[0]._2016_forestdegradation/1000000000),parseFloat(res[0]._2017_forestdegradation/1000000000),parseFloat(res[0]._2018_forestdegradation/1000000000),parseFloat(res[0]._2019_forestdegradation/1000000000),parseFloat(res[0]._2020_forestdegradation/1000000000),parseFloat(res[0]._2021_forestdegradation/1000000000)],
 
 }]
 
@@ -597,7 +597,7 @@ $('#tmf_deforestation_stack').html('<center><b>Statistics not available for the 
 
 });
 // TMF deforestation outside PAs dynamics
-var api_trend_tmf =  "https://api.biopama.org/api/protection_level/function/api_tmf_time_series/iso3="+e.features[0].properties.iso3
+var api_trend_tmf =  "https://api.biopama.org/api/tmf/function/api_tmf_timeseries_prot_unprot/iso_codes="+e.features[0].properties.iso3
 $.ajax({
 url: api_trend_tmf,
 dataType: 'json',
@@ -607,10 +607,10 @@ success: function(d) {
 
 var res = d.filter(obj=> obj.protection == "unprotected");
 
-var avg =  (parseFloat(res[0]._2018_directdeforestation)+parseFloat(res[0]._2019_directdeforestation)+parseFloat(res[0]._2020_directdeforestation)+parseFloat(res[0]._2021_directdeforestation)+parseFloat(res[0]._2018_deforafterdegrad)+parseFloat(res[0]._2019_deforafterdegrad)+parseFloat(res[0]._2020_deforafterdegrad)+parseFloat(res[0]._2021_deforafterdegrad))/4
+var avg =  (parseFloat(res[0]._2018_directdeforestation/1000000)+parseFloat(res[0]._2019_directdeforestation/1000000)+parseFloat(res[0]._2020_directdeforestation/1000000)+parseFloat(res[0]._2021_directdeforestation/1000000))/4
 
-var first = (parseFloat(res[0]._2018_directdeforestation)+parseFloat(res[0]._2019_directdeforestation)+parseFloat(res[0]._2018_deforafterdegrad)+parseFloat(res[0]._2019_deforafterdegrad))
-var last = (parseFloat(res[0]._2020_directdeforestation)+parseFloat(res[0]._2021_directdeforestation)+parseFloat(res[0]._2020_deforafterdegrad)+parseFloat(res[0]._2021_deforafterdegrad))
+var first = (parseFloat(res[0]._2018_directdeforestation/1000000000)+parseFloat(res[0]._2019_directdeforestation/1000000000)+parseFloat(res[0]._2018_deforafterdegrad/1000000000)+parseFloat(res[0]._2019_deforafterdegrad/1000000000))
+var last = (parseFloat(res[0]._2020_directdeforestation/1000000000)+parseFloat(res[0]._2021_directdeforestation/1000000000)+parseFloat(res[0]._2020_deforafterdegrad/1000000000)+parseFloat(res[0]._2021_deforafterdegrad/1000000000))
 var percentage = (((last-first)/first)*100)
 
 if (first>last){
@@ -620,7 +620,7 @@ var color = '#adef2a'
 var trend = 'increased'
 var color = '#ff6347'
 }
-if (parseFloat(res[0]._2000_forestdegradation)>0){
+if (parseFloat(res[0]._2000_forestdegradation/1000000000)>0){
 $('#tmf_deforestation_stack_unprot').highcharts({
 chart: {
 type: 'column',
@@ -664,7 +664,7 @@ yAxis: {
 visible: true,
 gridLineColor: '#404040',
 title: {
-text: 'SQKM '
+text: 'Mh '
 },
 stackLabels: {
 enabled: true,
@@ -706,25 +706,25 @@ style: {
 'color':'white',
 'font-size': '15px'
 },
-text: '<i>Between 2018 and 2021, in the Tropical Moist Forest ecosystem, the average deforestation  was '+avg.toFixed(2)+' km<sup>2</sup>/yr. Over the period 2020 - 2021 <b>deforestation, outside Protected Areas</b>, has <span style="color:'+color+';">'+trend+'</span> by '+Math.abs(percentage).toFixed(2)+'%  compared to the period 2018 - 2019. <i><hr><p><p><i class="tiny material-icons">info</i> The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre helps detect and monitor changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns. More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'
+text: '<i>Between 2018 and 2021, in the Tropical Moist Forest ecosystem, the average deforestation  was '+avg.toFixed(2)+' h/yr. Over the period 2020 - 2021 <b>deforestation, outside Protected Areas</b>, has <span style="color:'+color+';">'+trend+'</span> by '+Math.abs(percentage).toFixed(2)+'%  compared to the period 2018 - 2019. <i><hr><p><p><i class="tiny material-icons">info</i> The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre helps detect and monitor changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns. More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'
 },
 
 series: [{
 
 name: 'Direct Deforestation',
 color: '#c80a0a',
-data: [parseFloat(res[0]._2000_directdeforestation),parseFloat(res[0]._2001_directdeforestation),parseFloat(res[0]._2002_directdeforestation),parseFloat(res[0]._2003_directdeforestation),parseFloat(res[0]._2004_directdeforestation),parseFloat(res[0]._2005_directdeforestation),parseFloat(res[0]._2006_directdeforestation),parseFloat(res[0]._2007_directdeforestation),parseFloat(res[0]._2008_directdeforestation),parseFloat(res[0]._2009_directdeforestation),parseFloat(res[0]._2010_directdeforestation),parseFloat(res[0]._2011_directdeforestation),parseFloat(res[0]._2012_directdeforestation),parseFloat(res[0]._2013_directdeforestation),parseFloat(res[0]._2014_directdeforestation),parseFloat(res[0]._2015_directdeforestation),parseFloat(res[0]._2016_directdeforestation),parseFloat(res[0]._2017_directdeforestation),parseFloat(res[0]._2018_directdeforestation),parseFloat(res[0]._2019_directdeforestation),parseFloat(res[0]._2020_directdeforestation),parseFloat(res[0]._2021_directdeforestation)],
+data: [parseFloat(res[0]._2000_directdeforestation/1000000000),parseFloat(res[0]._2001_directdeforestation/1000000000),parseFloat(res[0]._2002_directdeforestation/1000000000),parseFloat(res[0]._2003_directdeforestation/1000000000),parseFloat(res[0]._2004_directdeforestation/1000000000),parseFloat(res[0]._2005_directdeforestation/1000000000),parseFloat(res[0]._2006_directdeforestation/1000000000),parseFloat(res[0]._2007_directdeforestation/1000000000),parseFloat(res[0]._2008_directdeforestation/1000000000),parseFloat(res[0]._2009_directdeforestation/1000000000),parseFloat(res[0]._2010_directdeforestation/1000000000),parseFloat(res[0]._2011_directdeforestation/1000000000),parseFloat(res[0]._2012_directdeforestation/1000000000),parseFloat(res[0]._2013_directdeforestation/1000000000),parseFloat(res[0]._2014_directdeforestation/1000000000),parseFloat(res[0]._2015_directdeforestation/1000000000),parseFloat(res[0]._2016_directdeforestation/1000000000),parseFloat(res[0]._2017_directdeforestation/1000000000),parseFloat(res[0]._2018_directdeforestation/1000000000),parseFloat(res[0]._2019_directdeforestation/1000000000),parseFloat(res[0]._2020_directdeforestation/1000000000),parseFloat(res[0]._2021_directdeforestation/1000000000)],
 }, {
 
 name: 'Deforestation after degradation',
 color: '#ff6347',
-data: [parseFloat(res[0]._2000_deforafterdegrad),parseFloat(res[0]._2001_deforafterdegrad),parseFloat(res[0]._2002_deforafterdegrad),parseFloat(res[0]._2003_deforafterdegrad),parseFloat(res[0]._2004_deforafterdegrad),parseFloat(res[0]._2005_deforafterdegrad),parseFloat(res[0]._2006_deforafterdegrad),parseFloat(res[0]._2007_deforafterdegrad),parseFloat(res[0]._2008_deforafterdegrad),parseFloat(res[0]._2009_deforafterdegrad),parseFloat(res[0]._2010_deforafterdegrad),parseFloat(res[0]._2011_deforafterdegrad),parseFloat(res[0]._2012_deforafterdegrad),parseFloat(res[0]._2013_deforafterdegrad),parseFloat(res[0]._2014_deforafterdegrad),parseFloat(res[0]._2015_deforafterdegrad),parseFloat(res[0]._2016_deforafterdegrad),parseFloat(res[0]._2017_deforafterdegrad),parseFloat(res[0]._2018_deforafterdegrad),parseFloat(res[0]._2019_deforafterdegrad),parseFloat(res[0]._2020_deforafterdegrad),parseFloat(res[0]._2021_deforafterdegrad)],
+data: [parseFloat(res[0]._2000_deforafterdegrad/1000000000),parseFloat(res[0]._2001_deforafterdegrad/1000000000),parseFloat(res[0]._2002_deforafterdegrad/1000000000),parseFloat(res[0]._2003_deforafterdegrad/1000000000),parseFloat(res[0]._2004_deforafterdegrad/1000000000),parseFloat(res[0]._2005_deforafterdegrad/1000000000),parseFloat(res[0]._2006_deforafterdegrad/1000000000),parseFloat(res[0]._2007_deforafterdegrad/1000000000),parseFloat(res[0]._2008_deforafterdegrad/1000000000),parseFloat(res[0]._2009_deforafterdegrad/1000000000),parseFloat(res[0]._2010_deforafterdegrad/1000000000),parseFloat(res[0]._2011_deforafterdegrad/1000000000),parseFloat(res[0]._2012_deforafterdegrad/1000000000),parseFloat(res[0]._2013_deforafterdegrad/1000000000),parseFloat(res[0]._2014_deforafterdegrad/1000000000),parseFloat(res[0]._2015_deforafterdegrad/1000000000),parseFloat(res[0]._2016_deforafterdegrad/1000000000),parseFloat(res[0]._2017_deforafterdegrad/1000000000),parseFloat(res[0]._2018_deforafterdegrad/1000000000),parseFloat(res[0]._2019_deforafterdegrad/1000000000),parseFloat(res[0]._2020_deforafterdegrad/1000000000),parseFloat(res[0]._2021_deforafterdegrad/1000000000)],
 
 }, {
 
 name: 'Forest Degradation',
 color: '#ffb400',
-data: [parseFloat(res[0]._2000_forestdegradation),parseFloat(res[0]._2001_forestdegradation),parseFloat(res[0]._2002_forestdegradation),parseFloat(res[0]._2003_forestdegradation),parseFloat(res[0]._2004_forestdegradation),parseFloat(res[0]._2005_forestdegradation),parseFloat(res[0]._2006_forestdegradation),parseFloat(res[0]._2007_forestdegradation),parseFloat(res[0]._2008_forestdegradation),parseFloat(res[0]._2009_forestdegradation),parseFloat(res[0]._2010_forestdegradation),parseFloat(res[0]._2011_forestdegradation),parseFloat(res[0]._2012_forestdegradation),parseFloat(res[0]._2013_forestdegradation),parseFloat(res[0]._2014_forestdegradation),parseFloat(res[0]._2015_forestdegradation),parseFloat(res[0]._2016_forestdegradation),parseFloat(res[0]._2017_forestdegradation),parseFloat(res[0]._2018_forestdegradation),parseFloat(res[0]._2019_forestdegradation),parseFloat(res[0]._2020_forestdegradation),parseFloat(res[0]._2021_forestdegradation)],
+data: [parseFloat(res[0]._2000_forestdegradation/1000000000),parseFloat(res[0]._2001_forestdegradation/1000000000),parseFloat(res[0]._2002_forestdegradation/1000000000),parseFloat(res[0]._2003_forestdegradation/1000000000),parseFloat(res[0]._2004_forestdegradation/1000000000),parseFloat(res[0]._2005_forestdegradation/1000000000),parseFloat(res[0]._2006_forestdegradation/1000000000),parseFloat(res[0]._2007_forestdegradation/1000000000),parseFloat(res[0]._2008_forestdegradation/1000000000),parseFloat(res[0]._2009_forestdegradation/1000000000),parseFloat(res[0]._2010_forestdegradation/1000000000),parseFloat(res[0]._2011_forestdegradation/1000000000),parseFloat(res[0]._2012_forestdegradation/1000000000),parseFloat(res[0]._2013_forestdegradation/1000000000),parseFloat(res[0]._2014_forestdegradation/1000000000),parseFloat(res[0]._2015_forestdegradation/1000000000),parseFloat(res[0]._2016_forestdegradation/1000000000),parseFloat(res[0]._2017_forestdegradation/1000000000),parseFloat(res[0]._2018_forestdegradation/1000000000),parseFloat(res[0]._2019_forestdegradation/1000000000),parseFloat(res[0]._2020_forestdegradation/1000000000),parseFloat(res[0]._2021_forestdegradation/1000000000)],
 
 }]
 
@@ -739,7 +739,7 @@ $('#tmf_deforestation_stack_unprot').html('<center><b>Statistics not available f
 
 });
 // Undisturbed TMF dynamics
-var api_trend_tmf =  "https://api.biopama.org/api/protection_level/function/api_tmf_time_series/iso3="+e.features[0].properties.iso3
+var api_trend_tmf =  "https://api.biopama.org/api/tmf/function/api_tmf_timeseries_prot_unprot/iso_codes="+e.features[0].properties.iso3
 $.ajax({
 url: api_trend_tmf,
 dataType: 'json',
@@ -750,17 +750,17 @@ success: function(d) {
 var res = d.filter(obj=> obj.protection == "unprotected");
 var resp = d.filter(obj=> obj.protection == "protected");
 
-var UndisturbedUnprot1 = parseFloat(res[0]._2000_undisturbedforest)
-var UndisturbedUnprot2 = parseFloat(res[0]._2021_undisturbedforest)
-var UndisturbedProt1 = parseFloat(resp[0]._2000_undisturbedforest)
-var UndisturbedProt2 = parseFloat(resp[0]._2021_undisturbedforest)
+var UndisturbedUnprot1 = parseFloat(res[0]._2000_undisturbedforest/1000000000)
+var UndisturbedUnprot2 = parseFloat(res[0]._2021_undisturbedforest/1000000000)
+var UndisturbedProt1 = parseFloat(resp[0]._2000_undisturbedforest/1000000000)
+var UndisturbedProt2 = parseFloat(resp[0]._2021_undisturbedforest/1000000000)
 
 var unprotVariation = parseFloat(((UndisturbedUnprot2-UndisturbedUnprot1)/UndisturbedUnprot1)*100) 
 var protVariation = parseFloat(((UndisturbedProt2-UndisturbedProt1)/UndisturbedProt1)*100)
 
 
-var countrycoverage2000 = (((UndisturbedUnprot1+UndisturbedProt1)/(parseFloat(resp[0]._2021_poly_area)+parseFloat(res[0]._2021_poly_area)))*100).toFixed(2)
-var countrycoverage2021 = (((UndisturbedUnprot2+UndisturbedProt2)/(parseFloat(resp[0]._2021_poly_area)+parseFloat(res[0]._2021_poly_area)))*100).toFixed(2)
+var countrycoverage2000 = (((UndisturbedUnprot1+UndisturbedProt1)/(parseFloat(resp[0].poly_area)+parseFloat(res[0].poly_area)))*100).toFixed(2)
+var countrycoverage2021 = (((UndisturbedUnprot2+UndisturbedProt2)/(parseFloat(resp[0].poly_area)+parseFloat(res[0].poly_area)))*100).toFixed(2)
 
 
 var trendUndisturbUnprot = 'unknown';
@@ -786,7 +786,7 @@ color2 = '#adef2a'
 
 
 
-if (parseFloat(res[0]._2000_undisturbedforest)>0){
+if (parseFloat(res[0]._2000_undisturbedforest/1000000000)>0){
 $('#tmf_undist_stack_unprot').highcharts({
 chart: {
 type: 'column',
@@ -830,7 +830,7 @@ yAxis: {
 visible: true,
 gridLineColor: '#404040',
 title: {
-text: 'SQKM '
+text: 'Mh '
 },
 stackLabels: {
 enabled: true,
@@ -841,7 +841,7 @@ textOutline: 'none'
 },
 formatter: function() {
 
-return  Highcharts.numberFormat(this.total/1000, 1, ',')+" k";
+return  Highcharts.numberFormat(this.total, 1, ',');
 }
 }
 },
@@ -880,7 +880,6 @@ style: {
 },
 text: '<i>Undisturbed tropical moist forest not subject to protection has <span style="color:'+color1+';"> '+trendUndisturbUnprot+' </span> by <b>'+Math.abs((unprotVariation)).toFixed(2)+'</b>% whereas '+
 'undisturbed tropical moist forest subject to protection has <span style="color:'+color2+';"> '+trendUndisturbProt+' </span> by <b>'+Math.abs((protVariation)).toFixed(2)+'</b>%.</i>'+
-'<i>Overall, in 2000, Undisturbed Tropical Moist Forest accounted for <b> '+countrycoverage2000+'</b>% of the total country area. In 2021 this proportion stood at <b> '+countrycoverage2021+'</b>%.</i>'+
 '<hr>'+
 '<p><p><i class="tiny material-icons">info</i> The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre, helps detect and monitor changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns. More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'
 
@@ -891,13 +890,13 @@ series: [{
 name: 'Unprotected',
 color: '#7fb763',
 
-data: [parseFloat(res[0]._2000_undisturbedforest),parseFloat(res[0]._2001_undisturbedforest),parseFloat(res[0]._2002_undisturbedforest),parseFloat(res[0]._2003_undisturbedforest),parseFloat(res[0]._2004_undisturbedforest),parseFloat(res[0]._2005_undisturbedforest),parseFloat(res[0]._2006_undisturbedforest),parseFloat(res[0]._2007_undisturbedforest),parseFloat(res[0]._2008_undisturbedforest),parseFloat(res[0]._2009_undisturbedforest),parseFloat(res[0]._2010_undisturbedforest),parseFloat(res[0]._2011_undisturbedforest),parseFloat(res[0]._2012_undisturbedforest),parseFloat(res[0]._2013_undisturbedforest),parseFloat(res[0]._2014_undisturbedforest),parseFloat(res[0]._2015_undisturbedforest),parseFloat(res[0]._2016_undisturbedforest),parseFloat(res[0]._2017_undisturbedforest),parseFloat(res[0]._2018_undisturbedforest),parseFloat(res[0]._2019_undisturbedforest),parseFloat(res[0]._2020_undisturbedforest),parseFloat(res[0]._2021_undisturbedforest)],
+data: [parseFloat(res[0]._2000_undisturbedforest/1000000000),parseFloat(res[0]._2001_undisturbedforest/1000000000),parseFloat(res[0]._2002_undisturbedforest/1000000000),parseFloat(res[0]._2003_undisturbedforest/1000000000),parseFloat(res[0]._2004_undisturbedforest/1000000000),parseFloat(res[0]._2005_undisturbedforest/1000000000),parseFloat(res[0]._2006_undisturbedforest/1000000000),parseFloat(res[0]._2007_undisturbedforest/1000000000),parseFloat(res[0]._2008_undisturbedforest/1000000000),parseFloat(res[0]._2009_undisturbedforest/1000000000),parseFloat(res[0]._2010_undisturbedforest/1000000000),parseFloat(res[0]._2011_undisturbedforest/1000000000),parseFloat(res[0]._2012_undisturbedforest/1000000000),parseFloat(res[0]._2013_undisturbedforest/1000000000),parseFloat(res[0]._2014_undisturbedforest/1000000000),parseFloat(res[0]._2015_undisturbedforest/1000000000),parseFloat(res[0]._2016_undisturbedforest/1000000000),parseFloat(res[0]._2017_undisturbedforest/1000000000),parseFloat(res[0]._2018_undisturbedforest/1000000000),parseFloat(res[0]._2019_undisturbedforest/1000000000),parseFloat(res[0]._2020_undisturbedforest/1000000000),parseFloat(res[0]._2021_undisturbedforest/1000000000)],
 },{
 
 name: 'Protected',
 color: '#369707',
 
-data: [parseFloat(resp[0]._2000_undisturbedforest),parseFloat(resp[0]._2001_undisturbedforest),parseFloat(resp[0]._2002_undisturbedforest),parseFloat(resp[0]._2003_undisturbedforest),parseFloat(resp[0]._2004_undisturbedforest),parseFloat(resp[0]._2005_undisturbedforest),parseFloat(resp[0]._2006_undisturbedforest),parseFloat(resp[0]._2007_undisturbedforest),parseFloat(resp[0]._2008_undisturbedforest),parseFloat(resp[0]._2009_undisturbedforest),parseFloat(resp[0]._2010_undisturbedforest),parseFloat(resp[0]._2011_undisturbedforest),parseFloat(resp[0]._2012_undisturbedforest),parseFloat(resp[0]._2013_undisturbedforest),parseFloat(resp[0]._2014_undisturbedforest),parseFloat(resp[0]._2015_undisturbedforest),parseFloat(resp[0]._2016_undisturbedforest),parseFloat(resp[0]._2017_undisturbedforest),parseFloat(resp[0]._2018_undisturbedforest),parseFloat(resp[0]._2019_undisturbedforest),parseFloat(resp[0]._2020_undisturbedforest),parseFloat(resp[0]._2021_undisturbedforest)],
+data: [parseFloat(resp[0]._2000_undisturbedforest/1000000000),parseFloat(resp[0]._2001_undisturbedforest/1000000000),parseFloat(resp[0]._2002_undisturbedforest/1000000000),parseFloat(resp[0]._2003_undisturbedforest/1000000000),parseFloat(resp[0]._2004_undisturbedforest/1000000000),parseFloat(resp[0]._2005_undisturbedforest/1000000000),parseFloat(resp[0]._2006_undisturbedforest/1000000000),parseFloat(resp[0]._2007_undisturbedforest/1000000000),parseFloat(resp[0]._2008_undisturbedforest/1000000000),parseFloat(resp[0]._2009_undisturbedforest/1000000000),parseFloat(resp[0]._2010_undisturbedforest/1000000000),parseFloat(resp[0]._2011_undisturbedforest/1000000000),parseFloat(resp[0]._2012_undisturbedforest/1000000000),parseFloat(resp[0]._2013_undisturbedforest/1000000000),parseFloat(resp[0]._2014_undisturbedforest/1000000000),parseFloat(resp[0]._2015_undisturbedforest/1000000000),parseFloat(resp[0]._2016_undisturbedforest/1000000000),parseFloat(resp[0]._2017_undisturbedforest/1000000000),parseFloat(resp[0]._2018_undisturbedforest/1000000000),parseFloat(resp[0]._2019_undisturbedforest/1000000000),parseFloat(resp[0]._2020_undisturbedforest/1000000000),parseFloat(resp[0]._2021_undisturbedforest/1000000000)],
 }]
 
 });
@@ -1082,7 +1081,7 @@ height:'800px'
 
 
 // Burned Areas dynamics
-var api_burned_area =  "https://api.biopama.org/api/burned_area/function/api_dynamics/iso3="+e.features[0].properties.iso3
+var api_burned_area =  "https://api.biopama.org/api/burned_area/function/api_burned_area_prot_unprot_ts/iso_codes="+e.features[0].properties.iso3
 $.ajax({
 url: api_burned_area,
 dataType: 'json',
@@ -1095,8 +1094,9 @@ var resp = d.filter(obj=> obj.protection == "protected");
 
 
 
-var start = parseFloat(res[0].burned_2001)+parseFloat(res[0].burned_2002)+parseFloat(res[0].burned_2003)+parseFloat(res[0].burned_2004)+parseFloat(res[0].burned_2005)
-var end = parseFloat(res[0].burned_2020)+parseFloat(res[0].burned_2019)+parseFloat(res[0].burned_2018)+parseFloat(res[0].burned_2017)+parseFloat(res[0].burned_2016)
+var start = parseFloat(res[0].burned_2001)+parseFloat(res[0].burned_2002)+parseFloat(res[0].burned_2003)+parseFloat(res[0].burned_2004)
+var end = parseFloat(res[0].burned_2019)+parseFloat(res[0].burned_2018)+parseFloat(res[0].burned_2017)+parseFloat(res[0].burned_2016)
+
 
 var perc = ((end-start)/start)*100
 if(start > end){
@@ -1108,8 +1108,10 @@ trend = 'increase'
 color_up = '#adef2a'
 }
 
-var startp = parseFloat(resp[0].burned_2001)+parseFloat(resp[0].burned_2002)+parseFloat(resp[0].burned_2003)+parseFloat(resp[0].burned_2004)+parseFloat(resp[0].burned_2005)
-var endp = parseFloat(resp[0].burned_2020)+parseFloat(resp[0].burned_2019)+parseFloat(resp[0].burned_2018)+parseFloat(resp[0].burned_2017)+parseFloat(resp[0].burned_2016)
+var startp = parseFloat(resp[0].burned_2001)+parseFloat(resp[0].burned_2002)+parseFloat(resp[0].burned_2003)+parseFloat(resp[0].burned_2004)
+var endp = parseFloat(resp[0].burned_2019)+parseFloat(resp[0].burned_2018)+parseFloat(resp[0].burned_2017)+parseFloat(resp[0].burned_2016)
+
+
 
 var percp = ((endp-startp)/startp)*100
 if(startp > endp){
@@ -1154,7 +1156,7 @@ align: 'center'
 
 },
 xAxis: {
-categories: ['2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020'],
+categories: ['2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019'],
 gridLineColor: '#404040',
 
 labels: {
@@ -1167,7 +1169,7 @@ yAxis: {
 visible: true,
 gridLineColor: '#404040',
 title: {
-text: 'SQKM '
+text: 'Mh '
 },
 stackLabels: {
 enabled: true,
@@ -1215,7 +1217,7 @@ style: {
 'color':'white',
 'font-size': '15px'
 },
-text: '<i>Over the span of 2016 to 2020, the burned lands inside protected areas showed a <b>'+Math.abs(parseFloat(percp)).toFixed(2)+'% </b><span style="color:'+color_p+';">'+trendp+'</span> when contrasted with the period of 2001 to 2005 </i>'+
+text: '<i>Over the span of 2016 to 2019, the burned lands inside protected areas showed a <b>'+Math.abs(parseFloat(percp)).toFixed(2)+'% </b><span style="color:'+color_p+';">'+trendp+'</span> when contrasted with the period of 2001 to 2004 </i>'+
 '<i> whereas the burned lands outside protected areas within the same time span showed a <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'% </b><span style="color:'+color_up+';">'+trend+'.</span></i>'+
 '<hr><p><i class="tiny material-icons">info</i> These statistics are derived from the ESA Climate Change Initiative (CCI). MODIS Fire_cci Burned Area pixel product is a monthly global ~250m spatial resolution dataset containing information on burned areas as well as ancillary data. This dataset is also part of the Copernicus Climate Change Service (C3S). For more information please visit <a href="https://climate.esa.int/en/projects/fire/">https://climate.esa.int/en/projects/fire/</a></p>'
 
@@ -1227,13 +1229,13 @@ series: [{
 name: 'Unprotected',
 color: '#c08108',
 
-data: [parseFloat(res[0].burned_2001),parseFloat(res[0].burned_2002),parseFloat(res[0].burned_2003),parseFloat(res[0].burned_2004),parseFloat(res[0].burned_2005),parseFloat(res[0].burned_2006),parseFloat(res[0].burned_2007),parseFloat(res[0].burned_2008),parseFloat(res[0].burned_2009),parseFloat(res[0].burned_2010),parseFloat(res[0].burned_2011),parseFloat(res[0].burned_2012),parseFloat(res[0].burned_2013),parseFloat(res[0].burned_2014),parseFloat(res[0].burned_2015),parseFloat(res[0].burned_2016),parseFloat(res[0].burned_2017),parseFloat(res[0].burned_2018),parseFloat(res[0].burned_2019),parseFloat(res[0].burned_2020)],
+data: [parseFloat(res[0].burned_2001),parseFloat(res[0].burned_2002),parseFloat(res[0].burned_2003),parseFloat(res[0].burned_2004),parseFloat(res[0].burned_2005),parseFloat(res[0].burned_2006),parseFloat(res[0].burned_2007),parseFloat(res[0].burned_2008),parseFloat(res[0].burned_2009),parseFloat(res[0].burned_2010),parseFloat(res[0].burned_2011),parseFloat(res[0].burned_2012),parseFloat(res[0].burned_2013),parseFloat(res[0].burned_2014),parseFloat(res[0].burned_2015),parseFloat(res[0].burned_2016),parseFloat(res[0].burned_2017),parseFloat(res[0].burned_2018),parseFloat(res[0].burned_2019)],
 },{
 
 name: 'Protected',
 color: '#f1c063',
 
-data: [parseFloat(resp[0].burned_2001),parseFloat(resp[0].burned_2002),parseFloat(resp[0].burned_2003),parseFloat(resp[0].burned_2004),parseFloat(resp[0].burned_2005),parseFloat(resp[0].burned_2006),parseFloat(resp[0].burned_2007),parseFloat(resp[0].burned_2008),parseFloat(resp[0].burned_2009),parseFloat(resp[0].burned_2010),parseFloat(resp[0].burned_2011),parseFloat(resp[0].burned_2012),parseFloat(resp[0].burned_2013),parseFloat(resp[0].burned_2014),parseFloat(resp[0].burned_2015),parseFloat(resp[0].burned_2016),parseFloat(resp[0].burned_2017),parseFloat(resp[0].burned_2018),parseFloat(resp[0].burned_2019),parseFloat(resp[0].burned_2020)],
+data: [parseFloat(resp[0].burned_2001),parseFloat(resp[0].burned_2002),parseFloat(resp[0].burned_2003),parseFloat(resp[0].burned_2004),parseFloat(resp[0].burned_2005),parseFloat(resp[0].burned_2006),parseFloat(resp[0].burned_2007),parseFloat(resp[0].burned_2008),parseFloat(resp[0].burned_2009),parseFloat(resp[0].burned_2010),parseFloat(resp[0].burned_2011),parseFloat(resp[0].burned_2012),parseFloat(resp[0].burned_2013),parseFloat(resp[0].burned_2014),parseFloat(resp[0].burned_2015),parseFloat(resp[0].burned_2016),parseFloat(resp[0].burned_2017),parseFloat(resp[0].burned_2018),parseFloat(resp[0].burned_2019)],
 }]
 
 });
@@ -1243,7 +1245,7 @@ data: [parseFloat(resp[0].burned_2001),parseFloat(resp[0].burned_2002),parseFloa
 
 });
 //Fires dynamics
-var api_fires =  "https://api.biopama.org/api/human_modification/function/api_fires/iso3="+e.features[0].properties.iso3
+var api_fires =  "https://api.biopama.org/api/human_modification/function/api_fires_ts_prot_unprot/iso_codes="+e.features[0].properties.iso3
 $.ajax({
 url: api_fires,
 dataType: 'json',
@@ -1403,7 +1405,7 @@ data: [parseFloat(resp[0].fires_2001),parseFloat(resp[0].fires_2002),parseFloat(
 
 
 //GHSL dynamics
-var api_ghsl =  "https://api.biopama.org/api/human_modification/function/api_ghsl/iso3="+e.features[0].properties.iso3
+var api_ghsl =  "https://api.biopama.org/api/human_modification/function/api_ghsl_prot_unprot_timeseries/iso_codes="+e.features[0].properties.iso3
 $.ajax({
 url: api_ghsl,
 dataType: 'json',
@@ -1411,10 +1413,10 @@ success: function(d) {
 
 
 
-var res = d.filter(obj=> obj.protection == "unprotected");
-var resp = d.filter(obj=> obj.protection == "protected");
+var res = d.filter(obj => obj.id.includes("unprotected"))
+var resp = d.filter(obj => !obj.id.includes("unprotected"))
 
-var start = parseFloat(res[0].sum_2000)
+var start = parseFloat(res[0].sum_2005)
 var end = parseFloat(res[0].sum_2020)
 
 var perc = ((end-start)/start)*100
@@ -1427,7 +1429,7 @@ trend = 'increase'
 color_up = '#adef2a'
 }
 
-var startp = parseFloat(resp[0].sum_2000)
+var startp = parseFloat(resp[0].sum_2005)
 var endp = parseFloat(resp[0].sum_2020)
 
 var percp = ((endp-startp)/startp)*100
@@ -1472,7 +1474,7 @@ align: 'center'
 
 },
 xAxis: {
-categories: ['2000','2005','2010','2015','2020'],
+categories: ['2005','2010','2015','2020'],
 gridLineColor: '#404040',
 
 labels: {
@@ -1545,13 +1547,13 @@ series: [{
 name: 'Unprotected',
 color: '#c04a08',
 
-data: [parseFloat(res[0].sum_2000),parseFloat(res[0].sum_2005),parseFloat(res[0].sum_2010),parseFloat(res[0].sum_2015),parseFloat(res[0].sum_2020)],
+data: [parseFloat(res[0].sum_2005),parseFloat(res[0].sum_2010),parseFloat(res[0].sum_2015),parseFloat(res[0].sum_2020)],
 },{
 
 name: 'Protected',
 color: '#f19562',
 
-data: [parseFloat(resp[0].sum_2000),parseFloat(resp[0].sum_2005),parseFloat(resp[0].sum_2010),parseFloat(resp[0].sum_2015),parseFloat(resp[0].sum_2020)],}]
+data: [parseFloat(resp[0].sum_2005),parseFloat(resp[0].sum_2010),parseFloat(resp[0].sum_2015),parseFloat(resp[0].sum_2020)],}]
 
 });
 
@@ -1568,7 +1570,7 @@ data: [parseFloat(resp[0].sum_2000),parseFloat(resp[0].sum_2005),parseFloat(resp
 
 
 // Primary Productivity dynamics
-var api_primary_prod =  "https://api.biopama.org/api/forest/function/api_primary_prod/iso3="+e.features[0].properties.iso3
+var api_primary_prod =  "https://api.biopama.org/api/forest/function/api_primary_prod/iso_codes="+e.features[0].properties.iso3
 $.ajax({
 url: api_primary_prod,
 dataType: 'json',
@@ -1724,7 +1726,7 @@ data: [parseFloat(resp[0].pp_2001),parseFloat(resp[0].pp_2002),parseFloat(resp[0
 
 });
 // Nightlights dynamics
-var api_nightlights =  "https://api.biopama.org/api/human_modification/function/api_nightlights/iso3="+e.features[0].properties.iso3
+var api_nightlights =  "https://api.biopama.org/api/human_modification/function/api_nightlights_ts_prot_unprot/iso_codes="+e.features[0].properties.iso3
 $.ajax({
 url: api_nightlights,
 dataType: 'json',
@@ -2159,7 +2161,7 @@ data: [parseFloat(res.protconn_2010),parseFloat(res.protconn_2012),parseFloat(re
 
 });
 // Surface water dynamics
-var api_trend_sw =  "https://api.biopama.org/api/waterdynamics/function/api_prot_unprot_surfacewater_dynamics/iso3="+e.features[0].properties.iso3
+var api_trend_sw =  "https://api.biopama.org/api/waterdynamics/function/api_prot_unprot_surfacewater_dynamics/iso_codes="+e.features[0].properties.iso3
 $.ajax({
 url: api_trend_sw,
 dataType: 'json',
