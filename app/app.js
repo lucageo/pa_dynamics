@@ -130,12 +130,12 @@ var map = new mapboxgl.Map({
     container: 'map',
 
     projection: 'globe',
-    style: 'mapbox://styles/mapbox/satellite-streets-v12',
+    style: 'mapbox://styles/mapbox/dark-v11',
     center: [19, 3], // starting position[35.890, -75.664]
     zoom: 3.11, // starting zoom
     hash: true,
     minZoom: 2.09,
-    opacity: 0.5,
+    opacity: 0.1,
    
 
     preserveDrawingBuffer: true
@@ -155,6 +155,123 @@ map.on('load', function() {
 //************************************************************************************************************************************************************ */
 //*************************************************************************END LAYERS************************************************************************
 //************************************************************************************************************************************************************ */
+
+//pressure
+map.addLayer({
+  "id": "UndisturbedDegradedForest",
+  "type": "raster",
+  "source": {
+      "type": "raster",
+      "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?SERVICE=WMTS&REQUEST=GetTile&LAYER=africa_platform:Transition&TILEMATRIX=EPSG:900913:{z}&TILEMATRIXSET=EPSG:900913&format=image%2Fpng&TileCol={x}&TileRow={y}"],
+      "tileSize": 256,
+     
+      },
+  "source-layer": "UndisturbedDegradedForest",
+  'layout': {
+    'visibility': 'none'
+    }
+  }, 'waterway-label');
+
+  map.setPaintProperty(
+    'UndisturbedDegradedForest',
+    'raster-opacity',
+    0.9
+  );
+
+  map.addLayer({
+    "id": "Deforestation",
+    "type": "raster",
+    "source": {
+        "type": "raster",
+        "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?SERVICE=WMTS&REQUEST=GetTile&LAYER=africa_platform:Deforestation&TILEMATRIX=EPSG:900913:{z}&TILEMATRIXSET=EPSG:900913&format=image%2Fpng&TileCol={x}&TileRow={y}"],
+        "tileSize": 256,
+       
+        },
+    "source-layer": "Deforestation",
+    'layout': {
+      'visibility': 'none'
+      }
+    }, 'waterway-label');
+  
+
+
+    map.addLayer({
+      "id": "Degradation",
+      "type": "raster",
+      "source": {
+          "type": "raster",
+          "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?SERVICE=WMTS&REQUEST=GetTile&LAYER=africa_platform:Degradation&TILEMATRIX=EPSG:900913:{z}&TILEMATRIXSET=EPSG:900913&format=image%2Fpng&TileCol={x}&TileRow={y}"],
+          "tileSize": 256,
+         
+          },
+      "source-layer": "Degradation",
+      'layout': {
+        'visibility': 'none'
+        }
+      }, 'waterway-label');
+      map.addLayer({
+        "id": "freshwater",
+        "type": "raster",
+        "source": {
+            "type": "raster",
+            "tiles": ["https://storage.googleapis.com/global-surface-water-stats/transition2004_2019NatWater/tiles/{z}/{x}/{y}.png"],
+            "tileSize": 256,
+           
+            },
+        "source-layer": "freshwater",
+        'layout': {
+          'visibility': 'none'
+          }
+        }, 'waterway-label');
+        map.setPaintProperty(
+          'freshwater',
+          'raster-opacity',
+          0.6
+        );
+ 
+        map.addLayer({
+          "id": "fires",
+          "type": "raster",
+          "source": {
+              "type": "raster",
+              "tiles": ["https://firms.modaps.eosdis.nasa.gov/mapserver/wms/fires/ba304485400bf0ee5c3d43d6bc37b9dc/?REQUEST=GetMap&layers=fires_modis_72&format=image/png&transparent=true&SERVICE=WMS&VERSION=1.1.1&HEIGHT=256&WIDTH=256&SRS=EPSG:3857&bbox={bbox-epsg-3857}"],
+              
+              "tileSize": 256,
+             
+              },
+          "source-layer": "fires",
+          'layout': {
+            'visibility': 'none'
+            }
+          }, 'waterway-label');
+          map.setPaintProperty(
+            'fires',
+            'raster-opacity',
+            1
+          );
+   
+          map.addLayer({
+            "id": "nightlights",
+            "type": "raster",
+            "source": {
+                "type": "raster",
+                "tiles": ["https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_Night_Lights/default/default/GoogleMapsCompatible_Level8/{z}/{y}/{x}.png"],
+                
+                "tileSize": 256,
+               
+                },
+            "source-layer": "nightlights",
+            'layout': {
+              'visibility': 'none'
+              }
+            }, 'waterway-label');
+            map.setPaintProperty(
+              'nightlights',
+              'raster-opacity',
+              1
+            );
+
+
 
 
 map.addSource('wms-test-source', {
@@ -342,6 +459,8 @@ map.on('click', 'protection_trends_acp', function (e) {
 //*************************************************************************START STATS************************************************************************
 //************************************************************************************************************************************************************ */
 
+
+
 // PAs number dynamics
 var api_trend =  "https://api.biopama.org/api/protection_level/function/api_country_timeseries/iso3="+e.features[0].properties.iso3
 $.ajax({
@@ -484,7 +603,7 @@ $('#tmf_deforestation_stack').highcharts({
 chart: {
 type: 'column',
 backgroundColor: null,
-height: 600,
+height: 900,
 
 },
 legend: {
@@ -566,7 +685,17 @@ style: {
 'color':'white',
 'font-size': '20px'
 },
-text: '<i>Between 2018 and 2021, in the Tropical Moist Forest ecosystem, the average deforestation  was '+avg.toFixed(2)+' h/yr. Over the period 2020 - 2021 <b>deforestation, inside Protected Areas</b>, has <span style="color:'+color+';">'+trend+'</span> by '+Math.abs(percentage).toFixed(2)+'%  compared to the period 2018 - 2019. <i><hr><p><i class="tiny material-icons">info</i> The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre helps detect and monitor changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns. More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'
+text: '<i>Between 2018 and 2021, in the Tropical Moist Forest ecosystem, the average deforestation  was '+avg.toFixed(2)+' h/yr. Over the period 2020 - 2021 <b>deforestation, inside Protected Areas</b>, has <span style="color:'+color+';">'+trend+'</span> by '+Math.abs(percentage).toFixed(2)+'%  compared to the period 2018 - 2019. <i><hr><p><i class="tiny material-icons">info</i> The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre helps detect and monitor changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns.'+
+' More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'+
+'<hr><div class= "policies"><i class="mainsubtitle">Related Policies</i></div>'+
+'<span class=" badge blue">REDD+ (Reducing Emissions from Deforestation and Forest Degradation)</span>'+
+'<span class=" badge blue">Sustainable Development Goal 15 (Life on Land)</span>'+
+'<span class=" badge blue">CBD Target 3</span>'+
+'<span class=" badge blue">CBD Target 10</span>'+
+'<span class=" badge blue">African Forest Landscape Restoration Initiative (AFR100)</span>'+
+'<span class=" badge blue">The African Union Agenda 2063</span>'+
+'<span class=" badge blue">The Central African Forest Initiative (CAFI)</span>'+
+'<span class=" badge blue">The Great Green Wall for the Sahara and the Sahel Initiative</span>'
 },
 
 series: [{
@@ -625,7 +754,7 @@ $('#tmf_deforestation_stack_unprot').highcharts({
 chart: {
 type: 'column',
 backgroundColor: null,
-height: 600,
+height: 900,
 },
 legend: {
 itemStyle: {
@@ -706,7 +835,16 @@ style: {
 'color':'white',
 'font-size': '15px'
 },
-text: '<i>Between 2018 and 2021, in the Tropical Moist Forest ecosystem, the average deforestation  was '+avg.toFixed(2)+' h/yr. Over the period 2020 - 2021 <b>deforestation, outside Protected Areas</b>, has <span style="color:'+color+';">'+trend+'</span> by '+Math.abs(percentage).toFixed(2)+'%  compared to the period 2018 - 2019. <i><hr><p><p><i class="tiny material-icons">info</i> The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre helps detect and monitor changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns. More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'
+text: '<i>Between 2018 and 2021, in the Tropical Moist Forest ecosystem, the average deforestation  was '+avg.toFixed(2)+' h/yr. Over the period 2020 - 2021 <b>deforestation, outside Protected Areas</b>, has <span style="color:'+color+';">'+trend+'</span> by '+Math.abs(percentage).toFixed(2)+'%  compared to the period 2018 - 2019. <i><hr><p><p><i class="tiny material-icons">info</i> The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre helps detect and monitor changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns. More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'+
+'<hr><div class= "policies"><i class="mainsubtitle">Related Policies</i></div>'+
+'<span class=" badge blue">REDD+ (Reducing Emissions from Deforestation and Forest Degradation)</span>'+
+'<span class=" badge blue">Sustainable Development Goal 15 (Life on Land)</span>'+
+'<span class=" badge blue">CBD Target 3</span>'+
+'<span class=" badge blue">CBD Target 10</span>'+
+'<span class=" badge blue">African Forest Landscape Restoration Initiative (AFR100)</span>'+
+'<span class=" badge blue">The African Union Agenda 2063</span>'+
+'<span class=" badge blue">The Central African Forest Initiative (CAFI)</span>'+
+'<span class=" badge blue">The Great Green Wall for the Sahara and the Sahel Initiative</span>'
 },
 
 series: [{
@@ -791,7 +929,7 @@ $('#tmf_undist_stack_unprot').highcharts({
 chart: {
 type: 'column',
 backgroundColor: null,
-height: 600,
+height: 900,
 },
 legend: {
 itemStyle: {
@@ -881,7 +1019,16 @@ style: {
 text: '<i>Undisturbed tropical moist forest not subject to protection has <span style="color:'+color1+';"> '+trendUndisturbUnprot+' </span> by <b>'+Math.abs((unprotVariation)).toFixed(2)+'</b>% whereas '+
 'undisturbed tropical moist forest subject to protection has <span style="color:'+color2+';"> '+trendUndisturbProt+' </span> by <b>'+Math.abs((protVariation)).toFixed(2)+'</b>%.</i>'+
 '<hr>'+
-'<p><p><i class="tiny material-icons">info</i> The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre, helps detect and monitor changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns. More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'
+'<p><p><i class="tiny material-icons">info</i> The Tropical Moist Forest Dataset, developed by the European Commission - Joint Research Centre, helps detect and monitor changes in forest cover in tropical moist forests. It provides detailed information on deforestation and degradation, including the timing and intensity of each disturbance. Deforestation is defined as a permanent change in land cover from forest to non-forested land, while degradation encompasses temporary disturbances within a forest that result in remaining forested areas, such as selective logging, fires, and extreme weather events like hurricanes, droughts, and blowdowns. More at <a href="https://forobs.jrc.ec.europa.eu/TMF">https://forobs.jrc.ec.europa.eu/TMF</a>.</p>'+
+'<hr><div class= "policies"><i class="mainsubtitle">Related Policies</i></div>'+
+'<span class=" badge blue">REDD+ (Reducing Emissions from Deforestation and Forest Degradation)</span>'+
+'<span class=" badge blue">Sustainable Development Goal 15 (Life on Land)</span>'+
+'<span class=" badge blue">CBD Target 3</span>'+
+'<span class=" badge blue">CBD Target 10</span>'+
+'<span class=" badge blue">African Forest Landscape Restoration Initiative (AFR100)</span>'+
+'<span class=" badge blue">The African Union Agenda 2063</span>'+
+'<span class=" badge blue">The Central African Forest Initiative (CAFI)</span>'+
+'<span class=" badge blue">The Great Green Wall for the Sahara and the Sahel Initiative</span>'
 
 },
 
@@ -1129,7 +1276,7 @@ $('#burned_areas').highcharts({
 chart: {
 type: 'column',
 backgroundColor: null,
-height:'600px'
+height:'900px'
 
 },
 legend: {
@@ -1219,7 +1366,15 @@ style: {
 },
 text: '<i>Over the span of 2016 to 2019, the burned lands inside protected areas showed a <b>'+Math.abs(parseFloat(percp)).toFixed(2)+'% </b><span style="color:'+color_p+';">'+trendp+'</span> when contrasted with the period of 2001 to 2004 </i>'+
 '<i> whereas the burned lands outside protected areas within the same time span showed a <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'% </b><span style="color:'+color_up+';">'+trend+'.</span></i>'+
-'<hr><p><i class="tiny material-icons">info</i> These statistics are derived from the ESA Climate Change Initiative (CCI). MODIS Fire_cci Burned Area pixel product is a monthly global ~250m spatial resolution dataset containing information on burned areas as well as ancillary data. This dataset is also part of the Copernicus Climate Change Service (C3S). For more information please visit <a href="https://climate.esa.int/en/projects/fire/">https://climate.esa.int/en/projects/fire/</a></p>'
+'<hr><p><i class="tiny material-icons">info</i> These statistics are derived from the ESA Climate Change Initiative (CCI). MODIS Fire_cci Burned Area pixel product is a monthly global ~250m spatial resolution dataset containing information on burned areas as well as ancillary data. This dataset is also part of the Copernicus Climate Change Service (C3S). For more information please visit <a href="https://climate.esa.int/en/projects/fire/">https://climate.esa.int/en/projects/fire/</a></p>'+
+'<hr><div class= "policies"><i class="mainsubtitle">Related Policies</i></div>'+
+'<span class=" badge blue">United Nations Framework Convention on Climate Change (UNFCCC)</span>'+
+'<span class=" badge blue">Sustainable Development Goal 15 (Life on Land)</span>'+
+'<span class=" badge blue">CBD Target 2</span>'+
+'<span class=" badge blue">CBD Target 8</span>'+
+'<span class=" badge blue">African Fire Accord</span>'+
+'<span class=" badge blue">Southern African Fire Network (SAFNet)</span>'+
+'<span class=" badge blue">African Union Agenda 2063</span>'
 
 
 },
@@ -1287,7 +1442,7 @@ $('#fires').highcharts({
 chart: {
 type: 'column',
 backgroundColor: null,
-height: '600px'
+height: '900px'
 
 },
 legend: {
@@ -1377,7 +1532,15 @@ style: {
 },
 text: '<i>Over the span of 2018 to 2022, the number of fires inside protected areas showed a <b>'+Math.abs(parseFloat(percp)).toFixed(2)+'% </b><span style="color:'+color_p+';">'+trendp+'</span> when contrasted with the period of 2001 to 2005 </i>'+
 '<i> whereas the number of fires outside protected areas within the same time span showed a <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'% </b><span style="color:'+color_up+';">'+trend+'.</span></i>'+
-'<hr><p><i class="tiny material-icons">info</i> These statistics are derived from the Fire Information for Resource Management System (FIRMS). MODIS Collection 6 NRT Hotspot / Active Fire Detections MCD14DL. Available on-line at <a href="https://earthdata.nasa.gov/firms">https://earthdata.nasa.gov/firms</a> </p>'
+'<hr><p><i class="tiny material-icons">info</i> These statistics are derived from the Fire Information for Resource Management System (FIRMS). MODIS Collection 6 NRT Hotspot / Active Fire Detections MCD14DL. Available on-line at <a href="https://earthdata.nasa.gov/firms">https://earthdata.nasa.gov/firms</a> </p>'+
+'<hr><div class= "policies"><i class="mainsubtitle">Related Policies</i></div>'+
+'<span class=" badge blue">United Nations Framework Convention on Climate Change (UNFCCC)</span>'+
+'<span class=" badge blue">Sustainable Development Goal 15 (Life on Land)</span>'+
+'<span class=" badge blue">CBD Target 2</span>'+
+'<span class=" badge blue">CBD Target 8</span>'+
+'<span class=" badge blue">African Fire Accord</span>'+
+'<span class=" badge blue">Southern African Fire Network (SAFNet)</span>'+
+'<span class=" badge blue">African Union Agenda 2063</span>'
 
 
 },
@@ -1447,7 +1610,7 @@ $('#ghsl').highcharts({
 chart: {
 type: 'column',
 backgroundColor: null,
-height: '600px'
+height: '900px'
 
 },
 legend: {
@@ -1537,7 +1700,12 @@ style: {
 },
 text: '<i>Between 2000 to 2020, the number of people living inside protected areas showed a <b>'+Math.abs(parseFloat(percp)).toFixed(2)+'% </b><span style="color:'+color_p+';">'+trendp+'</span>.</i>'+
 '<i> whereas the number of fires people living outside protected areas within the same time span showed a <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'% </b><span style="color:'+color_up+';">'+trend+'.</span></i>'+
-'<hr><p><i class="tiny material-icons">info</i> These statistics are derived from the The Global Human Settlement Layer (GHSL) Developed by the European Commission - Joint Research Centre. The GHSL project produces global spatial information about the human presence on the planet over time. This in the form of built-up maps, population density maps and settlement maps. This information is generated with evidence-based analytics and knowledge using new spatial data mining technologies. Available on-line at <a href="https://ghsl.jrc.ec.europa.eu/index.php">https://ghsl.jrc.ec.europa.eu/index.php</a> </p>'
+'<hr><p><i class="tiny material-icons">info</i> These statistics are derived from the The Global Human Settlement Layer (GHSL) Developed by the European Commission - Joint Research Centre. The GHSL project produces global spatial information about the human presence on the planet over time. This in the form of built-up maps, population density maps and settlement maps. This information is generated with evidence-based analytics and knowledge using new spatial data mining technologies. Available on-line at <a href="https://ghsl.jrc.ec.europa.eu/index.php">https://ghsl.jrc.ec.europa.eu/index.php</a> </p>'+
+'<hr><div class= "policies"><i class="mainsubtitle">Related Policies</i></div>'+
+'<span class=" badge blue">United Nations Convention to Combat Desertification (UNCCD)</span>'+
+'<span class=" badge blue">Sustainable Development Goal 15 (Life on land)</span>'+
+'<span class=" badge blue">African Union Agenda 2063</span>'+
+'<span class=" badge blue">African Convention on the Conservation of Nature and Natural Resources</span>'
 
 
 },
@@ -1611,7 +1779,7 @@ $('#primprod').highcharts({
 chart: {
 type: 'column',
 backgroundColor: null,
-height:'600px'
+height:'900px'
 
 },
 legend: {
@@ -1701,7 +1869,16 @@ style: {
 },
 text: '<i>Gross primary productivity inside protected areas has<span style="color:'+color_p+';"> '+trendp+'</span> between 2014 and 2022 by <b>'+Math.abs(parseFloat(percp)).toFixed(2)+'%</b></i>'+
 '<i> whereas gross primary productivity outside protected areas has<span style="color:'+color_up+';"> '+trend+'</span> between 2014 and 2022 by <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'%.</b></i>'+
-'<hr><p><i class="tiny material-icons">info</i> This data provides information about annual Gross Primary Productivity at 500m pixel resolution. Annual Gross Primary Productivity inside and outside Protected Areas is derived from the sum of all 8-day Net Photosynthesis products from the given year. More at https://lpdaac.usgs.gov/products/mod17a3hgfv061/</p>'
+'<hr><p><i class="tiny material-icons">info</i> This data provides information about annual Gross Primary Productivity at 500m pixel resolution. Annual Gross Primary Productivity inside and outside Protected Areas is derived from the sum of all 8-day Net Photosynthesis products from the given year. More at https://lpdaac.usgs.gov/products/mod17a3hgfv061/</p>'+
+'<hr><div class= "policies"><i class="mainsubtitle">Related Policies</i></div>'+
+'<span class=" badge blue">REDD+ (Reducing Emissions from Deforestation and Forest Degradation)</span>'+
+'<span class=" badge blue">Sustainable Development Goal 15 (Life on Land)</span>'+
+'<span class=" badge blue">CBD Target 2</span>'+
+'<span class=" badge blue">CBD Target 8</span>'+
+'<span class=" badge blue">African Forest Landscape Restoration Initiative (AFR100)</span>'+
+'<span class=" badge blue">The African Union Agenda 2063</span>'+
+'<span class=" badge blue">The Central African Forest Initiative (CAFI)</span>'+
+'<span class=" badge blue">The Great Green Wall for the Sahara and the Sahel Initiative</span>'
 
 },
 
@@ -1767,7 +1944,7 @@ $('#nightlights').highcharts({
 chart: {
 type: 'column',
 backgroundColor: null,
-height:'600px'
+height:'900px'
 
 },
 legend: {
@@ -1857,7 +2034,12 @@ style: {
 },
 text: '<i>Nightlighs inside protected areas has<span style="color:'+color_p+';"> '+nighttrendp+'</span> between 2014 and 2022 by <b>'+Math.abs(parseFloat(percp)).toFixed(2)+'%</b></i>'+
 '<i> whereas nightlighs outside protected areas has<span style="color:'+color_up+';"> '+nighttrend+'</span> between 2014 and 2022 by <b>'+Math.abs(parseFloat(perc)).toFixed(2)+'%.</b></i>'+
-'<hr><p><i class="tiny material-icons">info</i> This data provides information about annual nightime lights at 500m pixel resolution. Annual global VIIRS nighttime lights dataset is a time series produced from monthly cloud-free average radiance grids spanning 2013 to 2021. More at https://www.mdpi.com/2072-4292/13/5/922</p>'
+'<hr><p><i class="tiny material-icons">info</i> This data provides information about annual nightime lights at 500m pixel resolution. Annual global VIIRS nighttime lights dataset is a time series produced from monthly cloud-free average radiance grids spanning 2013 to 2021. More at https://www.mdpi.com/2072-4292/13/5/922</p>'+
+'<hr><div class= "policies"><i class="mainsubtitle">Related Policies</i></div>'+
+'<span class=" badge blue">United Nations Convention to Combat Desertification (UNCCD)</span>'+
+'<span class=" badge blue">Sustainable Development Goal 15 (Life on land)</span>'+
+'<span class=" badge blue">African Union Agenda 2063</span>'+
+'<span class=" badge blue">African Convention on the Conservation of Nature and Natural Resources</span>'
 
 },
 
@@ -2025,7 +2207,7 @@ data: [parseFloat(res.pa_2001),parseFloat(res.pa_2006),parseFloat(res.pa_2011),p
 
 
 //ProtConn dynamics
-var api_trend_protcon =  "https://api.biopama.org/api/protection_level/function/api_protconn_ts/iso3="+e.features[0].properties.iso3
+var api_trend_protcon =  "https://api.biopama.org/api/protection_level/function/api_protconn_ts/iso_codes="+e.features[0].properties.iso3
 $.ajax({
 url: api_trend_protcon,
 dataType: 'json',
@@ -2226,7 +2408,7 @@ $('#water_unprot_stack_unprot').highcharts({
 chart: {
 type: 'column',
 backgroundColor: null,
-height:'600px'
+height:'900px'
 
 },
 legend: {
@@ -2315,7 +2497,16 @@ style: {
 'font-size': '15px'
 },
 text: '<i>Permanent water not subject to protection has<span style="color:'+color_p_un+';"> '+pertrendWaterUnprot+'</span> between 2000 and 2021 by <b>'+parseFloat(permanent_perc_change_up).toFixed(2)+'%.</b></i>'+
-'<hr><p><i class="tiny material-icons">info</i> This data developed by the European Commission Joint Research Centre contains the temporal distribution of surface water and provides statistics on the extent outside Protected Areas. For more information please visit <a href="https://data.jrc.ec.europa.eu/collection/id-0084">https://data.jrc.ec.europa.eu/collection/id-0084</a> </p>'
+'<hr><p><i class="tiny material-icons">info</i> This data developed by the European Commission Joint Research Centre contains the temporal distribution of surface water and provides statistics on the extent outside Protected Areas. For more information please visit <a href="https://data.jrc.ec.europa.eu/collection/id-0084">https://data.jrc.ec.europa.eu/collection/id-0084</a> </p>'+
+'<hr><div class= "policies"><i class="mainsubtitle">Related Policies</i></div>'+
+'<span class=" badge blue">The Ramsar Convention on Wetlands</span>'+
+'<span class=" badge blue">Sustainable Development Goal 6 (Water and Sanitation)</span>'+
+'<span class=" badge blue">The Nile Basin Initiative (NBI)</span>'+
+'<span class=" badge blue">The Lake Chad Basin Commission (LCBC)</span>'+
+'<span class=" badge blue">The African Water Vision for 2025</span>'+
+'<span class=" badge blue">The Comprehensive Africa Agriculture Development Programme (CAADP)</span>'+
+'<span class=" badge blue">The Africa Water Investment Programme (AIP)</span>'
+
 
 
 },
@@ -2338,7 +2529,7 @@ $('#water_prot_stack_unprot').highcharts({
 chart: {
 type: 'column',
 backgroundColor: null,
-height:'600px'
+height:'900px'
 
 },
 legend: {
@@ -2427,7 +2618,15 @@ style: {
 'font-size': '15px'
 },
 text: '<i>Permanent water subject to protection has<span style="color:'+color_p_p+';"> '+pertrendWaterProt+'</span> between 2000 and 2021 by <b>'+parseFloat(permanent_perc_change_p).toFixed(2)+'%.</b></i>'+
-'<hr> <p><i class="tiny material-icons">info</i> This data developed by the European Commission Joint Research Centre contains the temporal distribution of surface water and provides statistics on the extent inside Protected Areas. For more information please visit <a href="https://data.jrc.ec.europa.eu/collection/id-0084">https://data.jrc.ec.europa.eu/collection/id-0084</a> </p>'
+'<hr> <p><i class="tiny material-icons">info</i> This data developed by the European Commission Joint Research Centre contains the temporal distribution of surface water and provides statistics on the extent inside Protected Areas. For more information please visit <a href="https://data.jrc.ec.europa.eu/collection/id-0084">https://data.jrc.ec.europa.eu/collection/id-0084</a> </p>'+
+'<hr><div class= "policies"><i class="mainsubtitle">Related Policies</i></div>'+
+'<span class=" badge blue">The Ramsar Convention on Wetlands</span>'+
+'<span class=" badge blue">Sustainable Development Goal 6 (Water and Sanitation)</span>'+
+'<span class=" badge blue">The Nile Basin Initiative (NBI)</span>'+
+'<span class=" badge blue">The Lake Chad Basin Commission (LCBC)</span>'+
+'<span class=" badge blue">The African Water Vision for 2025</span>'+
+'<span class=" badge blue">The Comprehensive Africa Agriculture Development Programme (CAADP)</span>'+
+'<span class=" badge blue">The Africa Water Investment Programme (AIP)</span>'
 
 
 },
@@ -2467,6 +2666,7 @@ data: [parseFloat(resp[0].permanent_2000),parseFloat(resp[0].permanent_2001),par
 
   // SHOW STATS PANEL
   $('#pa_stats').show();
+  $('#country_title').show().html(e.features[0].properties.name);
 
   // GET COUNTRY BBOX      
   var country_stats_rest = "https://geospatial.jrc.ec.europa.eu/geoserver/wfs?request=getfeature&version=1.0.0&service=wfs&typename=africa_platform:ap_country_stats&propertyname=iso3&SORTBY=iso3&CQL_FILTER=iso3='"+e.features[0].properties.iso3+"'&outputFormat=application%2Fjson";
@@ -2488,61 +2688,89 @@ data: [parseFloat(resp[0].permanent_2000),parseFloat(resp[0].permanent_2001),par
 
     },
   });
-                    
+             
+
 //************************************************************************************************************************************************************ */
 //*************************************************************************STATS PANEL************************************************************************
 //************************************************************************************************************************************************************ */
-  $('#pa_stats').html(
-  "<div>"+
-  "<div id='country_title'><b>"+e.features[0].properties.name+"</b></div>"+
-
-  "<div id='tmf_wrapper'>"+ 
-  "<div class = 'title'><h3>Tropical moist forest Dynamics</h3></div>"+  
-  "<div id='tmf_undist_stack_unprot' class = 'landcover'></div><br>"+   
-  "<div id='tmf_deforestation_stack' class = 'landcover'></div><br>"+
-  "<div id='tmf_deforestation_stack_unprot' class = 'landcover'></div></div>"+ 
-
-  "<div id='vegetation_wrapper'>"+ 
-  "<div class = 'title'><h3>Vegetation Dynamics</h3></div>"+  
-  "<div id='primprod' class = 'landcover'></div></div>"+ 
-
-  "<div id='freshwater_wrapper'>"+ 
-  "<div class = 'title'><h3>Freshwater Dynamics</h3></div>"+
-  "<div id='water_prot_stack_unprot' class = 'landcover'></div><br>"+
-  "<div id='water_unprot_stack_unprot' class = 'landcover'></div></div>"+
-
-  "<div id='burned_wrapper'>"+ 
-  "<div class = 'title'><h3>Burned Areas Dynamics</h3></div>"+ 
-  "<div id='burned_areas' class = 'landcover'></div></div>"+  
-  "<div id='fires' class = 'landcover'></div></div>"+   
-
-  "<div id='nightlight_wrapper'>"+
-  "<div class = 'title'><h3>Human Modification Dynamics</h3></div>"+ 
-  "<div id='nightlights' class = 'landcover'></div></div>"+
-  "<div id='ghsl' class = 'landcover'></div></div>"+
-  "<div id='lcc_wrapper'>"+
-  "<div class = 'title'><h3>Land Use Dynamics</h3></div>"+ 
-  "<div id='lcc' class = 'landcover'></div></div>"+
-  "<div id='lcc-extended' class = 'landcover'></div></div>"+
-  "<div id='lcc-unp' class = 'landcover'></div></div>"+
 
 
- 
-  "<div id='lcc-unp-t' class = 'landcover'></div></div>"+
-
-  "<div id='protconn_wrapper'>"+
-  "<div class = 'title'><h3>Protected Areas Connectivity Dynamics</h3></div>"+ 
-  "<div id='protconn' class = 'landcover'></div></div>"+
-
-  "<div id='pan_wrapper'>"+
-  "<div class = 'title'><h3>World Database on Protected Areas Dynamics</h3></div>"+ 
-  "<div id='desig' class = 'landcover'></div></div>"+
-  "<div id='pan' class = 'landcover'></div></div>"+
-  "</div></li></ul>");
 
 });
 
-// Layers Popup
+
+
+$('.add-tmf_undist_stack_unprot').click(function() {
+  if($(this).hasClass('layer_on')){
+    map.setLayoutProperty('UndisturbedDegradedForest', 'visibility', 'visible');
+    $(this).removeClass( "layer_on" );
+    $('.leg-transition').show();
+  }else{
+    map.setLayoutProperty('UndisturbedDegradedForest', 'visibility', 'none');
+    $(this).addClass( "layer_on" );
+    $('.leg-transition').hide();
+  }
+});
+
+$('.add-Deforestation').click(function() {
+  if($(this).hasClass('layer_on')){
+    map.setLayoutProperty('Deforestation', 'visibility', 'visible');
+    $(this).removeClass( "layer_on" );
+    $('.leg-Deforestation').show();
+  }else{
+    map.setLayoutProperty('Deforestation', 'visibility', 'none');
+    $(this).addClass( "layer_on" );
+    $('.leg-Deforestation').hide();
+  }
+});
+
+$('.add-Degradation').click(function() {
+  if($(this).hasClass('layer_on')){
+    map.setLayoutProperty('Degradation', 'visibility', 'visible');
+    $(this).removeClass( "layer_on" );
+    $('.leg-Degradation').show();
+  }else{
+    map.setLayoutProperty('Degradation', 'visibility', 'none');
+    $(this).addClass( "layer_on" );
+    $('.leg-Degradation').hide();
+  }
+});
+
+$('.add-freshwater').click(function() {
+  if($(this).hasClass('layer_on')){
+    map.setLayoutProperty('freshwater', 'visibility', 'visible');
+    $(this).removeClass( "layer_on" );
+    $('.leg-transitionfw').show();
+  }else{
+    map.setLayoutProperty('freshwater', 'visibility', 'none');
+    $(this).addClass( "layer_on" );
+    $('.leg-transitionfw').hide();
+  }
+});
+
+
+$('.add-fires').click(function() {
+  if($(this).hasClass('layer_on')){
+    map.setLayoutProperty('fires', 'visibility', 'visible');
+    $(this).removeClass( "layer_on" );
+    
+  }else{
+    map.setLayoutProperty('fires', 'visibility', 'none');
+    $(this).addClass( "layer_on" );
+
+  }
+});
+$('.add-nightlights').click(function() {
+  if($(this).hasClass('layer_on')){
+    map.setLayoutProperty('nightlights', 'visibility', 'visible');
+    $(this).removeClass( "layer_on" );
+    
+  }else{
+    map.setLayoutProperty('nightlights', 'visibility', 'none');
+    $(this).addClass( "layer_on" );
+
+  }
+});
 
 map.on('mouseenter', 'protection_trends_acp', function () {
 map.getCanvas().style.cursor = 'pointer';

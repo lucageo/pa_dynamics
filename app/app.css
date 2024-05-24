@@ -22,6 +22,43 @@
     display:inline-block;
   }
 }
+.mainsubtitle{
+  font-size: 17px;
+  color: #e8e8e8;
+}
+
+#layer-tmf_undist_stack_unprot{
+  background: aliceblue;
+    width: 100px;
+    height: 200px;
+}
+
+.blue {
+  background-color: #0546b0!important;
+}
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgb(226 226 226 / 10%)!important;
+}
+span.badge {
+  min-width: 3rem;
+  padding: 0 6px;
+  margin-right: 14px;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 22px;
+  height: 22px;
+  color: #ffffff;
+  float: right;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  float: left;
+  margin-bottom: 7px;
+  font-weight: 100;
+  margin-left: 0px;
+}
 
 .clickedtool{
   background-color: #044494!important;
@@ -165,11 +202,12 @@ display: none;
   height: 43px;
 }
 .c-legend-choropleth {
-  display: -ms-flexbox;
   display: flex;
   margin: 0;
   padding: 0;
   list-style: none;
+  margin-top: 70px;
+  margin-left: 30px;
 }
 
 .c-legend-choropleth > li {
@@ -233,10 +271,7 @@ display: none;
   padding: 11px;
 }
 .layer_on{
-  background-color: #ffffff!important;
-  /* border: 1px solid #101010!important; */
-  /* box-shadow: -2px -3px 3px rgb(30 31 31 / 5%); */
-  border-top: 3px solid #f6f4f4!important;
+  background-color: #cca213 !important;
 }
 #live_layer_container > div > a > span > img{
   float: right;
@@ -482,20 +517,59 @@ div.mapboxgl-popup-content > i
   
       border-radius: 30px!important;
   }
+  .legend_item .legend_color {
+    height: 10px;
+    width: 10px;
+    min-width: 10px;
+    border: 1px solid gray;
+}
+.legend {
+  padding: 33px;
+  /* padding-bottom: 10px; */
+  margin-top: 55px;
+}
+#space{
+  margin-bottom: 20px;
+}
+.buttonallignement{
+  position: relative;
+  margin-left: -819px;
+  margin-bottom: 26px !important;
+  padding-bottom: 14px;
+}
   #country_pop_title > {
     font-size: 0.9em;
   }
-  
+.legend_label{
+  padding-left:10px ;
+}
+
+.c-legend-choropleth .icon-choropleth {
+  display: block;
+  height: 15px;
+  margin-top: 0px;
+  margin-left: 2px;
+  width: 15px;
+  float: left;
+  border-radius: 10px;
+}
+.leg-Deforestation{
+  display: none;
+}
+.leg-Degradation{
+  display: none;
+}
+  .leg-transition{
+    display: none;
+  }
+  .leg-transitionfw{
+    display: none;
+  }
     .btn, .btn-large, .btn-small, .btn-flat {
-      border: none;
-      border-radius: 2px;
-      display: inline-block;
-      height: 37px!important;
-      line-height: 32px;
-      padding: 0 16px;
-      text-transform: uppercase;
-      vertical-align: middle;
-      -webkit-tap-highlight-color: transparent;
+      width: 56px;
+      height: 56px;
+      padding: 0px;
+      padding: 0 8px !important;
   }
     .card_custom{
   
@@ -1113,18 +1187,14 @@ div.mapboxgl-popup-content > i
     margin-left: 10px
   
   }
-  
-  .legend {
-    background-color: #f6f4f4;
-    border-radius: 3px;
-    bottom: 30px;
-    box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
-    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    padding: 10px;
-    position: absolute;
-    right: 10px;
-    z-index: 1;
-    color: #1f2325;
+  .legend_item .legend_value {
+    padding-left: 5px;
+    font-size: .9em;
+}
+  .legend_item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
 }
   
   .legend h4 {
@@ -1278,7 +1348,7 @@ i{
 
   .landcover{
   
-    background: #061123;
+    background: #252525;
     padding: 23px;
   }
 
@@ -1557,60 +1627,60 @@ i{
     color: #77bb0b;
   }
   #tmf_wrapper{
-    background: #061123;
+    background: #252525;
     padding: 10px;
-    border-top: 7px solid #041a3e;
-    color: #becad8;
+    border-top: 7px solid #1e1e1e;
+    color: #f7f7f7;
     text-align: center;
   }
   #vegetation_wrapper{
-    background: #061123;
+    background: #252525;
     padding: 10px;
-    border-top: 7px solid #041a3e;
-    color: #becad8;
+    border-top: 7px solid #1e1e1e;
+    color: #f7f7f7;
     text-align: center;
   }
   #burned_wrapper{
-    background: #061123;
+    background: #252525;
     padding: 10px;
-    border-top: 7px solid #041a3e;
-    color: #becad8;
+    border-top: 7px solid #1e1e1e;
+    color: #f7f7f7;
     text-align: center;
 }
 #protconn_wrapper{
-  background: #061123;
+  background: #252525;
   padding: 10px;
-  border-top: 7px solid #041a3e;
-  color: #becad8;
+  border-top: 7px solid #1e1e1e;
+  color: #f7f7f7;
   text-align: center;
 }
 
 #freshwater_wrapper{
-  background: #061123;
+  background: #252525;
   padding: 10px;
-  border-top: 7px solid #041a3e;
-  color: #becad8;
+  border-top: 7px solid #1e1e1e;
+  color: #f7f7f7;
   text-align: center;
 }
 #nightlight_wrapper{
-  background: #061123;
+  background: #252525;
   padding: 10px;
-  border-top: 7px solid #041a3e;
-  color: #becad8;
+  border-top: 7px solid #1e1e1e;
+  color: #f7f7f7;
   text-align: center;
 }
 #lcc_wrapper{
-  background: #061123;
+  background: #252525;
   padding: 10px;
-  border-top: 7px solid #041a3e;
-  color: #becad8;
+  border-top: 7px solid #1e1e1e;
+  color: #f7f7f7;
   text-align: center;
 }
 #pan_wrapper{
-  background: #061123;
+  background: #252525;
   padding: 10px;
-  border-top: 7px solid #041a3e;
-  color: #becad8;
+  border-top: 7px solid #1e1e1e;
+  color: #f7f7f7;
   text-align: center;
 }
   #pa_stats{
@@ -1637,8 +1707,10 @@ i{
     /* border: 1px solid; */
     padding: 36px;
     color: #ffffff;
-    background: #041a3e;
-
+    background: #1f1f1f;
+    position: relative;
+    width: 45%;
+    display: none;
   }
 
   #c_title > a{
